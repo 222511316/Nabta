@@ -24,11 +24,23 @@ def test_register_returns_the_new_grower(anon):
 
     assert response.status_code == 201
     user = response.json()
-    assert set(user) == {"id", "email", "full_name", "role", "created_at"}
+    assert set(user) == {
+        "id",
+        "email",
+        "full_name",
+        "role",
+        "research_consent",
+        "research_consent_at",
+        "specialist_status",
+        "approved_at",
+        "created_at",
+    }
     assert isinstance(user["id"], int)
     assert user["email"] == "sara@example.com"
     assert user["full_name"] == "Sara Ahmed"
     assert user["role"] == "grower"
+    assert user["specialist_status"] is None  # growers need no approval
+    assert user["approved_at"] is None
     assert ISO_UTC.match(user["created_at"]), user["created_at"]
 
 
@@ -153,12 +165,15 @@ def test_sign_up_defaults_to_the_grower_role(anon):
     assert register(anon)["role"] == "grower"
 
 
-def test_a_specialist_can_sign_up_and_open_the_review_workspace(anon):
+def test_a_specialist_who_signs_up_waits_for_the_team_s_approval(anon):
+    """Supervisor review OBS-14: website sign-up no longer opens the review queue (FR03, FR12)."""
     response = anon.post("/api/auth/register", json=valid_payload(role="specialist"))
 
     assert response.status_code == 201
     assert response.json()["role"] == "specialist"
-    assert anon.get("/api/specialist/cases").status_code == 200
+    assert response.json()["specialist_status"] == "pending"
+    assert response.json()["approved_at"] is None
+    assert_error(anon.get("/api/specialist/cases"), 403, "specialist_pending")
     assert_error(anon.get("/api/plants"), 403, "forbidden")
 
 

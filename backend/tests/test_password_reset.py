@@ -45,6 +45,16 @@ def test_a_known_email_is_sent_a_reset_link(sara, anon, outbox):
     token_in(outbox[0])
 
 
+def test_the_email_is_in_the_language_it_was_asked_in(sara, anon, outbox):
+    anon.post(
+        "/api/auth/password-reset/request", json={"email": "sara@example.com"}, headers={"Accept-Language": "ar"}
+    )
+
+    assert outbox[0].subject == "إعادة تعيين كلمة المرور في نبتة"
+    assert "خلال 60 دقيقة" in outbox[0].body
+    token_in(outbox[0])
+
+
 def test_an_unknown_email_gets_the_same_answer_and_no_email(sara, anon, outbox):
     response = request_reset(anon, email="nobody@example.com")
 

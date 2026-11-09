@@ -12,7 +12,8 @@ const INBOX_REFRESH_MS = 30_000
 
 /**
  * The header's notification bell (US13, FR15): questions, replies and assessments on
- * review cases. It checks for new ones every 30 seconds while the page is open.
+ * review cases, and reminders for tasks that are due (US18). It checks for new ones
+ * every 30 seconds while the page is open.
  */
 export function NotificationsMenu() {
   const { t } = useTranslation()
@@ -71,7 +72,7 @@ export function NotificationsMenu() {
                         if (!item.read) markRead.mutate(item.id)
                         close()
                       }}
-                      className="flex gap-3 px-4 py-3 outline-none hover:bg-sage-50 focus-visible:bg-sage-50"
+                      className="flex gap-3 px-4 py-3 outline-none hover:bg-sage-50 focus-visible:bg-sage-50 focus-visible:ring-2 focus-visible:ring-forest-500 focus-visible:ring-inset"
                     >
                       <span
                         className={cx('mt-1.5 size-2 shrink-0 rounded-full', item.read ? 'bg-transparent' : 'bg-forest-600')}
@@ -80,7 +81,11 @@ export function NotificationsMenu() {
                       </span>
                       <span className="min-w-0">
                         <span className={cx('block text-sm', item.read ? 'text-muted' : 'font-medium text-ink')}>
-                          {t(`notifications.kinds.${item.kind}`, { actor: item.actor_name, plant: item.plant_name })}
+                          {t(`notifications.kinds.${item.kind}`, {
+                            actor: item.actor_name,
+                            plant: item.plant_name,
+                            task: item.task_title,
+                          })}
                         </span>
                         <RelativeTime value={item.created_at} className="text-xs text-muted" />
                       </span>

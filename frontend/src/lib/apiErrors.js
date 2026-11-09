@@ -27,3 +27,8 @@ export function applyFieldErrors(error, setError, t, fieldNames) {
   }
   return applied
 }
+
+/** The server refused because the specialist's account isn't approved yet (or was withdrawn). */
+export function isPendingError(error) {
+  return error?.code === 'specialist_pending'
+}

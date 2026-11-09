@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Outlet, useLocation } from 'react-router'
 import { useRoleParam } from '../../auth/useRoleParam'
 import { LeafScene } from '../brand/LeafScene'
+import { LanguageSwitch } from '../ui/LanguageSwitch'
 import { LogoLink } from '../ui/Logo'
 
 /** The form on the left; on wide screens, the leaf scene for the chosen role on the right. */
@@ -13,8 +14,9 @@ export function AuthLayout() {
   return (
     <div className="grid min-h-dvh bg-paper lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
       <div className="flex min-h-dvh flex-col px-5 py-6 sm:px-10 lg:px-16">
-        <header>
+        <header className="flex items-center justify-between gap-4">
           <LogoLink to="/" />
+          <LanguageSwitch />
         </header>
         <main id="main" className="flex flex-1 items-center py-10">
           <div key={location.pathname} className="mx-auto w-full max-w-md animate-page-in lg:mx-0">

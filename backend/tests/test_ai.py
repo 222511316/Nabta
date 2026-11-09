@@ -7,6 +7,7 @@ reviewed pest pages, and nothing works (or breaks) without an API key.
 import json
 
 import pytest
+from pydantic import SecretStr
 from sqlalchemy import func, select
 
 from app.models import PlantReport
@@ -224,3 +225,28 @@ def test_questions_are_checked(grower, other_grower, analysed, writer):
         "not_found",
     )
     assert writer.requests == []
+
+
+def test_in_arabic_the_model_is_asked_to_write_arabic_from_the_arabic_guide(grower, writer):
+    response = grower.post(
+        "/api/pests/aphids/questions", json={"question": "أين يختبئ؟"}, headers={"Accept-Language": "ar"}
+    )
+
+    assert response.status_code == 200
+    sent = writer.requests[-1]
+    assert "Modern Standard Arabic" in sent["instructions"]
+    assert sent["facts"]["pest_guide"]["name"] == "المنّ"
+    assert sent["facts"]["pest_guide"]["what_you_can_do"]
+
+
+def test_in_english_no_language_rule_is_added(grower, writer):
+    grower.post("/api/pests/aphids/questions", json={"question": "Where do they hide?"})
+
+    assert "Arabic" not in writer.requests[-1]["instructions"]
+
+
+@pytest.mark.parametrize("key", [None, "", "   "])
+def test_no_key_or_a_blank_one_turns_ai_off(settings, key):
+    from app.ai.writer import load_writer
+
+    assert load_writer(settings.model_copy(update={"openai_api_key": None if key is None else SecretStr(key)})) is None

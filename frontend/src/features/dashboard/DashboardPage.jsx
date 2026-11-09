@@ -8,6 +8,7 @@ import { ButtonLink } from '../../components/ui/Button'
 import { LoadError, PageSpinner } from '../../components/ui/feedback'
 import { EmptyState, PageHeader } from '../../components/ui/layout'
 import { useDocumentTitle } from '../../lib/useDocumentTitle'
+import { NeedsAttention } from './NeedsAttention'
 import { PlantCard } from './PlantCard'
 
 function partOfDay(now = new Date()) {
@@ -59,6 +60,8 @@ export function DashboardPage() {
           )
         }
       />
+
+      {hasPlants && <NeedsAttention />}
 
       {plants.isPending ? (
         <PageSpinner />

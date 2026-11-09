@@ -5,6 +5,9 @@ Expected answers:
   specialist         → 403 on grower endpoints
   grower             → 403 on specialist endpoints
   another grower     → 404 on the owner's plant and observation records (existence is not revealed)
+  pending specialist → 403 specialist_pending on every specialist endpoint, 403 forbidden on grower
+                       endpoints; their own account and the pest reference still work (FR03, FR12,
+                       NFR05, NFR06; supervisor review OBS-14)
 """
 
 import pytest
@@ -26,6 +29,11 @@ GROWER_COLLECTION_ENDPOINTS = [
     ("GET", "/api/plants", {}),
     ("POST", "/api/plants", {"json": PLANT_BODY}),
     ("GET", "/api/reviews", {}),
+    ("GET", "/api/tasks", {}),
+    ("GET", "/api/search?q=fig", {}),
+    ("GET", "/api/summary", {}),
+    ("PATCH", "/api/account/consent", {"json": {"research_consent": True}}),
+    ("DELETE", "/api/account", {"json": {"password": PASSWORD}}),
 ]
 GROWER_RECORD_ENDPOINTS = [
     ("GET", "/api/plants/{plant}", {}),
@@ -46,6 +54,15 @@ GROWER_RECORD_ENDPOINTS = [
     ("POST", "/api/reviews/{case}/replies", {"json": {"body": "More detail"}}),
     ("GET", "/api/plants/{plant}/report", {}),
     ("POST", "/api/plants/{plant}/report", {}),
+    ("DELETE", "/api/observations/{observation}", {}),
+    ("GET", "/api/tasks?plant_id={plant}", {}),
+    ("POST", "/api/plants/{plant}/tasks", {"json": {"title": "Check the leaves"}}),
+    ("PATCH", "/api/tasks/{task}", {"json": {"done": True}}),
+    ("DELETE", "/api/tasks/{task}", {}),
+    ("GET", "/api/plants/{plant}/notes", {}),
+    ("POST", "/api/plants/{plant}/notes", {"json": {"noted_on": "2026-09-20", "body": "Rinsed the leaves."}}),
+    ("PATCH", "/api/notes/{note}", {"json": {"body": "Changed"}}),
+    ("DELETE", "/api/notes/{note}", {}),
 ]
 SPECIALIST_ENDPOINTS = [
     ("GET", "/api/specialist/cases", {}),
@@ -88,11 +105,19 @@ def endpoint_id(endpoint):
 
 @pytest.fixture
 def records(grower):
-    """Sara's plant and observation, the targets of the record checks."""
+    """Sara's plant, observation, review, task and note: the targets of the record checks."""
     plant = add_plant(grower, "Lemon tree")
     observation = add_observation(grower, plant["id"])
     case = grower.post(f"/api/observations/{observation['id']}/review", json={"note": "Is this aphids?"}).json()
-    return {"plant": plant["id"], "observation": observation["id"], "case": case["id"]}
+    task = grower.post(f"/api/plants/{plant['id']}/tasks", json={"title": "Check the leaves"}).json()
+    note = grower.post(f"/api/plants/{plant['id']}/notes", json={"noted_on": "2026-09-20", "body": "Rinsed."}).json()
+    return {
+        "plant": plant["id"],
+        "observation": observation["id"],
+        "case": case["id"],
+        "task": task["id"],
+        "note": note["id"],
+    }
 
 
 def call(client, endpoint, records):
@@ -140,3 +165,56 @@ def test_specialists_reach_their_workspace(specialist):
 def test_both_roles_can_reach_their_account_and_the_pest_reference(grower, specialist, records, endpoint):
     for client in (grower, specialist):
         assert call(client, endpoint, records).status_code in (200, 204)
+
+
+# Specialists waiting for the team's approval (supervisor review OBS-14) ----------------------------
+
+
+@pytest.mark.parametrize("endpoint", SPECIALIST_ENDPOINTS, ids=endpoint_id)
+def test_pending_specialists_are_denied_every_specialist_endpoint(pending_specialist, records, endpoint):
+    assert_error(call(pending_specialist, endpoint, records), 403, "specialist_pending")
+
+
+@pytest.mark.parametrize("endpoint", SPECIALIST_ENDPOINTS, ids=endpoint_id)
+def test_pending_specialists_are_denied_a_case_another_specialist_has_taken(
+    specialist, pending_specialist, records, endpoint
+):
+    specialist.post(f"/api/specialist/cases/{records['case']}/claim")
+
+    assert_error(call(pending_specialist, endpoint, records), 403, "specialist_pending")
+
+
+@pytest.mark.parametrize("endpoint", GROWER_COLLECTION_ENDPOINTS + GROWER_RECORD_ENDPOINTS, ids=endpoint_id)
+def test_pending_specialists_are_denied_grower_endpoints(pending_specialist, records, endpoint):
+    assert_error(call(pending_specialist, endpoint, records), 403, "forbidden")
+
+
+@pytest.mark.parametrize("endpoint", ACCOUNT_ENDPOINTS + REFERENCE_ENDPOINTS, ids=endpoint_id)
+def test_pending_specialists_can_reach_their_account_and_the_pest_reference(pending_specialist, records, endpoint):
+    assert call(pending_specialist, endpoint, records).status_code in (200, 204)
+
+
+def test_pending_specialists_leave_the_case_untouched(grower, pending_specialist, records):
+    for endpoint in SPECIALIST_ENDPOINTS:
+        call(pending_specialist, endpoint, records)
+
+    review = grower.get(f"/api/observations/{records['observation']}/review").json()
+    assert review["status"] == "waiting_for_specialist"
+    assert review["specialist_name"] is None
+    assert review["messages"] == []
+    assert review["feedback"] is None
+
+
+def test_every_specialist_route_requires_approval(app, pending_specialist, records):
+    """Every /api/specialist operation the app publishes, including any added later, refuses a
+    pending specialist, so the approval check can't be forgotten on one route."""
+    operations = [
+        (method.upper(), path)
+        for path, item in app.openapi()["paths"].items()
+        if path.startswith("/api/specialist")
+        for method in item
+    ]
+    assert len(operations) >= len(SPECIALIST_ENDPOINTS)
+    for method, path in operations:
+        response = pending_specialist.request(method, path.replace("{case_id}", str(records["case"])), json={})
+        assert_error(response, 403, "specialist_pending")

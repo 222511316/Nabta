@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { formatDate } from '../../lib/dates'
 import { formatPercent } from '../../lib/format'
 import { CaseStatusPill } from '../reviews/CaseStatusPill'
+import { pestName } from '../../lib/pestName'
 
 export function ObservationCard({ observation }) {
   const { t, i18n } = useTranslation()
@@ -48,7 +49,7 @@ function Result({ analysis }) {
   }
   return (
     <p className="mt-1 flex items-baseline gap-2 text-sm">
-      <span className="font-medium text-forest-700">{analysis.category.name}</span>
+      <span className="font-medium text-forest-700">{pestName(t, analysis.category)}</span>
       <span className="text-muted tabular-nums">{formatPercent(analysis.confidence, i18n.language)}</span>
     </p>
   )

@@ -5,6 +5,10 @@ export const grower = {
   email: 'sara@example.com',
   full_name: 'Sara Ahmed',
   role: 'grower',
+  research_consent: false,
+  research_consent_at: null,
+  specialist_status: null,
+  approved_at: null,
   created_at: '2026-09-01T08:00:00Z',
 }
 
@@ -13,7 +17,24 @@ export const specialist = {
   email: 'khalid@example.com',
   full_name: 'Khalid Alharbi',
   role: 'specialist',
+  research_consent: false,
+  research_consent_at: null,
+  specialist_status: 'approved',
+  approved_at: '2026-09-01T09:00:00Z',
   created_at: '2026-09-01T08:05:00Z',
+}
+
+/** A specialist who signed up on the website and is waiting for the Nabta team's approval. */
+export const pendingSpecialist = {
+  id: 4,
+  email: 'huda@example.com',
+  full_name: 'Huda Alqahtani',
+  role: 'specialist',
+  research_consent: false,
+  research_consent_at: null,
+  specialist_status: 'pending',
+  approved_at: null,
+  created_at: '2026-11-08T08:00:00Z',
 }
 
 export function makePlant(overrides = {}) {
@@ -93,6 +114,12 @@ export function makePest(overrides = {}) {
       caption: ['Close-up of one aphid', 'Black aphids on a stem', 'A colony on new growth'][n - 1],
       credit: 'IP102 dataset (Wu et al., CVPR 2019), class 28',
     })),
+    guidance: [
+      { kind: 'check', task: 'Check new shoots for aphids', text: 'Look under young leaves twice a week.' },
+      { kind: 'remove', task: 'Hose aphids off with water', text: 'A strong jet of water knocks them off.' },
+      { kind: 'natural_enemies', task: 'Protect ladybirds', text: 'Ladybirds and lacewings eat aphids.' },
+    ],
+    translation: null,
     ...overrides,
   }
 }
@@ -157,7 +184,7 @@ export function makeQueueItem(overrides = {}) {
     plant_name: 'Lemon tree',
     grower_name: 'Sara Ahmed',
     observed_on: '2026-09-20',
-    suggestion: { outcome: 'identified', name: 'Aphids', confidence: 0.92 },
+    suggestion: { outcome: 'identified', key: 'aphids', name: 'Aphids', confidence: 0.92 },
     thumb_url: '/api/specialist/cases/12/photo?variant=thumb',
     created_at: '2026-09-20T09:00:00Z',
     updated_at: '2026-09-20T09:00:00Z',
@@ -188,6 +215,35 @@ export function makeSpecialistCase(overrides = {}) {
     feedback: null,
     created_at: '2026-09-20T09:00:00Z',
     updated_at: '2026-09-20T09:00:00Z',
+    ...overrides,
+  }
+}
+
+export function makeTask(overrides = {}) {
+  return {
+    id: 21,
+    plant_id: 3,
+    plant_name: 'Lemon tree',
+    observation_id: null,
+    pest: null,
+    title: 'Check under the new leaves',
+    notes: null,
+    due_on: null,
+    done: false,
+    done_at: null,
+    created_at: '2026-09-21T08:00:00Z',
+    ...overrides,
+  }
+}
+
+export function makeNote(overrides = {}) {
+  return {
+    id: 31,
+    plant_id: 3,
+    noted_on: '2026-09-21',
+    body: 'Moved it into the shade.',
+    created_at: '2026-09-21T08:00:00Z',
+    updated_at: '2026-09-21T08:00:00Z',
     ...overrides,
   }
 }

@@ -35,7 +35,12 @@ export function RegisterPage() {
     setFailure(null)
     try {
       const user = await createAccount({ fullName: fullName.trim(), email: email.trim(), password, role })
-      toast.success(t('register.welcome', { name: user.full_name }))
+      if (user.specialist_status === 'pending') {
+        // FR03, FR12: a specialist who signs up here waits for the Nabta team's approval.
+        toast.success(t('register.specialistPending'), { duration: 10_000 })
+      } else {
+        toast.success(t('register.welcome', { name: user.full_name }))
+      }
     } catch (error) {
       if (error.code === 'email_taken') {
         setError('email', { message: t('fieldErrors.email_taken') }, { shouldFocus: true })
@@ -62,6 +67,11 @@ export function RegisterPage() {
       }
     >
       <RoleSelector legend={t('roles.joinAs')} value={role} onChange={setRole} detailed />
+      {role === 'specialist' && (
+        <p id="specialist-approval-note" className="text-sm text-muted">
+          {t('register.specialistNote')}
+        </p>
+      )}
       {failure && <Alert tone="danger">{errorMessage(t, failure)}</Alert>}
 
       <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-5">

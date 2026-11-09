@@ -68,7 +68,8 @@ class ReviewSummaryOut(BaseModel):
 
 class SuggestionOut(BaseModel):
     outcome: Literal["identified", "unclear"]
-    name: str | None  # the suggested pest, when identified
+    key: str | None  # the suggested pest, when identified
+    name: str | None
     confidence: float
 
 
@@ -120,8 +121,10 @@ class SpecialistCaseOut(BaseModel):
 
 class NotificationOut(BaseModel):
     id: int
-    kind: Literal["question_asked", "grower_replied", "feedback_sent"]
-    case_id: int
+    kind: Literal["question_asked", "grower_replied", "feedback_sent", "task_due"]
+    case_id: int | None  # set for review notices
+    task_id: int | None = None  # set for task reminders (US18)
+    task_title: str | None = None
     plant_name: str
     actor_name: str
     link: str

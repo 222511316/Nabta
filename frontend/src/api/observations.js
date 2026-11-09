@@ -34,6 +34,11 @@ export async function createObservation(
   return data
 }
 
+/** US22: deletes the observation with its photo, Nabta's result and any review. */
+export async function deleteObservation(observationId) {
+  await apiClient.delete(`/observations/${observationId}`)
+}
+
 /**
  * Runs Nabta's pest model on the observation's photo (US09). The server keeps one
  * analysis per observation, so asking again returns the saved result.

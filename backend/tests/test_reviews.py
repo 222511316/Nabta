@@ -30,7 +30,9 @@ def observation(grower):
 
 @pytest.fixture
 def second_specialist(db, make_client):
-    users.create_user(db, email="noura@example.com", full_name="Noura Saad", password=PASSWORD, role=Role.SPECIALIST)
+    users.create_user(
+        db, email="noura@example.com", full_name="Noura Saad", password=PASSWORD, role=Role.SPECIALIST, approved=True
+    )
     db.commit()
     client = make_client()
     login(client, email="noura@example.com")
@@ -120,7 +122,9 @@ def test_waiting_cases_appear_in_the_specialist_queue(specialist, case):
     assert item["assigned_to_me"] is False
     assert item["plant_name"] == "Lemon tree"
     assert item["grower_name"] == "Sara Ahmed"
-    assert item["suggestion"] == {"outcome": "identified", "name": "Aphids", "confidence": pytest.approx(0.8)}
+    assert item["suggestion"] == {
+        "outcome": "identified", "key": "aphids", "name": "Aphids", "confidence": pytest.approx(0.8)
+    }
     assert item["thumb_url"] == f"/api/specialist/cases/{case['id']}/photo?variant=thumb"
 
 

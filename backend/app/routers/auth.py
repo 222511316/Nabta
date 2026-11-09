@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter, BackgroundTasks, Request, Response
 
-from app.deps import AppSettings, CurrentUser, DbSession
+from app.deps import AppSettings, CurrentUser, DbSession, Language
 from app.errors import ApiError
 from app.models import Role, User
 from app.schemas.users import LoginIn, RegisterIn, ResetConfirmIn, ResetRequestIn, UserOut
@@ -30,7 +30,10 @@ def register(
         full_name=payload.full_name,
         password=payload.password,
         # Both roles sign up themselves; each role is a separate account (team decision, 2026-09-24).
+        # A specialist who signs up here is pending: no review cases until the Nabta team approves
+        # the account (FR03, FR12; `python -m app.cli approve-specialist`).
         role=Role(payload.role),
+        approved=False,
     )
     _sign_in(request, response, db, settings, user)
     return user
@@ -69,6 +72,7 @@ def request_password_reset(
     background_tasks: BackgroundTasks,
     db: DbSession,
     settings: AppSettings,
+    language: Language,
 ) -> dict[str, bool]:
     # The same answer whether or not the account exists, and the email goes out
     # after the response, so neither content nor timing reveals who has an account.
@@ -77,7 +81,7 @@ def request_password_reset(
         token = password_reset.issue_token(db, user, settings)
         db.commit()
         message = password_reset_email(
-            user.email, password_reset.reset_link(token, settings), settings.reset_token_minutes
+            user.email, password_reset.reset_link(token, settings), settings.reset_token_minutes, language
         )
         background_tasks.add_task(request.app.state.email_sender.send, message)
     return {"ok": True}

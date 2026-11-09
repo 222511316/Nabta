@@ -20,6 +20,8 @@ class Settings(BaseSettings):
     database_url: str = f"sqlite:///{(DEFAULT_STORAGE_DIR / 'nabta.db').as_posix()}"
     storage_dir: Path = DEFAULT_STORAGE_DIR
     frontend_url: str = "http://localhost:5173"
+    # The frontend's production build, served by this app when it exists (deployment).
+    frontend_dist: Path | None = BACKEND_DIR.parent / "frontend" / "dist"
     session_days: int = 7
     cookie_secure: bool = False
     reset_token_minutes: int = 60

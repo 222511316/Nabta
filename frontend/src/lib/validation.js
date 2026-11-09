@@ -13,6 +13,9 @@ export const limits = {
   caseMessage: 2000,
   otherPest: 80,
   pestQuestion: 300,
+  taskTitle: 120,
+  taskNotes: 1000,
+  plantNote: 2000,
 }
 
 // Deliberately loose: something@something.tld. The server does the strict check.

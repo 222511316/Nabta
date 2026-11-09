@@ -1,0 +1,19 @@
+# What `gcloud builds submit` uploads to Cloud Build (it replaces .gitignore for gcloud).
+# The pest model in backend/models/ IS uploaded (the image needs it); data, secrets and caches are not.
+.gcloudignore
+.git
+**/node_modules/
+**/__pycache__/
+**/.pytest_cache/
+**/.DS_Store
+backend/.venv/
+backend/.env
+backend/storage/
+backend/tests/
+frontend/dist/
+frontend/e2e/
+frontend/test-results/
+frontend/playwright-report/
+frontend/e2e-results/
+ml/
+docs/

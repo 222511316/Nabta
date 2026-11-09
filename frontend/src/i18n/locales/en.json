@@ -30,7 +30,9 @@
       "specialist": "Plant specialist"
     },
     "reviews": "Reviews",
-    "pestGuide": "Pest guide"
+    "pestGuide": "Pest guide",
+    "tasks": "Tasks",
+    "search": "Search"
   },
   "authLayout": {
     "backHome": "Nabta home",
@@ -76,7 +78,9 @@
     "submitting": "Creating account…",
     "haveAccount": "Already have an account?",
     "signIn": "Sign in",
-    "welcome": "Welcome to Nabta, {{name}}."
+    "welcome": "Welcome to Nabta, {{name}}.",
+    "specialistNote": "Specialist accounts are approved by the Nabta team. You'll see review cases once yours is approved.",
+    "specialistPending": "Your specialist account was created. The Nabta team must approve it before you can see review cases."
   },
   "forgotPassword": {
     "title": "Reset your password",
@@ -149,7 +153,8 @@
     "case_closed": "This review has been answered and is closed.",
     "already_assigned": "Another specialist has taken this case.",
     "ai_unavailable": "AI features aren't available right now.",
-    "ai_failed": "The AI couldn't write this right now. Try again."
+    "ai_failed": "The AI couldn't write this right now. Try again.",
+    "specialist_pending": "Your specialist account is waiting for approval by the Nabta team."
   },
   "dashboard": {
     "title": "Your plants",
@@ -218,7 +223,13 @@
     "deleted": "{{name}} was deleted.",
     "notFoundTitle": "Plant not found",
     "notFoundBody": "This plant doesn't exist or isn't in your account.",
-    "backToDashboard": "Back to dashboard"
+    "backToDashboard": "Back to dashboard",
+    "more": "More",
+    "tabs": {
+      "observations": "Observations",
+      "tasks": "Tasks",
+      "notes": "Notes"
+    }
   },
   "newObservation": {
     "title": "New observation",
@@ -262,7 +273,13 @@
     "openFull": "Open full-size photo",
     "notFoundTitle": "Observation not found",
     "notFoundBody": "This observation doesn't exist or isn't in your account.",
-    "details": "Details"
+    "details": "Details",
+    "delete": "Delete observation",
+    "deleteTitle": "Delete the observation from {{date}}?",
+    "deleteBody": "This permanently deletes the photo and Nabta's result. Tasks you made from it stay on the plant. This can't be undone.",
+    "deleteBodyReview": "This permanently deletes the photo, Nabta's result and the specialist review with its messages. Tasks you made from it stay on the plant. This can't be undone.",
+    "deleteConfirm": "Delete observation",
+    "deleted": "The observation was deleted."
   },
   "observationCard": {
     "thumbAlt": "Insect photo from {{date}}",
@@ -286,7 +303,34 @@
     "confirmPassword": "Confirm new password",
     "changePassword": "Change password",
     "changing": "Changing…",
-    "passwordChanged": "Your password was changed. Other devices have been signed out."
+    "passwordChanged": "Your password was changed. Other devices have been signed out.",
+    "subtitleGrower": "Manage your details, your password and your data.",
+    "consentTitle": "Research use of your photos",
+    "consentLabel": "Let the Nabta team use my photos to test the model",
+    "consentBody": "Your photos would only be used to check and improve how well Nabta identifies insects. The team gets each photo with its date and the insect it shows, never your name, email, plants or notes. It's off unless you switch it on, you can change it at any time, and nothing else in Nabta depends on it.",
+    "consentChanged": "Last changed {{date}}.",
+    "consentNever": "You haven't changed this setting.",
+    "consentOn": "The Nabta team may now use your photos to test the model.",
+    "consentOff": "Your photos won't be used to test the model.",
+    "deleteTitle": "Delete your account",
+    "deleteIntro": "This permanently deletes your account and everything in it:",
+    "deleteWhat": {
+      "plants": "Your plants and their details",
+      "photos": "Every photo, with Nabta's results",
+      "reviews": "Your specialist reviews and their messages",
+      "tasks": "Your tasks, reminders and notes"
+    },
+    "deleteButton": "Delete account",
+    "deleteConfirmTitle": "Delete your account?",
+    "deleteConfirmBody": "Everything listed will be deleted and can't be recovered. Enter your password to confirm.",
+    "deletePassword": "Password",
+    "deleteConfirm": "Delete everything",
+    "deleting": "Deleting…",
+    "deleted": "Your account and all its data were deleted.",
+    "deleteWrongPassword": "That password is incorrect.",
+    "approval": "Review access",
+    "approvalPending": "Awaiting approval by the Nabta team",
+    "approvalApproved": "Approved by the Nabta team"
   },
   "specialist": {
     "title": "Review queue",
@@ -301,7 +345,11 @@
     "suggestion": "Nabta: {{name}}, {{percent}}",
     "suggestionUnclear": "Nabta: unclear",
     "noSuggestion": "No suggestion from Nabta",
-    "updated": "Updated {{time}}"
+    "updated": "Updated {{time}}",
+    "pendingTitle": "Awaiting approval",
+    "pendingBody": "Your specialist account was created. The Nabta team must approve it before you can see review cases.",
+    "pendingNext": "Once it's approved, the review queue appears here. Meanwhile, you can update your account details.",
+    "pendingAccount": "Go to your account"
   },
   "forbidden": {
     "title": "You don't have access to this page",
@@ -416,7 +464,8 @@
     "labelNoMatch": "No confident match",
     "labelUnfamiliar": "Unlike the insects Nabta knows",
     "reasonUnfamiliar": "The photo is unlike the ones Nabta was trained on.",
-    "reasonUncertain": "No category was likely enough to suggest."
+    "reasonUncertain": "No category was likely enough to suggest.",
+    "guidance": "What you can do about {{name}}"
   },
   "caseStatus": {
     "grower": {
@@ -524,13 +573,14 @@
     "buttonUnread_one": "Notifications, {{count}} unread",
     "buttonUnread_other": "Notifications, {{count}} unread",
     "markAllRead": "Mark all as read",
-    "empty": "No notifications yet. You'll be told here when a review changes.",
+    "empty": "No notifications yet. You'll be told here when a review changes or a task is due.",
     "loadError": "Notifications couldn't be loaded.",
     "unread": "Unread",
     "kinds": {
       "question_asked": "{{actor}} asked you a question about {{plant}}",
       "grower_replied": "{{actor}} replied about {{plant}}",
-      "feedback_sent": "{{actor}} sent an assessment for {{plant}}"
+      "feedback_sent": "{{actor}} sent an assessment for {{plant}}",
+      "task_due": "Due: {{task}}, on {{plant}}"
     }
   },
   "pests": {
@@ -560,7 +610,8 @@
     "notAMatch": "Not a match? Compare with",
     "backToObservation": "Back to your observation",
     "backToCase": "Back to the case",
-    "guideAwaiting": "These descriptions are awaiting review by a plant specialist on the Nabta team."
+    "guideAwaiting": "These descriptions are awaiting review by a plant specialist on the Nabta team.",
+    "translationAwaiting": "Translated by AI; awaiting review by a native Arabic speaker on the team."
   },
   "ai": {
     "note": "Written by AI ({{model}}). It can be wrong: check with a specialist.",
@@ -608,5 +659,164 @@
     "askSpecialist": "A plant specialist can help with this.",
     "you": "You asked",
     "failedTitle": "No answer this time"
+  },
+  "language": {
+    "switchTo": "Change language to {{language}}"
+  },
+  "pestNames": {
+    "aphids": "Aphids",
+    "whiteflies": "Whiteflies",
+    "mealybugs": "Mealybugs",
+    "scale_insects": "Scale insects",
+    "fruit_flies": "Fruit flies",
+    "armyworms_cutworms": "Armyworms and cutworms",
+    "thrips": "Thrips",
+    "locusts": "Locusts and grasshoppers"
+  },
+  "guidance": {
+    "title": "What you can do",
+    "intro": "Practical steps from the same sources as this page. None of them use chemicals.",
+    "kinds": {
+      "check": "Check",
+      "prevent": "Prevent",
+      "remove": "Remove",
+      "natural_enemies": "Protect natural enemies"
+    },
+    "addTask": "Add as a task",
+    "pesticidesTitle": "Thinking of using a pesticide?",
+    "pesticidesBody": "Ask a plant specialist first. Nabta doesn't recommend chemical treatments or doses."
+  },
+  "tasks": {
+    "pageTitle": "Tasks",
+    "pageSubtitle": "Things to do for your plants. A task with a date reminds you in the notification bell when it's due.",
+    "addTitle": "Add a task",
+    "addIntro": "A task with a date reminds you in the notification bell on that day.",
+    "editTitle": "Edit task",
+    "plant": "Plant",
+    "plantRequired": "Choose the plant this task is for.",
+    "title": "Task",
+    "dueOn": "Due date",
+    "dueOnHint": "You'll get a reminder on this day.",
+    "notes": "Notes",
+    "add": "Add task",
+    "save": "Save task",
+    "saving": "Saving…",
+    "added": "Task added to {{plant}}.",
+    "saved": "Task saved.",
+    "deleted": "Task deleted.",
+    "noPlants": "Tasks belong to a plant, so add a plant first.",
+    "edit": "Edit task: {{title}}",
+    "delete": "Delete task: {{title}}",
+    "deleteTitle": "Delete this task?",
+    "deleteBody": "“{{title}}” and its reminder will be deleted. This can't be undone.",
+    "deleteConfirm": "Delete task",
+    "fromGuide": "From the {{name}} guide",
+    "doneOn": "Done {{date}}",
+    "due": {
+      "overdue": "Was due {{date}}",
+      "today": "Due today",
+      "upcoming": "Due {{date}}"
+    },
+    "groups": {
+      "overdue": "Overdue",
+      "today": "Today",
+      "upcoming": "Coming up",
+      "undated": "No date",
+      "done": "Done"
+    },
+    "emptyTitle": "No tasks yet",
+    "emptyBody": "Add your own, or add a step from “What you can do” on a pest's page.",
+    "allDone": "Nothing left to do here.",
+    "plantEmpty": "No tasks for this plant yet.",
+    "newTask": "New task",
+    "newTaskPlaceholder": "For example, check under the new leaves"
+  },
+  "notes": {
+    "empty": "No notes yet. Use them for anything you do or notice, like watering, pruning or a hot week.",
+    "listLabel": "Notes on {{plant}}",
+    "date": "Date",
+    "note": "Note",
+    "newNote": "New note",
+    "hint": "Something you did or noticed on this plant.",
+    "add": "Add note",
+    "save": "Save note",
+    "added": "Note added.",
+    "saved": "Note saved.",
+    "deleted": "Note deleted.",
+    "edit": "Edit the note from {{date}}",
+    "delete": "Delete the note from {{date}}",
+    "deleteTitle": "Delete the note from {{date}}?",
+    "deleteBody": "This permanently deletes the note. This can't be undone.",
+    "deleteConfirm": "Delete note"
+  },
+  "compare": {
+    "open": "Compare photos",
+    "documentTitle": "Compare photos of {{plant}}",
+    "crumb": "Compare photos",
+    "title": "Compare photos",
+    "subtitle": "Pick two dates on the ribbon to see how things have changed.",
+    "notEnoughTitle": "Two photos are needed",
+    "notEnoughBody": "Add another photo of this plant to compare them side by side.",
+    "ribbonTitle_one": "{{count}} photo over time",
+    "ribbonTitle_other": "{{count}} photos over time",
+    "choosingLabel": "Photo to change",
+    "choosing": "Change",
+    "photoSlot": "Photo {{slot}}",
+    "slots": {
+      "a": "A",
+      "b": "B"
+    },
+    "chooseFor": "Change photo {{slot}}",
+    "ribbonLabel": "Photos by date",
+    "inSlot": "photo {{slot}}",
+    "sameDay": "Same day",
+    "apart_one": "{{count}} day apart",
+    "apart_other": "{{count}} days apart"
+  },
+  "search": {
+    "title": "Search",
+    "subtitle": "Find your plants, photos, tasks and notes.",
+    "label": "Search your records",
+    "placeholder": "Plant, pest, task or note",
+    "typeLabel": "Show",
+    "types": {
+      "all": "Everything",
+      "plants": "Plants",
+      "observations": "Photos",
+      "tasks": "Tasks",
+      "notes": "Notes"
+    },
+    "resultLabel": "Nabta's result",
+    "results": {
+      "identified": "Identified",
+      "unclear": "Unclear",
+      "review": "Sent for review"
+    },
+    "taskLabel": "Task status",
+    "taskStates": {
+      "open": "Open",
+      "done": "Done"
+    },
+    "any": "Any",
+    "prompt": "Type to search, or choose what to show.",
+    "none": "Nothing found",
+    "noneFor": "Nothing found for “{{query}}”",
+    "noneBody": "Try a different word, or show everything.",
+    "found_one": "{{count}} result",
+    "found_other": "{{count}} results"
+  },
+  "attention": {
+    "title": "Needs attention",
+    "overdue_one": "{{count}} task overdue",
+    "overdue_other": "{{count}} tasks overdue",
+    "dueToday_one": "{{count}} task due today",
+    "dueToday_other": "{{count}} tasks due today",
+    "reviews_one": "{{count}} review waiting for your reply",
+    "reviews_other": "{{count}} reviews waiting for your reply",
+    "unclear_one": "{{count}} unclear result to check",
+    "unclear_other": "{{count}} unclear results to check",
+    "allClear": "Nothing needs your attention today.",
+    "openTasks_one": "{{count}} open task",
+    "openTasks_other": "{{count}} open tasks"
   }
 }

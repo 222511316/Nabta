@@ -1,24 +1,31 @@
+import { Menu, MenuButton, MenuItem, MenuItems, Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Camera, ImagePlus, Pencil, Sparkles, Trash2 } from 'lucide-react'
+import { Camera, Columns2, Ellipsis, ImagePlus, Pencil, Sparkles, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate, useParams } from 'react-router'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { toast } from 'sonner'
 import { listObservations } from '../../api/observations'
 import { deletePlant, getPlant } from '../../api/plants'
 import { queryKeys } from '../../api/queryKeys'
 import { Alert } from '../../components/ui/Alert'
-import { Button, ButtonLink } from '../../components/ui/Button'
+import { ButtonLink } from '../../components/ui/Button'
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog'
-import { LoadError, PageSpinner } from '../../components/ui/feedback'
+import { LoadError, PageSpinner, SectionSpinner } from '../../components/ui/feedback'
 import { Breadcrumb, Card, EmptyState, PageHeader } from '../../components/ui/layout'
 import { errorMessage } from '../../lib/apiErrors'
+import { cx } from '../../lib/cx'
 import { formatDay } from '../../lib/dates'
 import { useDocumentTitle } from '../../lib/useDocumentTitle'
 import { useAiStatus } from '../ai/useAiStatus'
-import { plantMeta } from './plantMeta'
+import { PlantNotes } from '../notes/PlantNotes'
 import { ObservationCard } from '../observations/ObservationCard'
+import { PlantTasks } from '../tasks/PlantTasks'
+import { plantMeta } from './plantMeta'
 import { PlantNotFound } from './PlantNotFound'
+
+// The tab is kept in the URL (?tab=tasks), so it survives a refresh, a language switch and a link from a reminder.
+const TABS = ['observations', 'tasks', 'notes']
 
 export function PlantPage() {
   const { t } = useTranslation()
@@ -41,8 +48,10 @@ function PlantProfile({ plant }) {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [confirmingDelete, setConfirmingDelete] = useState(false)
   const ai = useAiStatus()
+  const tabIndex = Math.max(TABS.indexOf(searchParams.get('tab')), 0)
 
   const remove = useMutation({
     mutationFn: () => deletePlant(plant.id),
@@ -51,6 +60,8 @@ function PlantProfile({ plant }) {
       // still mounted would make the page fetch it again before navigating away.
       queryClient.invalidateQueries({ queryKey: queryKeys.plant(plant.id), refetchType: 'none' })
       queryClient.invalidateQueries({ queryKey: queryKeys.plants, exact: true })
+      queryClient.invalidateQueries({ queryKey: queryKeys.tasks })
+      queryClient.invalidateQueries({ queryKey: queryKeys.summary })
       toast.success(t('plant.deleted', { name: plant.name }))
       navigate('/dashboard', { replace: true })
     },
@@ -67,6 +78,24 @@ function PlantProfile({ plant }) {
     { label: t('plant.added'), value: formatDay(plant.created_at, i18n.language) },
   ]
 
+  const selectTab = (index) => {
+    const next = new URLSearchParams(searchParams)
+    if (index === 0) next.delete('tab')
+    else next.set('tab', TABS[index])
+    setSearchParams(next, { replace: true })
+  }
+
+  // Headless UI moves to the next tab on ArrowRight whatever the direction. In Arabic the tabs run right
+  // to left, so the arrow keys are swapped to follow what the user sees (WAI-ARIA tabs pattern; DEF-03).
+  const onTabListKeyDown = (event) => {
+    if (i18n.dir() !== 'rtl' || (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')) return
+    event.preventDefault()
+    event.stopPropagation()
+    const index = (tabIndex + (event.key === 'ArrowLeft' ? 1 : -1) + TABS.length) % TABS.length
+    selectTab(index)
+    event.currentTarget.querySelectorAll('[role="tab"]')[index]?.focus()
+  }
+
   return (
     <>
       <PageHeader
@@ -77,18 +106,15 @@ function PlantProfile({ plant }) {
         description={plantMeta(plant) || null}
         actions={
           <>
-            <Button variant="dangerGhost" onClick={() => setConfirmingDelete(true)}>
-              <Trash2 />
-              {t('plant.delete')}
-            </Button>
-            <ButtonLink to={`/plants/${plant.id}/edit`} variant="secondary">
-              <Pencil />
-              {t('plant.edit')}
-            </ButtonLink>
-            {ai.enabled && (
-              <ButtonLink to={`/plants/${plant.id}/report`} variant="secondary">
-                <Sparkles />
-                {t('report.open')}
+            <MoreMenu
+              plant={plant}
+              aiEnabled={ai.enabled}
+              onDelete={() => setConfirmingDelete(true)}
+            />
+            {plant.observation_count >= 2 && (
+              <ButtonLink to={`/plants/${plant.id}/compare`} variant="secondary">
+                <Columns2 />
+                {t('compare.open')}
               </ButtonLink>
             )}
             <ButtonLink to={`/observations/new?plantId=${plant.id}`}>
@@ -122,7 +148,41 @@ function PlantProfile({ plant }) {
           </dl>
         </Card>
 
-        <ObservationHistory plant={plant} />
+        <TabGroup selectedIndex={tabIndex} onChange={selectTab} className="min-w-0">
+          <TabList onKeyDownCapture={onTabListKeyDown} className="mb-6 flex gap-1 border-b border-line">
+            {TABS.map((tab) => (
+              <Tab
+                key={tab}
+                className={cx(
+                  // No outline-none here: keyboard focus shows the app-wide ring (:focus-visible in
+                  // styles/index.css, forest-500), which outline-none used to switch off (DEF-03).
+                  '-mb-px flex shrink-0 items-center gap-2 rounded-t-md border-b-2 border-transparent px-3 py-2.5 font-medium text-muted',
+                  'hover:text-forest-800',
+                  'data-selected:border-forest-700 data-selected:text-forest-800',
+                )}
+              >
+                {t(`plant.tabs.${tab}`)}
+                {tab === 'observations' && plant.observation_count > 0 && (
+                  <span className="rounded-full bg-sage-100 px-2 text-xs leading-5 text-sage-800 tabular-nums">
+                    {plant.observation_count}
+                  </span>
+                )}
+              </Tab>
+            ))}
+          </TabList>
+          {/* The selected panel is in the tab order; it shows the same focus ring when reached. */}
+          <TabPanels>
+            <TabPanel className="rounded-lg">
+              <ObservationHistory plant={plant} />
+            </TabPanel>
+            <TabPanel className="rounded-lg">
+              <PlantTasks plant={plant} />
+            </TabPanel>
+            <TabPanel className="rounded-lg">
+              <PlantNotes plant={plant} />
+            </TabPanel>
+          </TabPanels>
+        </TabGroup>
       </div>
 
       <ConfirmDialog
@@ -144,6 +204,47 @@ function PlantProfile({ plant }) {
   )
 }
 
+/** Edit, the AI report and Delete: used less often, so kept one tap away. */
+function MoreMenu({ plant, aiEnabled, onDelete }) {
+  const { t } = useTranslation()
+  const item =
+    'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-start text-sm text-ink data-focus:bg-forest-50 data-focus:text-forest-800'
+  return (
+    <Menu>
+      <MenuButton className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-line-strong bg-white px-4 text-[0.95rem] font-medium text-forest-800 shadow-xs hover:border-forest-400 hover:bg-forest-50 data-open:bg-forest-50">
+        <Ellipsis className="size-[1.1em]" />
+        {t('plant.more')}
+      </MenuButton>
+      <MenuItems
+        anchor="bottom end"
+        className="z-40 w-56 rounded-xl border border-line bg-white p-1.5 shadow-raised [--anchor-gap:0.5rem] focus:outline-none"
+      >
+        <MenuItem>
+          <Link to={`/plants/${plant.id}/edit`} className={item}>
+            <Pencil className="size-4.5 text-muted" />
+            {t('plant.edit')}
+          </Link>
+        </MenuItem>
+        {aiEnabled && (
+          <MenuItem>
+            <Link to={`/plants/${plant.id}/report`} className={item}>
+              <Sparkles className="size-4.5 text-muted" />
+              {t('report.open')}
+            </Link>
+          </MenuItem>
+        )}
+        <div className="my-1 h-px bg-line" />
+        <MenuItem>
+          <button type="button" onClick={onDelete} className={cx(item, 'text-danger-600 data-focus:bg-danger-50 data-focus:text-danger-700')}>
+            <Trash2 className="size-4.5" />
+            {t('plant.delete')}
+          </button>
+        </MenuItem>
+      </MenuItems>
+    </Menu>
+  )
+}
+
 function ObservationHistory({ plant }) {
   const { t } = useTranslation()
   const observations = useQuery({
@@ -151,44 +252,34 @@ function ObservationHistory({ plant }) {
     queryFn: () => listObservations(plant.id),
   })
 
+  if (observations.isPending) return <SectionSpinner />
+  if (observations.isError) {
+    return <LoadError message={errorMessage(t, observations.error)} onRetry={() => observations.refetch()} />
+  }
+  if (observations.data.length === 0) {
+    return (
+      <EmptyState
+        icon={ImagePlus}
+        headingLevel="h3"
+        title={t('plant.observationsEmptyTitle')}
+        action={
+          <ButtonLink to={`/observations/new?plantId=${plant.id}`} variant="secondary">
+            <Camera />
+            {t('plant.addObservation')}
+          </ButtonLink>
+        }
+      >
+        {t('plant.observationsEmptyBody')}
+      </EmptyState>
+    )
+  }
   return (
-    <section aria-labelledby="observations-heading">
-      <div className="mb-4 flex items-baseline justify-between gap-4">
-        <h2 id="observations-heading" className="text-lg font-semibold text-forest-800">
-          {t('plant.observationsTitle')}
-          {observations.data?.length > 0 && (
-            <span className="ms-2 text-base font-normal text-muted">({observations.data.length})</span>
-          )}
-        </h2>
-      </div>
-
-      {observations.isPending ? (
-        <PageSpinner />
-      ) : observations.isError ? (
-        <LoadError message={errorMessage(t, observations.error)} onRetry={() => observations.refetch()} />
-      ) : observations.data.length === 0 ? (
-        <EmptyState
-          icon={ImagePlus}
-          headingLevel="h3"
-          title={t('plant.observationsEmptyTitle')}
-          action={
-            <ButtonLink to={`/observations/new?plantId=${plant.id}`} variant="secondary">
-              <Camera />
-              {t('plant.addObservation')}
-            </ButtonLink>
-          }
-        >
-          {t('plant.observationsEmptyBody')}
-        </EmptyState>
-      ) : (
-        <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {observations.data.map((observation, index) => (
-            <li key={observation.id} className="animate-rise stagger" style={{ '--i': index }}>
-              <ObservationCard observation={observation} />
-            </li>
-          ))}
-        </ul>
-      )}
-    </section>
+    <ul aria-label={t('plant.observationsTitle')} className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      {observations.data.map((observation, index) => (
+        <li key={observation.id} className="animate-rise stagger" style={{ '--i': index }}>
+          <ObservationCard observation={observation} />
+        </li>
+      ))}
+    </ul>
   )
 }

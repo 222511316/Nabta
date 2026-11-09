@@ -1,4 +1,5 @@
-"""In-app notifications about review cases (US13, FR15). No email: the charter asks for in-app."""
+"""In-app notifications about review cases (US13, FR15) and tasks that have come due (US18).
+No email: the charter asks for in-app."""
 
 from sqlalchemy import func, select, update
 from sqlalchemy.orm import Session
@@ -16,6 +17,20 @@ def notify(db: Session, user_id: int, kind: str, case: ReviewCase) -> None:
 
 
 def _out(notification: Notification) -> NotificationOut:
+    if notification.kind == "task_due":
+        task = notification.task
+        return NotificationOut(
+            id=notification.id,
+            kind=notification.kind,
+            case_id=None,
+            task_id=task.id,
+            task_title=task.title,
+            plant_name=task.plant.name,
+            actor_name="",
+            link=f"/plants/{task.plant_id}?tab=tasks",
+            read=notification.read_at is not None,
+            created_at=notification.created_at,
+        )
     case = notification.case
     grower = case.observation.plant.owner
     if notification.kind == "grower_replied":

@@ -61,6 +61,21 @@
   --animate-fade-in: fade-in 400ms ease-out both;
   /* A specimen label being pinned on: the result of an analysis arriving. */
   --animate-pin: pin 560ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  /* The date ribbon drawing itself from the first photo to the last. */
+  --animate-draw: draw 900ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  --animate-pop: pop 320ms cubic-bezier(0.2, 0.8, 0.2, 1.4) both;
+
+  @keyframes draw {
+    from {
+      transform: scaleX(0);
+    }
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+  }
 
   @keyframes page-in {
     from {

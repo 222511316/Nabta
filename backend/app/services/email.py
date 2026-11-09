@@ -57,7 +57,20 @@ def email_sender_for(settings: Settings):
     return SmtpEmailSender(settings) if settings.smtp_host else ConsoleEmailSender()
 
 
-def password_reset_email(to: str, link: str, minutes: int) -> EmailMessage:
+def password_reset_email(to: str, link: str, minutes: int, language: str = "en") -> EmailMessage:
+    """In the language of the screen the reset was asked from (US23: essential messages in both)."""
+    if language == "ar":
+        # Arabic counts 3–10 with the plural, other numbers (11–99, 60) with the singular.
+        unit = "دقائق" if 3 <= minutes <= 10 else "دقيقة"
+        body = (
+            "مرحبًا،\n\n"
+            "وصلنا طلب لإعادة تعيين كلمة المرور لحسابك في نبتة.\n"
+            f"اختر كلمة مرور جديدة من هنا (يعمل الرابط مرة واحدة، خلال {minutes} {unit}):\n\n"
+            f"{link}\n\n"
+            "إذا لم تطلب ذلك، فتجاهل هذه الرسالة؛ لن تتغير كلمة المرور.\n\n"
+            "فريق نبتة\n"
+        )
+        return EmailMessage(to=to, subject="إعادة تعيين كلمة المرور في نبتة", body=body)
     body = (
         "Hello,\n\n"
         "We received a request to reset the password for your Nabta account.\n"

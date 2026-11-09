@@ -32,6 +32,17 @@ class ReferenceImageOut(BaseModel):
     credit: str
 
 
+class GuidanceStepOut(BaseModel):
+    kind: Literal["check", "prevent", "remove", "natural_enemies"]
+    task: str  # short: becomes the task title when the grower adds it
+    text: str
+
+
+class TranslationOut(BaseModel):
+    language: str
+    status: ReviewStatus  # a native speaker on the team checks each translation
+
+
 class PestOut(BaseModel):
     key: str
     name: str
@@ -44,3 +55,5 @@ class PestOut(BaseModel):
     sources: list[SourceOut]
     review: ContentReviewOut
     images: list[ReferenceImageOut]
+    guidance: list[GuidanceStepOut]  # US17: what the grower can do, from the same sources
+    translation: TranslationOut | None  # set when this is a translated version

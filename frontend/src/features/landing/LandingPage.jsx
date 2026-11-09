@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { LeafScene } from '../../components/brand/LeafScene'
 import { ButtonLink } from '../../components/ui/Button'
+import { LanguageSwitch } from '../../components/ui/LanguageSwitch'
 import { LogoLink } from '../../components/ui/Logo'
 import { useDocumentTitle } from '../../lib/useDocumentTitle'
 
@@ -19,6 +20,7 @@ export function LandingPage() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
           <LogoLink to="/" />
           <nav className="flex items-center gap-1 sm:gap-2">
+            <LanguageSwitch compact />
             <ButtonLink to="/sign-in" variant="ghost" size="sm">
               {t('landing.signIn')}
             </ButtonLink>

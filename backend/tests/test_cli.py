@@ -1,12 +1,15 @@
-"""The team's command line: creating specialist accounts (US08) and demo data."""
+"""The team's command line: creating specialist accounts (US08), demo data and content review."""
 
 import json
+import shutil
+from datetime import date
 
 import pytest
 from sqlalchemy import select
 
 from app import cli
 from app.models import Analysis, Notification, Observation, Plant, ReviewCase, User
+from app.pests import CONTENT_DIR, Review, load_catalog
 from tests.fakes import FakeClassifier
 from tests.helpers import add_plant, assert_error, login
 
@@ -138,12 +141,31 @@ def test_seed_demo_opens_a_review_in_each_state(app, settings, db, make_client):
     grower_inbox = make_client()
     login(grower_inbox, email="grower@example.com", password=cli.DEMO_PASSWORD)
     inbox = grower_inbox.get("/api/notifications").json()
-    assert inbox["unread"] == 2
-    assert {item["kind"] for item in inbox["items"]} == {"question_asked", "feedback_sent"}
+    # The two review notices, and reminders for the overdue task and the one due today.
+    assert inbox["unread"] == 4
+    assert {item["kind"] for item in inbox["items"]} == {"question_asked", "feedback_sent", "task_due"}
 
     queue = make_client()
     login(queue, email="specialist@example.com", password=cli.DEMO_PASSWORD)
     assert len(queue.get("/api/specialist/cases").json()) == 3
+
+
+def test_seed_demo_adds_tasks_in_each_state_and_notes(app, settings, make_client):
+    assert run(settings, "seed-demo") == 0
+    client = make_client()
+    login(client, email="grower@example.com", password=cli.DEMO_PASSWORD)
+
+    tasks = client.get("/api/tasks").json()
+    assert len(tasks) == len(cli.DEMO_TASKS)
+    assert sum(task["done"] for task in tasks) == 1
+    from_guide = [task for task in tasks if task["pest"]]
+    assert {task["pest"]["key"] for task in from_guide} == {"aphids", "whiteflies"}
+    assert all(task["observation_id"] for task in from_guide)
+    summary = client.get("/api/summary").json()
+    assert summary["tasks_overdue"] == 1 and summary["tasks_due_today"] == 1
+
+    lemon = next(plant for plant in client.get("/api/plants").json() if plant["name"] == "Lemon tree")
+    assert len(client.get(f"/api/plants/{lemon['id']}/notes").json()) == 2
 
 
 def test_seed_demo_runs_the_model_when_it_is_installed(app, settings, db, monkeypatch):
@@ -184,3 +206,45 @@ def test_reset_replaces_only_the_demo_grower_s_data(app, settings, db, grower, c
     assert len(photos_now) == 16  # the new demo photos only
     assert not old_photos & photos_now  # the replaced ones were deleted
     assert "Removed the demo grower's" in capsys.readouterr().out
+
+
+# Content review (NFR14) ------------------------------------------------------------------------
+
+
+@pytest.fixture
+def content(tmp_path, monkeypatch):
+    """A copy of the pest content, so the real catalog is never changed by a test."""
+    copy = tmp_path / "pests"
+    shutil.copytree(CONTENT_DIR, copy)
+    monkeypatch.setattr(cli, "CONTENT_DIR", copy)
+    return copy
+
+
+def test_review_content_records_the_reviewer_and_date(app, settings, content, capsys):
+    assert run(settings, "review-content", "--by", "Dr Noura Saad", "--pest", "aphids", "--pest", "thrips") == 0
+
+    catalog = load_catalog(content)
+    assert catalog.get("aphids").review == Review("reviewed", "Dr Noura Saad", date.today())
+    assert catalog.get("thrips").review.status == "reviewed"
+    assert catalog.get("whiteflies").review.status == "awaiting_review"
+    assert "Marked aphids, thrips as reviewed by Dr Noura Saad" in capsys.readouterr().out
+
+
+def test_review_content_can_sign_off_every_page_or_the_arabic_translation(app, settings, content):
+    assert run(settings, "review-content", "--by", "Dr Noura Saad", "--all") == 0
+    assert run(settings, "review-content", "--by", "Rema Altamimi", "--translation", "ar") == 0
+
+    catalog = load_catalog(content)
+    assert all(pest.review.status == "reviewed" for pest in catalog.pests)
+    assert catalog.get("aphids", "ar").translation.status == "reviewed"
+    raw = json.loads((content / "catalog.json").read_text(encoding="utf-8"))
+    assert raw["translations"]["ar"]["reviewed_by"] == "Rema Altamimi"
+
+
+def test_review_content_refuses_unknown_pests_and_blank_names(app, settings, content, capsys):
+    before = (content / "catalog.json").read_text(encoding="utf-8")
+
+    assert run(settings, "review-content", "--by", "Dr Noura", "--pest", "ladybirds") == 1
+    assert "Known: aphids" in capsys.readouterr().err
+    assert run(settings, "review-content", "--by", "  ", "--all") == 1
+    assert (content / "catalog.json").read_text(encoding="utf-8") == before

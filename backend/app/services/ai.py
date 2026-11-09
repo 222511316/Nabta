@@ -25,9 +25,11 @@ logger = logging.getLogger(__name__)
 MAX_STEPS = 3
 
 
-def _write(writer, task: str, instructions: str, facts: dict, output_type):
+def _write(writer, task: str, instructions: str, facts: dict, output_type, language: str = "en"):
     if writer is None:
         raise ApiError(503, "ai_unavailable", "AI features aren't set up.")
+    if language == "ar":
+        instructions = f"{instructions}\n\n{prompts.IN_ARABIC}"
     try:
         return writer.write(task, instructions, facts, output_type)
     except Exception:
@@ -49,14 +51,15 @@ def _guide(pest: Pest) -> dict:
         "where": pest.where,
         "damage": pest.damage,
         "look_alikes": pest.look_alikes,
+        "what_you_can_do": [step.text for step in pest.guidance],
         "source": "; ".join(f"{source.publisher}: {source.title}" for source in pest.sources),
         "reviewed_by_specialist": pest.review.status == "reviewed",
     }
 
 
-def _guides(keys: list[str], catalog: Catalog) -> list[dict]:
+def _guides(keys: list[str], catalog: Catalog, language: str = "en") -> list[dict]:
     unique = dict.fromkeys(key for key in keys if key and key in catalog)
-    return [_guide(catalog.get(key)) for key in unique]
+    return [_guide(catalog.get(key, language)) for key in unique]
 
 
 def _nabta(analysis: Analysis | None) -> dict | None:
@@ -104,7 +107,7 @@ def _review(case: ReviewCase | None, catalog: Catalog) -> dict | None:
 # Plant reports (growers) -----------------------------------------------------------------------
 
 
-def report_facts(plant: Plant, catalog: Catalog) -> dict:
+def report_facts(plant: Plant, catalog: Catalog, language: str = "en") -> dict:
     observations = sorted(plant.observations, key=lambda o: (o.observed_on, o.id))
     pests = []
     for observation in observations:
@@ -124,13 +127,13 @@ def report_facts(plant: Plant, catalog: Catalog) -> dict:
             }
             for observation in observations
         ],
-        "pest_guides": _guides(pests, catalog),
+        "pest_guides": _guides(pests, catalog, language),
     }
 
 
-def write_report(db: Session, plant: Plant, writer, catalog: Catalog) -> PlantReport:
-    facts = report_facts(plant, catalog)
-    draft = _write(writer, "plant_report", prompts.PLANT_REPORT, facts, prompts.PlantReportDraft)
+def write_report(db: Session, plant: Plant, writer, catalog: Catalog, language: str = "en") -> PlantReport:
+    facts = report_facts(plant, catalog, language)
+    draft = _write(writer, "plant_report", prompts.PLANT_REPORT, facts, prompts.PlantReportDraft, language)
     given = {guide["key"] for guide in facts["pest_guides"]}
     content = {
         "summary": draft.summary.strip(),
@@ -158,11 +161,11 @@ def latest_report(db: Session, plant: Plant) -> PlantReport | None:
     )
 
 
-def report_out(report: PlantReport, catalog: Catalog) -> PlantReportOut:
+def report_out(report: PlantReport, catalog: Catalog, language: str = "en") -> PlantReportOut:
     content = report.content
 
     def pest_ref(key: str | None) -> PestRef | None:
-        pest = catalog.get(key) if key else None
+        pest = catalog.get(key, language) if key else None
         return PestRef(key=pest.key, name=pest.name) if pest else None
 
     return PlantReportOut(
@@ -178,14 +181,14 @@ def report_out(report: PlantReport, catalog: Catalog) -> PlantReportOut:
 # Draft assessments (specialists) -----------------------------------------------------------------
 
 
-def draft_assessment(case: ReviewCase, decision_in: DraftIn, writer, catalog: Catalog) -> str:
+def draft_assessment(case: ReviewCase, decision_in: DraftIn, writer, catalog: Catalog, language: str = "en") -> str:
     if case.status == CaseStatus.ANSWERED:
         raise ApiError(409, "case_closed", "This review has been answered and is closed.")
     decision = None
     if decision_in.outcome == "inconclusive":
         decision = {"outcome": "inconclusive", "pest": None}
     elif decision_in.outcome == "identified":
-        pest = catalog.get(decision_in.category_key) if decision_in.category_key else None
+        pest = catalog.get(decision_in.category_key, language) if decision_in.category_key else None
         decision = {"outcome": "identified", "pest": pest.name if pest else decision_in.other_pest}
 
     observation, plant = case.observation, case.observation.plant
@@ -198,16 +201,18 @@ def draft_assessment(case: ReviewCase, decision_in: DraftIn, writer, catalog: Ca
         "nabta": _nabta(analysis),
         "conversation": _messages(case),
         "decision": decision,
-        "pest_guides": _guides([decision_in.category_key, *suggested], catalog),
+        "pest_guides": _guides([decision_in.category_key, *suggested], catalog, language),
     }
-    draft = _write(writer, "assessment_draft", prompts.ASSESSMENT_DRAFT, facts, prompts.AssessmentDraft)
+    draft = _write(writer, "assessment_draft", prompts.ASSESSMENT_DRAFT, facts, prompts.AssessmentDraft, language)
     return draft.message.strip()
 
 
 # Questions about a pest (anyone signed in) -------------------------------------------------------
 
 
-def answer_question(db: Session, user: User, pest: Pest, question: QuestionIn, writer) -> prompts.PestAnswer:
+def answer_question(
+    db: Session, user: User, pest: Pest, question: QuestionIn, writer, language: str = "en"
+) -> prompts.PestAnswer:
     plant = None
     if question.observation_id is not None:
         # Context from the grower's own observation; nobody else's.
@@ -216,4 +221,4 @@ def answer_question(db: Session, user: User, pest: Pest, question: QuestionIn, w
         observed = get_owned_observation(db, user, question.observation_id).plant
         plant = {"type": observed.plant_type, "location": observed.location}
     facts = {"pest_guide": _guide(pest), "plant": plant, "question": question.question}
-    return _write(writer, "pest_answer", prompts.PEST_ANSWER, facts, prompts.PestAnswer)
+    return _write(writer, "pest_answer", prompts.PEST_ANSWER, facts, prompts.PestAnswer, language)

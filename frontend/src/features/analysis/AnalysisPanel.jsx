@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Camera, Images, MessageCircleQuestion, RefreshCw, Search } from 'lucide-react'
+import { Camera, Images, ListChecks, MessageCircleQuestion, RefreshCw, Search } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 import { getPest } from '../../api/pests'
@@ -9,6 +9,7 @@ import { Button, ButtonLink } from '../../components/ui/Button'
 import { Card } from '../../components/ui/layout'
 import { errorMessage } from '../../lib/apiErrors'
 import { confidenceLevel, formatList, formatPercent } from '../../lib/format'
+import { pestName } from '../../lib/pestName'
 
 /**
  * "Nabta's suggestion" on an observation (US09, US10): analysing, identified with its
@@ -51,12 +52,15 @@ function Identified({ observation, result, onAsk, reveal }) {
     .slice(1)
     .filter((prediction) => prediction.probability >= 0.01)
     .map((prediction) =>
-      t('analysis.withPercent', { name: prediction.name, percent: formatPercent(prediction.probability, i18n.language) }),
+      t('analysis.withPercent', {
+        name: pestName(t, prediction),
+        percent: formatPercent(prediction.probability, i18n.language),
+      }),
     )
 
   return (
     <div className={reveal ? 'animate-rise' : undefined}>
-      <p className="mt-2 text-2xl font-semibold tracking-tight text-forest-800">{result.category.name}</p>
+      <p className="mt-2 text-2xl font-semibold tracking-tight text-forest-800">{pestName(t, result.category)}</p>
       <div className="mt-3">
         <div aria-hidden="true" className="h-1.5 overflow-hidden rounded-full bg-sage-100">
           <div className="h-full rounded-full bg-forest-600" style={{ width: `${Math.round(result.confidence * 100)}%` }} />
@@ -66,6 +70,13 @@ function Identified({ observation, result, onAsk, reveal }) {
         </p>
       </div>
       {pest.data && <p className="mt-4 text-sm leading-relaxed text-ink">{pest.data.summary}</p>}
+      <Link
+        to={`${compareLink(result.category.key, observation.id)}#guidance`}
+        className={`${linkClasses} mt-3 inline-flex items-center gap-1.5`}
+      >
+        <ListChecks className="size-4 shrink-0" />
+        {t('analysis.guidance', { name: pestName(t, result.category) })}
+      </Link>
 
       <div className="mt-5 flex flex-col gap-2">
         <ButtonLink to={compareLink(result.category.key, observation.id)}>
@@ -92,11 +103,11 @@ function Identified({ observation, result, onAsk, reveal }) {
 function unclearExplanation(t, result, language) {
   if (result.unclear_reason === 'unfamiliar') {
     // Percentages would mislead here: the model can be sure of a category it has never seen this insect in.
-    const [first, second] = result.predictions.map((prediction) => prediction.name)
+    const [first, second] = result.predictions.map((prediction) => pestName(t, prediction))
     return second ? t('analysis.unfamiliarBody', { first, second }) : t('analysis.unfamiliarBodySingle', { first })
   }
   const [first, second] = result.predictions.map((prediction) =>
-    t('analysis.withPercent', { name: prediction.name, percent: formatPercent(prediction.probability, language) }),
+    t('analysis.withPercent', { name: pestName(t, prediction), percent: formatPercent(prediction.probability, language) }),
   )
   return second ? t('analysis.unclearBody', { first, second }) : t('analysis.unclearBodySingle', { first })
 }
@@ -120,10 +131,10 @@ function Unclear({ observation, result, onAsk, reveal }) {
         <NextStep
           icon={Images}
           title={t('analysis.compareTitle')}
-          body={t('analysis.compareBody', { name: closest.name })}
+          body={t('analysis.compareBody', { name: pestName(t, closest) })}
         >
           <Link to={compareLink(closest.key, observation.id)} className={linkClasses}>
-            {t('analysis.compareWith', { name: closest.name })}
+            {t('analysis.compareWith', { name: pestName(t, closest) })}
           </Link>
         </NextStep>
         {onAsk && (

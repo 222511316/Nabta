@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
 import { toast } from 'sonner'
 import { afterAll, afterEach, beforeAll } from 'vitest'
-import '../i18n'
+import i18n from '../i18n'
 import { server } from './server'
 
 // jsdom's Blob has no stream(). MSW reads request bodies through undici, which
@@ -40,5 +40,8 @@ afterEach(() => {
   // Toaster, so one test's toast would otherwise show up in the next.
   toast.dismiss()
   server.resetHandlers()
+  // A test that switches to Arabic must not leave the next one in Arabic.
+  localStorage.clear()
+  if (i18n.language !== 'en') i18n.changeLanguage('en')
 })
 afterAll(() => server.close())

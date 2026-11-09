@@ -54,3 +54,22 @@ export function formatRelativeTime(isoTimestamp, language, now = new Date()) {
   }
   return format.format(0, 'second')
 }
+
+/** "2026-09-20" → "20 Sept", with the year only when it isn't this year. */
+export function formatShortDate(isoDate, language, now = new Date()) {
+  const date = parseCalendarDate(isoDate)
+  return new Intl.DateTimeFormat(localeFor(language), {
+    day: 'numeric',
+    month: 'short',
+    ...(date.getFullYear() === now.getFullYear() ? {} : { year: 'numeric' }),
+  }).format(date)
+}
+
+/** Whole calendar days from one YYYY-MM-DD date to another (negative if `to` is earlier). */
+export function daysBetween(from, to) {
+  const utc = (isoDate) => {
+    const [year, month, day] = isoDate.split('-').map(Number)
+    return Date.UTC(year, month - 1, day)
+  }
+  return Math.round((utc(to) - utc(from)) / 86_400_000)
+}

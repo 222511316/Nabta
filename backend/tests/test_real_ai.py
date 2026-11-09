@@ -1,6 +1,6 @@
-"""The real OpenAI model, end to end. Skipped unless NABTA_OPENAI_API_KEY is set (in the
-environment or backend/.env); the other tests use a fake writer. Each run costs a fraction of
-a cent."""
+"""The real OpenAI model, end to end. Not in the default run (marker real_ai), and skipped unless
+NABTA_OPENAI_API_KEY is set (in the environment or backend/.env); the other tests use a fake writer.
+Each run costs a fraction of a cent."""
 
 import pytest
 
@@ -12,7 +12,10 @@ from app.services.ai import _guide
 
 SETTINGS = Settings()  # read before the test fixtures clear NABTA_* variables
 
-pytestmark = pytest.mark.skipif(SETTINGS.openai_api_key is None, reason="no OpenAI API key configured")
+pytestmark = [
+    pytest.mark.real_ai,  # left out of the default run (pytest.ini); run with  pytest -m real_ai
+    pytest.mark.skipif(SETTINGS.openai_api_key is None, reason="no OpenAI API key configured"),
+]
 
 
 def test_the_model_answers_a_question_from_the_pest_guide():

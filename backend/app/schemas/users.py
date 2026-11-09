@@ -22,6 +22,12 @@ class UserOut(BaseModel):
     email: str
     full_name: str
     role: str
+    research_consent: bool
+    research_consent_at: UtcTimestamp | None
+    # Specialists only: "approved" once the Nabta team has approved the account, otherwise "pending"
+    # (no review cases until then). Always null for growers.
+    specialist_status: Literal["approved", "pending"] | None
+    approved_at: UtcTimestamp | None
     created_at: UtcTimestamp
 
 

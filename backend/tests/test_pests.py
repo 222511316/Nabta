@@ -25,6 +25,8 @@ DETAIL_KEYS = {
     "sources",
     "review",
     "images",
+    "guidance",
+    "translation",
 }
 
 
@@ -149,6 +151,7 @@ def _entry(**overrides):
         "sources": [{"title": "Aphids", "publisher": "UC IPM", "url": "https://ipm.ucanr.edu/"}],
         "review": {"status": "awaiting_review", "reviewed_by": None, "reviewed_on": None},
         "images": [{"file": "aphids-1.jpg", "caption": "Close-up", "credit": "IP102"}],
+        "guidance": [{"kind": "check", "task": "Check the shoots", "text": "Look weekly."}],
     }
     return {**entry, **overrides}
 
@@ -182,3 +185,49 @@ def test_reviewed_content_records_who_reviewed_it_and_when(tmp_path):
 def test_broken_content_stops_the_app_from_starting(tmp_path, overrides, problem):
     with pytest.raises(ValueError, match=re.escape(problem)):
         load_catalog(_content(tmp_path, _entry(**overrides)))
+
+
+# Guidance (US17) and Arabic content (US23) ---------------------------------------------------------
+
+GUIDANCE_KINDS = {"check", "prevent", "remove", "natural_enemies"}
+# The charter keeps pesticide prescriptions and doses out of scope (§5.2); guidance never names them.
+CHEMICAL_WORDS = (
+    "insecticide", "pesticide", "carbaryl", "spinosad", "neem", "pyrethrin", "imidacloprid",
+    "dinotefuran", "bacillus", "soap", "horticultural oil", "bait",
+)
+
+
+def test_every_pest_has_practical_guidance_from_its_sources(grower, catalog):
+    for summary in catalog:
+        guidance = grower.get(f"/api/pests/{summary['key']}").json()["guidance"]
+        assert 4 <= len(guidance) <= 6, summary["key"]
+        for step in guidance:
+            assert set(step) == {"kind", "task", "text"}
+            assert step["kind"] in GUIDANCE_KINDS
+            assert 0 < len(step["task"]) <= 120  # short enough to become a task title
+            text = f"{step['task']} {step['text']}".lower()
+            assert not any(word in text for word in CHEMICAL_WORDS), (summary["key"], step["task"])
+
+
+def test_pest_content_comes_in_arabic_when_asked(grower):
+    english = grower.get("/api/pests/aphids").json()
+    arabic = grower.get("/api/pests/aphids", headers={"Accept-Language": "ar"}).json()
+
+    def is_arabic(text):
+        return any("\u0600" <= character <= "\u06ff" for character in text)
+
+    assert arabic["key"] == "aphids"
+    assert is_arabic(arabic["name"]) and is_arabic(arabic["summary"]) and is_arabic(arabic["where"])
+    assert all(is_arabic(item) for item in arabic["look_for"])
+    assert all(is_arabic(step["task"]) and is_arabic(step["text"]) for step in arabic["guidance"])
+    assert all(is_arabic(image["caption"]) for image in arabic["images"])
+    assert len(arabic["guidance"]) == len(english["guidance"])
+    assert arabic["sources"] == english["sources"]  # sources stay as published
+    assert arabic["translation"] == {"language": "ar", "status": "awaiting_review"}
+    assert english["translation"] is None
+
+
+def test_the_pest_guide_list_comes_in_arabic_too(grower):
+    pests = grower.get("/api/pests", headers={"Accept-Language": "ar-SA,ar;q=0.9,en;q=0.5"}).json()
+
+    assert all(any("\u0600" <= c <= "\u06ff" for c in pest["name"]) for pest in pests)

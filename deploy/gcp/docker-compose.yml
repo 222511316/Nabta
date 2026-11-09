@@ -1,0 +1,29 @@
+# Nabta on one Google Compute Engine VM: the app image (built by Cloud Build) behind Caddy, which
+# provides HTTPS with a free Let's Encrypt certificate. Data (SQLite + photos) lives on the VM's disk
+# in /srv/nabta. See DEPLOY_GCP.md.
+services:
+  nabta:
+    image: me-central1-docker.pkg.dev/${GCP_PROJECT_ID:?set GCP_PROJECT_ID in .env}/nabta/nabta:v1
+    restart: unless-stopped
+    env_file: nabta.env
+    volumes:
+      - /srv/nabta:/data
+    expose:
+      - "8000"
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - nabta
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

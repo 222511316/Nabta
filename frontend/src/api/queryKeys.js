@@ -15,4 +15,10 @@ export const queryKeys = {
   notifications: ['notifications'],
   aiStatus: ['ai'],
   plantReport: (plantId) => ['plants', String(plantId), 'report'],
+  plantNotes: (plantId) => ['plants', String(plantId), 'notes'],
+  // Every task list starts with 'tasks', so one invalidation refreshes them all.
+  tasks: ['tasks'],
+  taskList: (filters = {}) => ['tasks', filters],
+  search: (params) => ['search', params],
+  summary: ['summary'],
 }

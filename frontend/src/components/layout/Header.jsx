@@ -13,9 +13,11 @@ import {
   ChevronDown,
   Inbox,
   LayoutGrid,
+  ListChecks,
   LogOut,
   Menu as MenuIcon,
   MessagesSquare,
+  Search,
   UserRound,
   X,
 } from 'lucide-react'
@@ -24,6 +26,7 @@ import { Link, NavLink, useNavigate } from 'react-router'
 import { useAuth } from '../../auth/useAuth'
 import { homePathFor } from '../../auth/homePath'
 import { cx } from '../../lib/cx'
+import { LanguageSwitch } from '../ui/LanguageSwitch'
 import { LogoLink } from '../ui/Logo'
 import { NotificationsMenu } from './NotificationsMenu'
 
@@ -36,6 +39,7 @@ function navLinksFor(role, t) {
   return [
     { to: '/dashboard', label: t('nav.dashboard'), Icon: LayoutGrid, end: true },
     { to: '/observations/new', label: t('nav.newObservation'), Icon: Camera, end: true },
+    { to: '/tasks', label: t('nav.tasks'), Icon: ListChecks, end: true },
     { to: '/reviews', label: t('nav.reviews'), Icon: MessagesSquare, end: true },
     pestGuide,
   ]
@@ -59,7 +63,7 @@ export function Header() {
           <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-4 sm:px-6 lg:gap-8">
             <LogoLink to={homePathFor(user)} />
 
-            <nav aria-label={t('nav.main')} className="hidden items-center gap-1 lg:flex">
+            <nav aria-label={t('nav.main')} className="hidden items-center gap-0.5 lg:flex xl:gap-1">
               {links.map(({ to, label, Icon, end }) => (
                 <NavLink
                   key={to}
@@ -67,7 +71,7 @@ export function Header() {
                   end={end}
                   className={({ isActive }) =>
                     cx(
-                      'flex items-center gap-2 rounded-lg px-3 py-2 text-[0.95rem] font-medium transition-colors',
+                      'flex items-center gap-2 rounded-lg px-2.5 py-2 text-[0.95rem] font-medium whitespace-nowrap transition-colors xl:px-3',
                       isActive
                         ? 'bg-forest-50 text-forest-800'
                         : 'text-muted hover:bg-sage-50 hover:text-forest-800',
@@ -80,7 +84,23 @@ export function Header() {
               ))}
             </nav>
 
-            <div className="ms-auto flex items-center gap-1 sm:gap-2">
+            <div className="ms-auto flex items-center gap-0.5 sm:gap-1.5">
+              {user.role === 'grower' && (
+                <NavLink
+                  to="/search"
+                  aria-label={t('nav.search')}
+                  title={t('nav.search')}
+                  className={({ isActive }) =>
+                    cx(
+                      'flex size-10 items-center justify-center rounded-full text-forest-800 hover:bg-sage-50',
+                      isActive && 'bg-forest-50',
+                    )
+                  }
+                >
+                  <Search className="size-5" />
+                </NavLink>
+              )}
+              <LanguageSwitch compact />
               <NotificationsMenu />
               <AccountMenu user={user} onSignOut={handleSignOut} />
               <DisclosureButton
