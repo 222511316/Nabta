@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { formatDate, formatDateTime, formatDay, todayISO } from './dates'
+import { formatDate, formatDateTime, formatDay, formatRelativeTime, todayISO } from './dates'
 
 const originalTimeZone = process.env.TZ
 
@@ -37,5 +37,16 @@ describe('formatDateTime', () => {
   it('shows a UTC timestamp in the viewer’s local time', () => {
     useTimeZone('Asia/Riyadh')
     expect(formatDateTime('2026-09-20T08:01:12Z', 'en')).toBe('20 September 2026 at 11:01')
+  })
+})
+
+describe('formatRelativeTime', () => {
+  const now = new Date('2026-10-18T12:00:00Z')
+
+  it('says how long ago a timestamp was', () => {
+    expect(formatRelativeTime('2026-10-18T09:00:00Z', 'en', now)).toBe('3 hours ago')
+    expect(formatRelativeTime('2026-10-18T11:59:30Z', 'en', now)).toBe('now')
+    expect(formatRelativeTime('2026-10-17T11:00:00Z', 'en', now)).toBe('yesterday')
+    expect(formatRelativeTime('2026-10-04T12:00:00Z', 'en', now)).toBe('2 weeks ago')
   })
 })

@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { ExternalLink, SearchX } from 'lucide-react'
+import { SearchX } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router'
 import { getObservation } from '../../api/observations'
@@ -10,6 +11,11 @@ import { Breadcrumb, Card, PageHeader, StatusPanel } from '../../components/ui/l
 import { errorMessage } from '../../lib/apiErrors'
 import { formatDate, formatDateTime } from '../../lib/dates'
 import { useDocumentTitle } from '../../lib/useDocumentTitle'
+import { AnalysisPanel } from '../analysis/AnalysisPanel'
+import { PhotoStage } from '../analysis/PhotoStage'
+import { useObservationAnalysis } from '../analysis/useObservationAnalysis'
+import { GrowerReviewPanel } from '../reviews/GrowerReviewPanel'
+import { RequestReviewDialog } from '../reviews/RequestReviewDialog'
 
 export function ObservationPage() {
   const { t } = useTranslation()
@@ -38,17 +44,12 @@ export function ObservationPage() {
 
 function ObservationDetails({ observation }) {
   const { t, i18n } = useTranslation()
+  const analysis = useObservationAnalysis(observation)
+  const [asking, setAsking] = useState(false)
   const date = formatDate(observation.observed_on, i18n.language)
   const title = t('observation.title', { date })
   useDocumentTitle(title)
-  const plantLink = (
-    <Link
-      to={`/plants/${observation.plant_id}`}
-      className="font-medium text-forest-700 underline-offset-4 hover:underline"
-    >
-      {observation.plant_name}
-    </Link>
-  )
+  const canAsk = !observation.review_status
 
   return (
     <>
@@ -65,51 +66,68 @@ function ObservationDetails({ observation }) {
         title={title}
       />
 
-      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
-        <figure className="overflow-hidden rounded-2xl border border-line bg-sage-50 shadow-card">
-          <img
+      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        {/* The photo stays in view while the suggestion and review are read beside it. */}
+        <div className="lg:sticky lg:top-24">
+          <PhotoStage
             src={observation.photo_url}
             alt={t('observation.photoAlt', { plant: observation.plant_name, date })}
             width={observation.photo_width}
             height={observation.photo_height}
-            className="mx-auto max-h-[70vh] w-full object-contain"
+            analysis={analysis}
           />
-          <figcaption className="flex justify-end border-t border-line bg-white px-4 py-2.5">
-            <a
-              href={observation.photo_url}
-              target="_blank"
-              rel="noopener"
-              className="flex items-center gap-2 rounded-lg px-2 py-1 text-sm font-medium text-forest-700 hover:bg-forest-50"
-            >
-              <ExternalLink className="size-4" />
-              {t('observation.openFull')}
-            </a>
-          </figcaption>
-        </figure>
+        </div>
 
-        <Card className="p-6">
-          <dl className="space-y-4 text-sm">
-            <div>
-              <dt className="text-muted">{t('observation.plant')}</dt>
-              <dd className="mt-0.5">{plantLink}</dd>
-            </div>
-            <div>
-              <dt className="text-muted">{t('observation.observedOn')}</dt>
-              <dd className="mt-0.5 font-medium text-ink">{date}</dd>
-            </div>
-            <div>
-              <dt className="text-muted">{t('observation.savedAt')}</dt>
-              <dd className="mt-0.5 text-ink">{formatDateTime(observation.created_at, i18n.language)}</dd>
-            </div>
-            <div>
-              <dt className="text-muted">{t('observation.notes')}</dt>
-              <dd className="mt-0.5 whitespace-pre-line text-ink">
-                {observation.notes ?? <span className="text-muted">{t('observation.noNotes')}</span>}
-              </dd>
-            </div>
-          </dl>
-        </Card>
+        <div className="space-y-6">
+          <AnalysisPanel
+            observation={observation}
+            analysis={analysis}
+            onAsk={canAsk ? () => setAsking(true) : undefined}
+          />
+          {!canAsk && <GrowerReviewPanel observation={observation} />}
+          <ObservationFacts observation={observation} date={date} />
+        </div>
       </div>
+
+      {canAsk && <RequestReviewDialog observation={observation} open={asking} onClose={() => setAsking(false)} />}
     </>
+  )
+}
+
+function ObservationFacts({ observation, date }) {
+  const { t, i18n } = useTranslation()
+  return (
+    <Card aria-labelledby="observation-facts-heading" className="p-6">
+      <h2 id="observation-facts-heading" className="font-semibold text-forest-800">
+        {t('observation.details')}
+      </h2>
+      <dl className="mt-4 space-y-4 text-sm">
+        <div>
+          <dt className="text-muted">{t('observation.plant')}</dt>
+          <dd className="mt-0.5">
+            <Link
+              to={`/plants/${observation.plant_id}`}
+              className="font-medium text-forest-700 underline-offset-4 hover:underline"
+            >
+              {observation.plant_name}
+            </Link>
+          </dd>
+        </div>
+        <div>
+          <dt className="text-muted">{t('observation.observedOn')}</dt>
+          <dd className="mt-0.5 font-medium text-ink">{date}</dd>
+        </div>
+        <div>
+          <dt className="text-muted">{t('observation.savedAt')}</dt>
+          <dd className="mt-0.5 text-ink">{formatDateTime(observation.created_at, i18n.language)}</dd>
+        </div>
+        <div>
+          <dt className="text-muted">{t('observation.notes')}</dt>
+          <dd className="mt-0.5 whitespace-pre-line text-ink">
+            {observation.notes ?? <span className="text-muted">{t('observation.noNotes')}</span>}
+          </dd>
+        </div>
+      </dl>
+    </Card>
   )
 }

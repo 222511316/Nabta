@@ -1,0 +1,997 @@
+{
+  "date": "2026-10-18",
+  "dataset": {
+    "name": "IP102 v1.1",
+    "citation": "Wu et al., IP102: A Large-Scale Benchmark Dataset for Insect Pest Recognition, CVPR 2019",
+    "terms": "Free for academic use",
+    "obtained_from": "https://huggingface.co/datasets/EnmmmmOvO/insect-pest-dataset",
+    "repository": "EnmmmmOvO/insect-pest-dataset",
+    "revision": "5d1b759111eb34fb5925f68e62713c534d9a917e",
+    "why_mirror": "The official Google Drive link was over its download quota; split sizes match the official ones.",
+    "split_sizes": {
+      "train": 45095,
+      "validation": 7508,
+      "test": 22619
+    }
+  },
+  "categories": [
+    {
+      "key": "aphids",
+      "name": "Aphids",
+      "ip102": [
+        25,
+        28,
+        29,
+        30,
+        53,
+        90,
+        91,
+        92
+      ]
+    },
+    {
+      "key": "whiteflies",
+      "name": "Whiteflies",
+      "ip102": [
+        72,
+        83
+      ]
+    },
+    {
+      "key": "mealybugs",
+      "name": "Mealybugs",
+      "ip102": [
+        65,
+        82
+      ]
+    },
+    {
+      "key": "scale_insects",
+      "name": "Scale insects",
+      "ip102": [
+        77,
+        78,
+        79,
+        80,
+        81
+      ]
+    },
+    {
+      "key": "fruit_flies",
+      "name": "Fruit flies",
+      "ip102": [
+        84,
+        85,
+        86
+      ]
+    },
+    {
+      "key": "armyworms_cutworms",
+      "name": "Armyworms and cutworms",
+      "ip102": [
+        19,
+        20,
+        21,
+        24,
+        39,
+        40,
+        87
+      ]
+    },
+    {
+      "key": "thrips",
+      "name": "Thrips",
+      "ip102": [
+        13,
+        34,
+        54,
+        55,
+        93
+      ]
+    },
+    {
+      "key": "locusts",
+      "name": "Locusts and grasshoppers",
+      "ip102": [
+        49
+      ]
+    }
+  ],
+  "counts": {
+    "train": 12988,
+    "train_augmented_views": 12988,
+    "validation": 1846,
+    "test": 5434,
+    "unsupported_tuning": 1906,
+    "unsupported_tuning_classes": 35,
+    "unsupported_held_out": 3000,
+    "unsupported_held_out_classes": 34,
+    "duplicates_excluded": 1400
+  },
+  "chosen": "bioclip",
+  "baseline": "resnet50",
+  "models": {
+    "bioclip": {
+      "backbone": "bioclip",
+      "description": "BioCLIP ViT-B/16 image encoder (imageomics/bioclip, MIT licence)",
+      "feature_dim": 512,
+      "strength": 10.0,
+      "validation_macro_f1_by_strength": {
+        "0.3": 0.7794650513973389,
+        "1.0": 0.7941772995840711,
+        "3.0": 0.8037506109925019,
+        "10.0": 0.8099556955436102,
+        "30.0": 0.8098773808607849,
+        "100.0": 0.8037974822614992
+      },
+      "validation_macro_f1": 0.8099556955436102,
+      "temperature": 1.2542056120757386,
+      "min_confidence": 0.5,
+      "familiarity_threshold": 0.6170710325241089,
+      "test": {
+        "macro_f1": 0.8281518683212898,
+        "accuracy": 0.8840633051159367,
+        "per_class": {
+          "Aphids": {
+            "precision": 0.9503464203233256,
+            "recall": 0.8897297297297297,
+            "f1": 0.9190396426577331,
+            "support": 1850
+          },
+          "Whiteflies": {
+            "precision": 0.7089337175792507,
+            "recall": 0.845360824742268,
+            "f1": 0.7711598746081505,
+            "support": 291
+          },
+          "Mealybugs": {
+            "precision": 0.5142857142857142,
+            "recall": 0.7422680412371134,
+            "f1": 0.6075949367088608,
+            "support": 97
+          },
+          "Scale insects": {
+            "precision": 0.7335243553008596,
+            "recall": 0.757396449704142,
+            "f1": 0.745269286754003,
+            "support": 338
+          },
+          "Fruit flies": {
+            "precision": 0.859375,
+            "recall": 0.9243697478991597,
+            "f1": 0.8906882591093117,
+            "support": 238
+          },
+          "Armyworms and cutworms": {
+            "precision": 0.9567154678548695,
+            "recall": 0.9087061668681983,
+            "f1": 0.932093023255814,
+            "support": 1654
+          },
+          "Thrips": {
+            "precision": 0.7317829457364341,
+            "recall": 0.833922261484099,
+            "f1": 0.7795210569777044,
+            "support": 566
+          },
+          "Locusts and grasshoppers": {
+            "precision": 0.9873096446700508,
+            "recall": 0.9725,
+            "f1": 0.9798488664987406,
+            "support": 400
+          }
+        },
+        "confusion": [
+          [
+            1646,
+            41,
+            18,
+            35,
+            8,
+            28,
+            71,
+            3
+          ],
+          [
+            12,
+            246,
+            6,
+            12,
+            0,
+            3,
+            12,
+            0
+          ],
+          [
+            3,
+            4,
+            72,
+            13,
+            2,
+            2,
+            1,
+            0
+          ],
+          [
+            6,
+            18,
+            22,
+            256,
+            10,
+            6,
+            20,
+            0
+          ],
+          [
+            2,
+            0,
+            3,
+            2,
+            220,
+            4,
+            7,
+            0
+          ],
+          [
+            30,
+            24,
+            10,
+            19,
+            6,
+            1503,
+            61,
+            1
+          ],
+          [
+            28,
+            14,
+            9,
+            12,
+            9,
+            21,
+            472,
+            1
+          ],
+          [
+            5,
+            0,
+            0,
+            0,
+            1,
+            4,
+            1,
+            389
+          ]
+        ]
+      },
+      "uncertainty": {
+        "validation": {
+          "supported_images": 1846,
+          "unsupported_images": 1906,
+          "supported_accepted": 0.7183098591549296,
+          "accuracy_when_accepted": 0.951734539969834,
+          "unsupported_rejected": 0.8431269674711438
+        },
+        "test": {
+          "supported_images": 5434,
+          "unsupported_images": 3000,
+          "supported_accepted": 0.7326094957673905,
+          "accuracy_when_accepted": 0.947249434815373,
+          "unsupported_rejected": 0.8693333333333333
+        }
+      },
+      "confidence_only": {
+        "validation": {
+          "threshold": 0.9105787873268127,
+          "supported_images": 1846,
+          "unsupported_images": 1906,
+          "supported_accepted": 0.6218851570964247,
+          "accuracy_when_accepted": 0.9843205574912892,
+          "unsupported_rejected": 0.7906610703043022
+        },
+        "test": {
+          "threshold": 0.9105787873268127,
+          "supported_images": 5434,
+          "unsupported_images": 3000,
+          "supported_accepted": 0.6312108943687891,
+          "accuracy_when_accepted": 0.9892128279883382,
+          "unsupported_rejected": 0.8163333333333334
+        }
+      },
+      "open_set_scores": {
+        "Top probability": {
+          "validation_auroc": 0.7575134802681616,
+          "test_auroc": 0.7888198380566802
+        },
+        "Top logit": {
+          "validation_auroc": 0.7528017812257353,
+          "test_auroc": 0.7803956569746044
+        },
+        "Similarity to the nearest training photo": {
+          "validation_auroc": 0.8568384436898249,
+          "test_auroc": 0.8743413384860753
+        }
+      },
+      "calibration": {
+        "test_ece_before": 0.016390943657750817,
+        "test_ece_after": 0.019820239396274312
+      },
+      "train_seconds": 265.7
+    },
+    "resnet50": {
+      "backbone": "resnet50",
+      "description": "ResNet-50, ImageNet-1k weights (torchvision IMAGENET1K_V2)",
+      "feature_dim": 2048,
+      "strength": 30.0,
+      "validation_macro_f1_by_strength": {
+        "0.3": 0.7007040286866152,
+        "1.0": 0.7350166485302757,
+        "3.0": 0.7571741741029516,
+        "10.0": 0.7716416519894507,
+        "30.0": 0.7778573527147289,
+        "100.0": 0.7745086506981603
+      },
+      "validation_macro_f1": 0.7778573527147289,
+      "temperature": 1.170019902495676,
+      "min_confidence": 0.5,
+      "familiarity_threshold": 0.737136721611023,
+      "test": {
+        "macro_f1": 0.7955157504187229,
+        "accuracy": 0.8463378726536621,
+        "per_class": {
+          "Aphids": {
+            "precision": 0.9091438555620268,
+            "recall": 0.8437837837837838,
+            "f1": 0.8752453041771797,
+            "support": 1850
+          },
+          "Whiteflies": {
+            "precision": 0.643646408839779,
+            "recall": 0.8006872852233677,
+            "f1": 0.7136294027565084,
+            "support": 291
+          },
+          "Mealybugs": {
+            "precision": 0.5555555555555556,
+            "recall": 0.6701030927835051,
+            "f1": 0.6074766355140186,
+            "support": 97
+          },
+          "Scale insects": {
+            "precision": 0.6435897435897436,
+            "recall": 0.742603550295858,
+            "f1": 0.6895604395604396,
+            "support": 338
+          },
+          "Fruit flies": {
+            "precision": 0.8796680497925311,
+            "recall": 0.8907563025210085,
+            "f1": 0.8851774530271399,
+            "support": 238
+          },
+          "Armyworms and cutworms": {
+            "precision": 0.9269698910954516,
+            "recall": 0.8748488512696493,
+            "f1": 0.9001555209953344,
+            "support": 1654
+          },
+          "Thrips": {
+            "precision": 0.695852534562212,
+            "recall": 0.8003533568904594,
+            "f1": 0.7444535743631882,
+            "support": 566
+          },
+          "Locusts and grasshoppers": {
+            "precision": 0.9544303797468354,
+            "recall": 0.9425,
+            "f1": 0.9484276729559749,
+            "support": 400
+          }
+        },
+        "confusion": [
+          [
+            1561,
+            58,
+            11,
+            49,
+            11,
+            48,
+            100,
+            12
+          ],
+          [
+            20,
+            233,
+            5,
+            17,
+            2,
+            5,
+            9,
+            0
+          ],
+          [
+            5,
+            5,
+            65,
+            18,
+            1,
+            2,
+            1,
+            0
+          ],
+          [
+            23,
+            9,
+            20,
+            251,
+            4,
+            13,
+            18,
+            0
+          ],
+          [
+            8,
+            0,
+            0,
+            7,
+            212,
+            4,
+            6,
+            1
+          ],
+          [
+            57,
+            37,
+            11,
+            33,
+            5,
+            1447,
+            60,
+            4
+          ],
+          [
+            35,
+            20,
+            4,
+            15,
+            6,
+            32,
+            453,
+            1
+          ],
+          [
+            8,
+            0,
+            1,
+            0,
+            0,
+            10,
+            4,
+            377
+          ]
+        ]
+      },
+      "uncertainty": {
+        "validation": {
+          "supported_images": 1846,
+          "unsupported_images": 1906,
+          "supported_accepted": 0.6148429035752979,
+          "accuracy_when_accepted": 0.9277533039647577,
+          "unsupported_rejected": 0.8389296956977964
+        },
+        "test": {
+          "supported_images": 5434,
+          "unsupported_images": 3000,
+          "supported_accepted": 0.59735001840265,
+          "accuracy_when_accepted": 0.9248305606900801,
+          "unsupported_rejected": 0.758
+        }
+      },
+      "confidence_only": {
+        "validation": {
+          "threshold": 0.89014732837677,
+          "supported_images": 1846,
+          "unsupported_images": 1906,
+          "supported_accepted": 0.5677139761646804,
+          "accuracy_when_accepted": 0.9790076335877863,
+          "unsupported_rejected": 0.7759706190975866
+        },
+        "test": {
+          "threshold": 0.89014732837677,
+          "supported_images": 5434,
+          "unsupported_images": 3000,
+          "supported_accepted": 0.5634891424365108,
+          "accuracy_when_accepted": 0.9794252122795558,
+          "unsupported_rejected": 0.7556666666666667
+        }
+      },
+      "open_set_scores": {
+        "Top probability": {
+          "validation_auroc": 0.7126984808195368,
+          "test_auroc": 0.7026637222426696
+        },
+        "Top logit": {
+          "validation_auroc": 0.673005585372758,
+          "test_auroc": 0.6598032756716967
+        },
+        "Similarity to the nearest training photo": {
+          "validation_auroc": 0.7944757900863897,
+          "test_auroc": 0.7365358851674642
+        }
+      },
+      "calibration": {
+        "test_ece_before": 0.016501151971357184,
+        "test_ece_after": 0.018119928253938655
+      },
+      "train_seconds": 97.4
+    }
+  },
+  "zero_shot": {
+    "prompts": {
+      "aphids": [
+        "a photo of aphid.",
+        "a photo of Aphididae."
+      ],
+      "whiteflies": [
+        "a photo of whitefly.",
+        "a photo of Aleyrodidae."
+      ],
+      "mealybugs": [
+        "a photo of mealybug.",
+        "a photo of Pseudococcidae."
+      ],
+      "scale_insects": [
+        "a photo of scale insect.",
+        "a photo of Coccoidea."
+      ],
+      "fruit_flies": [
+        "a photo of fruit fly.",
+        "a photo of Tephritidae."
+      ],
+      "armyworms_cutworms": [
+        "a photo of armyworm caterpillar.",
+        "a photo of cutworm.",
+        "a photo of Noctuidae."
+      ],
+      "thrips": [
+        "a photo of thrips.",
+        "a photo of Thysanoptera."
+      ],
+      "locusts": [
+        "a photo of grasshopper.",
+        "a photo of locust.",
+        "a photo of Acrididae."
+      ]
+    },
+    "test": {
+      "macro_f1": 0.5907249621624013,
+      "accuracy": 0.7232241442767758,
+      "per_class": {
+        "Aphids": {
+          "precision": 0.8432462479155086,
+          "recall": 0.82,
+          "f1": 0.8314606741573034,
+          "support": 1850
+        },
+        "Whiteflies": {
+          "precision": 0.4489795918367347,
+          "recall": 0.6048109965635738,
+          "f1": 0.5153733528550513,
+          "support": 291
+        },
+        "Mealybugs": {
+          "precision": 0.20833333333333334,
+          "recall": 0.4639175257731959,
+          "f1": 0.28753993610223644,
+          "support": 97
+        },
+        "Scale insects": {
+          "precision": 0.3249211356466877,
+          "recall": 0.3047337278106509,
+          "f1": 0.3145038167938931,
+          "support": 338
+        },
+        "Fruit flies": {
+          "precision": 0.33400402414486924,
+          "recall": 0.6974789915966386,
+          "f1": 0.45170068027210886,
+          "support": 238
+        },
+        "Armyworms and cutworms": {
+          "precision": 0.9713622291021672,
+          "recall": 0.7587666263603385,
+          "f1": 0.8520027155465038,
+          "support": 1654
+        },
+        "Thrips": {
+          "precision": 0.5752380952380952,
+          "recall": 0.5335689045936396,
+          "f1": 0.5536205316223648,
+          "support": 566
+        },
+        "Locusts and grasshoppers": {
+          "precision": 0.9242424242424242,
+          "recall": 0.915,
+          "f1": 0.9195979899497487,
+          "support": 400
+        }
+      },
+      "confusion": [
+        [
+          1517,
+          57,
+          35,
+          84,
+          56,
+          17,
+          77,
+          7
+        ],
+        [
+          49,
+          176,
+          23,
+          19,
+          14,
+          0,
+          10,
+          0
+        ],
+        [
+          15,
+          18,
+          45,
+          10,
+          7,
+          1,
+          1,
+          0
+        ],
+        [
+          31,
+          63,
+          84,
+          103,
+          36,
+          5,
+          16,
+          0
+        ],
+        [
+          17,
+          15,
+          3,
+          18,
+          166,
+          6,
+          13,
+          0
+        ],
+        [
+          75,
+          38,
+          14,
+          58,
+          111,
+          1255,
+          85,
+          18
+        ],
+        [
+          92,
+          25,
+          12,
+          25,
+          99,
+          6,
+          302,
+          5
+        ],
+        [
+          3,
+          0,
+          0,
+          0,
+          8,
+          2,
+          21,
+          366
+        ]
+      ]
+    }
+  },
+  "unsuitable_photos": {
+    "blurred": {
+      "images": 200,
+      "rejected": 0.995
+    },
+    "dark": {
+      "images": 200,
+      "rejected": 0.825
+    }
+  },
+  "official_ip102_baseline": {
+    "model": "IP102 ResNet-50 published by the dataset authors (resnet50_0.497.pkl), trained on IP102 train",
+    "weights_sha256": "e632971ad7c36039ee08026bee33ca263e80adecabb57de484b72b4f2cad4d5f",
+    "preprocessing": "resize to 224 \u00d7 224",
+    "preprocessing_validation_macro_f1": {
+      "resize 256, centre crop 224": 0.6288858561326977,
+      "resize to 224 \u00d7 224": 0.6538730414152998
+    },
+    "test_images": 5434,
+    "restricted": {
+      "macro_f1": 0.6250459123527738,
+      "accuracy": 0.7465955097534045,
+      "per_class": {
+        "Aphids": {
+          "precision": 0.8095712861415753,
+          "recall": 0.8778378378378379,
+          "f1": 0.8423236514522822,
+          "support": 1850
+        },
+        "Whiteflies": {
+          "precision": 0.44502617801047123,
+          "recall": 0.2920962199312715,
+          "f1": 0.35269709543568467,
+          "support": 291
+        },
+        "Mealybugs": {
+          "precision": 0.46774193548387094,
+          "recall": 0.5979381443298969,
+          "f1": 0.5248868778280543,
+          "support": 97
+        },
+        "Scale insects": {
+          "precision": 0.5606060606060606,
+          "recall": 0.6568047337278107,
+          "f1": 0.6049046321525886,
+          "support": 338
+        },
+        "Fruit flies": {
+          "precision": 0.8296943231441049,
+          "recall": 0.7983193277310925,
+          "f1": 0.8137044967880086,
+          "support": 238
+        },
+        "Armyworms and cutworms": {
+          "precision": 0.8633461047254151,
+          "recall": 0.8174123337363967,
+          "f1": 0.8397515527950311,
+          "support": 1654
+        },
+        "Thrips": {
+          "precision": 0.6210045662100456,
+          "recall": 0.7208480565371025,
+          "f1": 0.6672117743254292,
+          "support": 566
+        },
+        "Locusts and grasshoppers": {
+          "precision": 0.44528301886792454,
+          "recall": 0.295,
+          "f1": 0.3548872180451128,
+          "support": 400
+        }
+      },
+      "confusion": [
+        [
+          1624,
+          20,
+          12,
+          33,
+          13,
+          20,
+          50,
+          78
+        ],
+        [
+          74,
+          85,
+          16,
+          37,
+          1,
+          26,
+          40,
+          12
+        ],
+        [
+          8,
+          1,
+          58,
+          20,
+          0,
+          1,
+          6,
+          3
+        ],
+        [
+          36,
+          11,
+          28,
+          222,
+          5,
+          10,
+          19,
+          7
+        ],
+        [
+          19,
+          0,
+          0,
+          9,
+          190,
+          3,
+          10,
+          7
+        ],
+        [
+          108,
+          18,
+          7,
+          49,
+          9,
+          1352,
+          85,
+          26
+        ],
+        [
+          52,
+          54,
+          2,
+          15,
+          3,
+          18,
+          408,
+          14
+        ],
+        [
+          85,
+          2,
+          1,
+          11,
+          8,
+          136,
+          39,
+          118
+        ]
+      ]
+    },
+    "unrestricted": {
+      "macro_f1": 0.5447158450894054,
+      "accuracy": 0.4841737210158263,
+      "per_class": {
+        "Aphids": {
+          "precision": 0.9081551860649247,
+          "recall": 0.62,
+          "f1": 0.7369097333761645,
+          "support": 1850
+        },
+        "Whiteflies": {
+          "precision": 0.5251798561151079,
+          "recall": 0.2508591065292096,
+          "f1": 0.3395348837209302,
+          "support": 291
+        },
+        "Mealybugs": {
+          "precision": 0.6329113924050633,
+          "recall": 0.5154639175257731,
+          "f1": 0.5681818181818182,
+          "support": 97
+        },
+        "Scale insects": {
+          "precision": 0.7178423236514523,
+          "recall": 0.5118343195266272,
+          "f1": 0.5975820379965457,
+          "support": 338
+        },
+        "Fruit flies": {
+          "precision": 0.9298245614035088,
+          "recall": 0.6680672268907563,
+          "f1": 0.7775061124694377,
+          "support": 238
+        },
+        "Armyworms and cutworms": {
+          "precision": 0.943213296398892,
+          "recall": 0.4117291414752116,
+          "f1": 0.5732323232323232,
+          "support": 1654
+        },
+        "Thrips": {
+          "precision": 0.8179551122194514,
+          "recall": 0.5795053003533569,
+          "f1": 0.6783867631851086,
+          "support": 566
+        },
+        "Locusts and grasshoppers": {
+          "precision": 0.31746031746031744,
+          "recall": 0.05,
+          "f1": 0.08639308855291576,
+          "support": 400
+        }
+      },
+      "confusion": [
+        [
+          1147,
+          8,
+          2,
+          15,
+          4,
+          4,
+          13,
+          28
+        ],
+        [
+          30,
+          73,
+          8,
+          13,
+          0,
+          14,
+          18,
+          2
+        ],
+        [
+          5,
+          0,
+          50,
+          11,
+          0,
+          1,
+          2,
+          0
+        ],
+        [
+          11,
+          4,
+          16,
+          173,
+          2,
+          1,
+          8,
+          2
+        ],
+        [
+          11,
+          0,
+          0,
+          5,
+          159,
+          0,
+          5,
+          5
+        ],
+        [
+          30,
+          7,
+          2,
+          14,
+          2,
+          681,
+          23,
+          4
+        ],
+        [
+          11,
+          46,
+          1,
+          10,
+          2,
+          7,
+          328,
+          2
+        ],
+        [
+          18,
+          1,
+          0,
+          0,
+          2,
+          14,
+          4,
+          20
+        ]
+      ]
+    },
+    "unrestricted_outside_categories": 0.43338240706661757
+  },
+  "seed": 2026
+}

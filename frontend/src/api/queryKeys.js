@@ -6,5 +6,13 @@ export const queryKeys = {
   plant: (plantId) => ['plants', String(plantId)],
   plantObservations: (plantId) => ['plants', String(plantId), 'observations'],
   observation: (observationId) => ['observations', String(observationId)],
+  observationReview: (observationId) => ['observations', String(observationId), 'review'],
+  reviews: ['reviews'],
+  pests: ['pests'],
+  pest: (key) => ['pests', key],
   reviewCases: ['specialist', 'cases'],
+  reviewCase: (caseId) => ['specialist', 'cases', String(caseId)],
+  notifications: ['notifications'],
+  aiStatus: ['ai'],
+  plantReport: (plantId) => ['plants', String(plantId), 'report'],
 }

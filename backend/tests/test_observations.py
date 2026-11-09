@@ -26,6 +26,8 @@ OBSERVATION_KEYS = {
     "photo_width",
     "photo_height",
     "created_at",
+    "analysis",
+    "review_status",
 }
 
 

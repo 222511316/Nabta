@@ -3,11 +3,12 @@
 from datetime import date
 from typing import Annotated, Literal
 
-from fastapi import APIRouter, File, Form, Response, UploadFile
+from fastapi import APIRouter, File, Form, Request, Response, UploadFile
 from fastapi.responses import FileResponse
 
 from app.deps import AppSettings, DbSession, Grower
-from app.schemas.observations import ObservationOut
+from app.schemas.observations import AnalysisOut, ObservationOut
+from app.services import analysis as analysis_service
 from app.services import observations, photos, plants
 
 router = APIRouter(tags=["observations"])
@@ -77,3 +78,20 @@ def get_photo(
     if not path.is_file():
         raise plants.not_found()
     return FileResponse(path, media_type="image/jpeg", headers={"Cache-Control": "private, max-age=3600"})
+
+
+@router.post("/api/observations/{observation_id}/analysis", status_code=201, response_model=AnalysisOut)
+def analyse_observation(
+    observation_id: int,
+    grower: Grower,
+    db: DbSession,
+    settings: AppSettings,
+    request: Request,
+    response: Response,
+) -> AnalysisOut:
+    """US09: run the pest model on the photo, or return the saved result (200)."""
+    observation = observations.get_owned_observation(db, grower, observation_id)
+    analysis, created = analysis_service.analyse(db, observation, request.app.state.classifier, settings)
+    if not created:
+        response.status_code = 200
+    return analysis_service.to_out(analysis)

@@ -13,6 +13,16 @@ export function PageSpinner() {
   )
 }
 
+/** Loading one section of a page. */
+export function SectionSpinner() {
+  const { t } = useTranslation()
+  return (
+    <div className="flex justify-center py-8 text-forest-600">
+      <Spinner label={t('common.loading')} className="size-6" />
+    </div>
+  )
+}
+
 /** A failed load, with a way to try again. */
 export function LoadError({ message, onRetry }) {
   const { t } = useTranslation()

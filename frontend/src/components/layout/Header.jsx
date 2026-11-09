@@ -7,21 +7,37 @@ import {
   MenuItem,
   MenuItems,
 } from '@headlessui/react'
-import { Camera, ChevronDown, Inbox, LayoutGrid, LogOut, Menu as MenuIcon, UserRound, X } from 'lucide-react'
+import {
+  BookOpen,
+  Camera,
+  ChevronDown,
+  Inbox,
+  LayoutGrid,
+  LogOut,
+  Menu as MenuIcon,
+  MessagesSquare,
+  UserRound,
+  X,
+} from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link, NavLink, useNavigate } from 'react-router'
 import { useAuth } from '../../auth/useAuth'
 import { homePathFor } from '../../auth/homePath'
 import { cx } from '../../lib/cx'
 import { LogoLink } from '../ui/Logo'
+import { NotificationsMenu } from './NotificationsMenu'
 
+// `end`: active only on that exact page, not on the pages below it.
 function navLinksFor(role, t) {
+  const pestGuide = { to: '/pests', label: t('nav.pestGuide'), Icon: BookOpen, end: false }
   if (role === 'specialist') {
-    return [{ to: '/specialist', label: t('nav.reviewQueue'), Icon: Inbox }]
+    return [{ to: '/specialist', label: t('nav.reviewQueue'), Icon: Inbox, end: false }, pestGuide]
   }
   return [
-    { to: '/dashboard', label: t('nav.dashboard'), Icon: LayoutGrid },
-    { to: '/observations/new', label: t('nav.newObservation'), Icon: Camera },
+    { to: '/dashboard', label: t('nav.dashboard'), Icon: LayoutGrid, end: true },
+    { to: '/observations/new', label: t('nav.newObservation'), Icon: Camera, end: true },
+    { to: '/reviews', label: t('nav.reviews'), Icon: MessagesSquare, end: true },
+    pestGuide,
   ]
 }
 
@@ -37,18 +53,18 @@ export function Header() {
   }
 
   return (
-    <Disclosure as="header" className="sticky top-0 z-30 border-b border-line bg-white/90 backdrop-blur-md">
+    <Disclosure as="header" className="sticky top-0 z-30 border-b border-line bg-white/90 backdrop-blur-md print:hidden">
       {({ open, close }) => (
         <>
-          <div className="mx-auto flex h-16 max-w-6xl items-center gap-8 px-4 sm:px-6">
+          <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-4 sm:px-6 lg:gap-8">
             <LogoLink to={homePathFor(user)} />
 
-            <nav aria-label={t('nav.main')} className="hidden items-center gap-1 md:flex">
-              {links.map(({ to, label, Icon }) => (
+            <nav aria-label={t('nav.main')} className="hidden items-center gap-1 lg:flex">
+              {links.map(({ to, label, Icon, end }) => (
                 <NavLink
                   key={to}
                   to={to}
-                  end
+                  end={end}
                   className={({ isActive }) =>
                     cx(
                       'flex items-center gap-2 rounded-lg px-3 py-2 text-[0.95rem] font-medium transition-colors',
@@ -64,24 +80,25 @@ export function Header() {
               ))}
             </nav>
 
-            <div className="ms-auto flex items-center gap-2">
+            <div className="ms-auto flex items-center gap-1 sm:gap-2">
+              <NotificationsMenu />
               <AccountMenu user={user} onSignOut={handleSignOut} />
               <DisclosureButton
                 aria-label={open ? t('nav.closeMenu') : t('nav.openMenu')}
-                className="flex size-10 items-center justify-center rounded-lg text-forest-800 hover:bg-forest-50 md:hidden"
+                className="flex size-10 items-center justify-center rounded-lg text-forest-800 hover:bg-forest-50 lg:hidden"
               >
                 {open ? <X className="size-6" /> : <MenuIcon className="size-6" />}
               </DisclosureButton>
             </div>
           </div>
 
-          <DisclosurePanel className="border-t border-line bg-white md:hidden">
+          <DisclosurePanel className="border-t border-line bg-white lg:hidden">
             <nav aria-label={t('nav.main')} className="mx-auto max-w-6xl space-y-1 px-4 py-3">
-              {links.map(({ to, label, Icon }) => (
+              {links.map(({ to, label, Icon, end }) => (
                 <NavLink
                   key={to}
                   to={to}
-                  end
+                  end={end}
                   onClick={() => close()}
                   className={({ isActive }) =>
                     cx(
@@ -124,7 +141,7 @@ function AccountMenu({ user, onSignOut }) {
         >
           {initialsOf(user.full_name)}
         </span>
-        <span className="hidden max-w-40 truncate sm:block">{user.full_name}</span>
+        <span className="hidden max-w-40 truncate sm:block lg:hidden xl:block">{user.full_name}</span>
         <ChevronDown className="size-4 text-muted" />
       </MenuButton>
       <MenuItems

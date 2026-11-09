@@ -1,0 +1,37 @@
+{
+  "credit": "Demo photos from the IP102 insect pest dataset (Wu et al., CVPR 2019), test split, used for academic purposes.",
+  "photos": {
+    "lemon-aphids.jpg": {
+      "ip102_class": 25,
+      "split": "test"
+    },
+    "lemon-mealybugs.jpg": {
+      "ip102_class": 65,
+      "split": "test"
+    },
+    "lemon-fruit-fly.jpg": {
+      "ip102_class": 85,
+      "split": "test"
+    },
+    "tomato-whiteflies.jpg": {
+      "ip102_class": 72,
+      "split": "test"
+    },
+    "tomato-caterpillar.jpg": {
+      "ip102_class": 87,
+      "split": "test"
+    },
+    "rose-aphids.jpg": {
+      "ip102_class": 25,
+      "split": "test"
+    },
+    "fig-scale.jpg": {
+      "ip102_class": 79,
+      "split": "test"
+    },
+    "mint-unknown.jpg": {
+      "ip102_class": 70,
+      "split": "test"
+    }
+  }
+}

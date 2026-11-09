@@ -10,6 +10,7 @@ from app.config import Settings
 from app.errors import ApiError, validation_error
 from app.models import Observation, Plant, User
 from app.schemas.observations import ObservationOut
+from app.services import analysis as analysis_service
 from app.services import photos
 from app.services.plants import not_found, thumb_url
 
@@ -28,6 +29,8 @@ def to_out(observation: Observation) -> ObservationOut:
         photo_width=observation.photo_width,
         photo_height=observation.photo_height,
         created_at=observation.created_at,
+        analysis=analysis_service.to_out(observation.analysis),
+        review_status=observation.review.status if observation.review else None,
     )
 
 

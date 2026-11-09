@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 import { describe, expect, it } from 'vitest'
 import { apiPath, errorResponse, readMultipart } from '../../test/api'
-import { grower, makeObservation, makePlant } from '../../test/fixtures'
+import { grower, makeAnalysis, makeObservation, makePest, makePlant } from '../../test/fixtures'
 import { renderApp } from '../../test/renderApp'
 import { server } from '../../test/server'
 
@@ -20,10 +20,13 @@ const savedObservation = makeObservation({
 
 const aphidPhoto = () => new File(['fake jpeg bytes'], 'aphids.jpg', { type: 'image/jpeg' })
 
+// Once saved, the observation page asks Nabta to identify the insect.
 function plantsAndSavedObservation() {
   return [
     http.get(apiPath('/plants'), () => HttpResponse.json([lemonTree, tomatoes])),
     http.get(apiPath('/observations/7'), () => HttpResponse.json(savedObservation)),
+    http.post(apiPath('/observations/7/analysis'), () => HttpResponse.json(makeAnalysis(), { status: 201 })),
+    http.get(apiPath('/pests/aphids'), () => HttpResponse.json(makePest())),
   ]
 }
 
@@ -177,7 +180,12 @@ describe('Saving an observation (US06)', () => {
 
 describe('Viewing an observation (US06, FR10)', () => {
   it('shows the photo with its plant, date and notes', async () => {
-    server.use(http.get(apiPath('/observations/7'), () => HttpResponse.json(savedObservation)))
+    server.use(
+      http.get(apiPath('/observations/7'), () =>
+        HttpResponse.json({ ...savedObservation, analysis: makeAnalysis() }),
+      ),
+      http.get(apiPath('/pests/aphids'), () => HttpResponse.json(makePest())),
+    )
     renderApp('/observations/7', { user: grower })
 
     expect(

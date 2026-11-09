@@ -18,6 +18,7 @@ class Plant(Base):
     created_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utcnow)
     updated_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utcnow, onupdate=utcnow)
 
+    owner: Mapped["User"] = relationship()  # noqa: F821
     observations: Mapped[list["Observation"]] = relationship(
         back_populates="plant", cascade="all, delete-orphan", passive_deletes=True
     )
@@ -41,3 +42,9 @@ class Observation(Base):
     created_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utcnow)
 
     plant: Mapped[Plant] = relationship(back_populates="observations")
+    analysis: Mapped["Analysis | None"] = relationship(  # noqa: F821
+        back_populates="observation", cascade="all, delete-orphan", passive_deletes=True
+    )
+    review: Mapped["ReviewCase | None"] = relationship(  # noqa: F821
+        back_populates="observation", cascade="all, delete-orphan", passive_deletes=True
+    )

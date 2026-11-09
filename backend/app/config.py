@@ -2,6 +2,7 @@
 
 from pathlib import Path
 
+from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
@@ -23,6 +24,13 @@ class Settings(BaseSettings):
     cookie_secure: bool = False
     reset_token_minutes: int = 60
     max_upload_mb: int = 10
+    # The exported pest model (model.onnx + model_card.json), produced by ml/. Not in git.
+    model_dir: Path = BACKEND_DIR / "models" / "nabta-pest"
+
+    # AI features (plant reports, specialist drafts, questions about a pest). Off without a key.
+    openai_api_key: SecretStr | None = None
+    openai_model: str = "gpt-6-luna"
+    openai_timeout_seconds: float = 45.0
 
     smtp_host: str | None = None
     smtp_port: int = 587
