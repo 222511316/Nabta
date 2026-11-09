@@ -1,0 +1,126 @@
+@import 'tailwindcss';
+@import './scene.css';
+
+/*
+ * Nabta light theme, derived from the logo's two greens:
+ * forest #1C3F28 (leaf + wordmark) and sage #83996A (second leaf).
+ * Contrast notes: forest-700 on white is 11.7:1; sage-500 is 3.1:1, so it is
+ * used for decoration only. Text in sage uses 600 or darker.
+ */
+@theme {
+  --font-sans: 'Readex Pro Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-forest-50: #f3f7f5;
+  --color-forest-100: #e2ebe5;
+  --color-forest-200: #c5d7cb;
+  --color-forest-300: #9fbca8;
+  --color-forest-400: #759f82;
+  --color-forest-500: #3a714c;
+  --color-forest-600: #2c5a3b;
+  --color-forest-700: #1c3f28;
+  --color-forest-800: #163220;
+  --color-forest-900: #102517;
+  --color-forest-950: #0b1910;
+
+  --color-sage-50: #f5f7f3;
+  --color-sage-100: #e6ebe1;
+  --color-sage-200: #d0d8c6;
+  --color-sage-300: #b5c2a6;
+  --color-sage-400: #9cad88;
+  --color-sage-500: #83996a;
+  --color-sage-600: #697a55;
+  --color-sage-700: #515f42;
+  --color-sage-800: #3b4530;
+  --color-sage-900: #2a3122;
+
+  --color-paper: #f7f8f3;
+  --color-ink: #17261c;
+  --color-muted: #56655a;
+  --color-line: #dde3d5;
+  --color-line-strong: #839385;
+
+  --color-danger-50: #fef3f2;
+  --color-danger-200: #fecdca;
+  --color-danger-600: #b42318;
+  --color-danger-700: #912018;
+
+  --color-warning-50: #fef6e7;
+  --color-warning-200: #f7d9a4;
+  --color-warning-800: #8a4b08;
+
+  /* A pale leaf-green surface, and one warm accent (the magnifier) used sparingly. */
+  --color-wash: #e6eddf;
+  --color-pollen: #c99a2e;
+
+  --shadow-card: 0 1px 2px rgb(23 38 28 / 0.04), 0 6px 20px -8px rgb(23 38 28 / 0.1);
+  --shadow-raised: 0 2px 4px rgb(23 38 28 / 0.06), 0 16px 32px -12px rgb(23 38 28 / 0.18);
+
+  --animate-page-in: page-in 360ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-rise: rise 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-fade-in: fade-in 400ms ease-out both;
+
+  @keyframes page-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+}
+
+
+/* A graph-paper ground, like the page of a field notebook. */
+@utility bg-field-grid {
+  background-image:
+    linear-gradient(to right, rgb(131 153 106 / 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(131 153 106 / 0.14) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Items in a list rise in one after another: set --i on each. */
+@utility stagger {
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    min-height: 100dvh;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-forest-500);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-forest-100);
+  }
+}

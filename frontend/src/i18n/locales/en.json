@@ -1,0 +1,363 @@
+{
+  "app": {
+    "name": "Nabta",
+    "titleSuffix": "Nabta",
+    "skipToContent": "Skip to main content",
+    "home": "Nabta home"
+  },
+  "common": {
+    "loading": "Loading…",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "optional": "optional",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "breadcrumb": "Breadcrumb",
+    "loadFailed": "This page couldn't be loaded."
+  },
+  "nav": {
+    "main": "Main",
+    "dashboard": "Dashboard",
+    "newObservation": "New observation",
+    "reviewQueue": "Review queue",
+    "account": "Account",
+    "signOut": "Sign out",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "accountMenu": "Account menu for {{name}}",
+    "roles": {
+      "grower": "Grower",
+      "specialist": "Plant specialist"
+    }
+  },
+  "authLayout": {
+    "backHome": "Nabta home",
+    "grower": {
+      "headline": "Keep every sighting with its plant.",
+      "body": "Photos, dates and notes stay together, so you can see what you found and when."
+    },
+    "specialist": {
+      "headline": "See the whole case at a glance.",
+      "body": "The photo, the plant and the grower's notes arrive together in your review queue."
+    }
+  },
+  "signIn": {
+    "title": "Sign in",
+    "subtitle": "Welcome back to Nabta.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "forgot": "Forgot your password?",
+    "noAccount": "New to Nabta?",
+    "createAccount": "Create an account",
+    "sessionExpired": "Your session has ended. Please sign in again.",
+    "passwordReset": "Your password has been changed. Sign in with your new password.",
+    "roleMismatch": {
+      "grower": "This email belongs to a grower account.",
+      "specialist": "This email belongs to a plant specialist account."
+    },
+    "switchTo": {
+      "grower": "Sign in as a grower",
+      "specialist": "Sign in as a specialist"
+    }
+  },
+  "register": {
+    "title": "Create your account",
+    "subtitle": "Choose how you'll use Nabta, then add your details.",
+    "fullName": "Full name",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 8 characters.",
+    "confirmPassword": "Confirm password",
+    "submit": "Create account",
+    "submitting": "Creating account…",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "welcome": "Welcome to Nabta, {{name}}."
+  },
+  "forgotPassword": {
+    "title": "Reset your password",
+    "subtitle": "Enter the email you signed up with and we'll send you a link to choose a new password.",
+    "email": "Email",
+    "submit": "Send reset link",
+    "submitting": "Sending…",
+    "sentTitle": "Check your email",
+    "sentBody": "If there's an account for {{email}}, we've sent it a link to reset the password. The link works for 60 minutes.",
+    "backToSignIn": "Back to sign in"
+  },
+  "resetPassword": {
+    "title": "Choose a new password",
+    "subtitle": "Use at least 8 characters. You'll be signed out on all your devices.",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "submit": "Save new password",
+    "submitting": "Saving…",
+    "missingToken": "This reset link is incomplete. Request a new link to continue.",
+    "requestNew": "Request a new link"
+  },
+  "validation": {
+    "required": "This field is required.",
+    "emailInvalid": "Enter a valid email address, like name@example.com.",
+    "passwordMin": "Use at least {{min}} characters.",
+    "maxLength": "Use {{max}} characters or fewer.",
+    "passwordsMismatch": "The passwords don't match.",
+    "photoRequired": "Choose a photo of the insect.",
+    "plantRequired": "Choose the plant you found the insect on.",
+    "dateRequired": "Choose the date you saw the insect.",
+    "dateFuture": "The date can't be in the future."
+  },
+  "fieldErrors": {
+    "required": "This field is required.",
+    "too_short": "This is too short.",
+    "too_long": "This is too long.",
+    "invalid_email": "Enter a valid email address.",
+    "invalid": "This value isn't valid.",
+    "future_date": "The date can't be in the future.",
+    "too_early": "Choose a date from the year 2000 onwards.",
+    "email_taken": "An account with this email already exists.",
+    "wrong_password": "Your current password is incorrect.",
+    "unsupported_image_type": "Use a JPEG, PNG or WebP photo.",
+    "invalid_image": "This file couldn't be read as a photo. Try a different one.",
+    "image_too_large": "This photo is larger than 10 MB. Choose a smaller one.",
+    "image_too_small": "This photo is too small to show the insect clearly. Use one that's at least 256 pixels on each side."
+  },
+  "errors": {
+    "unknown": "Something went wrong. Please try again.",
+    "network_error": "We couldn't reach Nabta. Check your connection and try again.",
+    "server_error": "Something went wrong on our side. Please try again.",
+    "validation_error": "Some fields need attention.",
+    "invalid_credentials": "The email or password is incorrect.",
+    "email_taken": "An account with this email already exists.",
+    "invalid_reset_token": "This reset link is invalid or has expired. Request a new one.",
+    "wrong_password": "Your current password is incorrect.",
+    "not_authenticated": "Please sign in to continue.",
+    "forbidden": "You don't have access to this.",
+    "not_found": "We couldn't find that.",
+    "cross_site_request": "This request was blocked to protect your account.",
+    "duplicate_request": "This observation has already been submitted.",
+    "unsupported_image_type": "Use a JPEG, PNG or WebP photo.",
+    "invalid_image": "This file couldn't be read as a photo. Try a different one.",
+    "image_too_large": "This photo is larger than 10 MB. Choose a smaller one.",
+    "image_too_small": "This photo is too small to show the insect clearly. Use one that's at least 256 pixels on each side.",
+    "role_mismatch": "This account is registered with the other role."
+  },
+  "dashboard": {
+    "title": "Your plants",
+    "subtitle": "Open a plant to see its observations, or record something new.",
+    "addPlant": "Add plant",
+    "newObservation": "New observation",
+    "emptyTitle": "Add your first plant",
+    "emptyBody": "Create a profile for each plant you look after. Every insect photo you save is kept with its plant.",
+    "loadError": "Your plants couldn't be loaded.",
+    "greeting": {
+      "morning": "Good morning, {{name}}.",
+      "afternoon": "Good afternoon, {{name}}.",
+      "evening": "Good evening, {{name}}."
+    },
+    "summary": "You're keeping records for {{plants}}, with {{observations}} so far.",
+    "summaryNoObservations": "You're keeping records for {{plants}}. No observations yet."
+  },
+  "plantCard": {
+    "observations_one": "{{count}} observation",
+    "observations_other": "{{count}} observations",
+    "lastSeen": "Last seen {{date}}",
+    "noObservations": "No observations yet",
+    "coverAlt": "Latest insect photo from {{name}}"
+  },
+  "plantForm": {
+    "createTitle": "Add a plant",
+    "createSubtitle": "Give the plant a name you'll recognise. You can change any of this later.",
+    "editTitle": "Edit plant",
+    "editSubtitle": "Update the details for {{name}}.",
+    "name": "Plant name",
+    "nameHint": "For example, \"Lemon tree by the gate\".",
+    "plantType": "Type of plant",
+    "plantTypeHint": "For example, lemon, tomato or rose.",
+    "location": "Location",
+    "locationHint": "Where it grows, like \"balcony\" or \"back garden\".",
+    "notes": "Notes",
+    "notesHint": "Anything worth remembering about this plant.",
+    "create": "Add plant",
+    "creating": "Adding…",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "created": "{{name}} was added.",
+    "saved": "Your changes were saved."
+  },
+  "plant": {
+    "addObservation": "Add observation",
+    "edit": "Edit",
+    "delete": "Delete",
+    "details": "Details",
+    "type": "Type",
+    "location": "Location",
+    "notes": "Notes",
+    "added": "Added",
+    "notSet": "Not set",
+    "noNotes": "No notes yet.",
+    "observationsTitle": "Observations",
+    "observationsEmptyTitle": "No observations yet",
+    "observationsEmptyBody": "When you find an insect on this plant, add a photo so there's a record of it.",
+    "deleteTitle": "Delete {{name}}?",
+    "deleteBodyEmpty": "This permanently deletes the plant. This can't be undone.",
+    "deleteBody_one": "This permanently deletes the plant and its {{count}} observation, including the photo. This can't be undone.",
+    "deleteBody_other": "This permanently deletes the plant and its {{count}} observations, including their photos. This can't be undone.",
+    "deleteConfirm": "Delete plant",
+    "deleting": "Deleting…",
+    "deleted": "{{name}} was deleted.",
+    "notFoundTitle": "Plant not found",
+    "notFoundBody": "This plant doesn't exist or isn't in your account.",
+    "backToDashboard": "Back to dashboard"
+  },
+  "newObservation": {
+    "title": "New observation",
+    "subtitle": "Save a photo of an insect you found, with the date and any notes.",
+    "plant": "Plant",
+    "choosePlant": "Choose a plant",
+    "photo": "Photo",
+    "dropTitle": "Choose a photo or drag it here",
+    "dropHint": "JPEG, PNG or WebP, up to 10 MB",
+    "changePhoto": "Choose a different photo",
+    "previewAlt": "The photo you selected",
+    "observedOn": "Date seen",
+    "notes": "Notes",
+    "notesHint": "Where on the plant it was, how many you saw, any damage you noticed.",
+    "submit": "Save observation",
+    "uploading": "Uploading… {{percent}}%",
+    "uploadProgress": "Upload progress",
+    "failedTitle": "Your observation wasn't saved",
+    "saved": "Observation saved.",
+    "noPlantsTitle": "Add a plant first",
+    "noPlantsBody": "Observations are saved to a plant. Create a plant profile, then come back to add your photo.",
+    "addPlant": "Add plant",
+    "cancel": "Cancel"
+  },
+  "photoTips": {
+    "title": "Tips for a clear photo",
+    "close": "Get close, so the insect fills a good part of the photo.",
+    "focus": "Tap the insect on your screen to bring it into focus.",
+    "light": "Use soft daylight. Avoid harsh shadows and flash glare.",
+    "single": "Photograph one insect at a time, if you can.",
+    "background": "A plain background, like a leaf or a sheet of paper, helps."
+  },
+  "observation": {
+    "title": "Observation from {{date}}",
+    "plant": "Plant",
+    "observedOn": "Date seen",
+    "savedAt": "Saved",
+    "notes": "Notes",
+    "noNotes": "No notes.",
+    "photoAlt": "Insect photo from {{plant}}, seen {{date}}",
+    "openFull": "Open full-size photo",
+    "notFoundTitle": "Observation not found",
+    "notFoundBody": "This observation doesn't exist or isn't in your account."
+  },
+  "observationCard": {
+    "thumbAlt": "Insect photo from {{date}}",
+    "noNotes": "No notes"
+  },
+  "account": {
+    "title": "Account",
+    "subtitle": "Manage your details and password.",
+    "detailsTitle": "Your details",
+    "fullName": "Full name",
+    "email": "Email",
+    "accountType": "Account type",
+    "save": "Save details",
+    "saving": "Saving…",
+    "saved": "Your details were saved.",
+    "passwordTitle": "Change password",
+    "passwordIntro": "Other devices signed in to your account will be signed out.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "changePassword": "Change password",
+    "changing": "Changing…",
+    "passwordChanged": "Your password was changed. Other devices have been signed out."
+  },
+  "specialist": {
+    "title": "Review queue",
+    "subtitle": "Cases that growers send for a specialist's review appear here.",
+    "emptyTitle": "No cases waiting",
+    "emptyBody": "When a grower asks for a review of one of their observations, the case will appear in this queue.",
+    "loadError": "The review queue couldn't be loaded."
+  },
+  "forbidden": {
+    "title": "You don't have access to this page",
+    "grower": "This area is for growers.",
+    "specialist": "This area is for plant specialists.",
+    "goHome": "Go to your workspace"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for doesn't exist or has moved.",
+    "goHome": "Go to the home page"
+  },
+  "fullPageError": {
+    "title": "Nabta isn't responding",
+    "body": "We couldn't check whether you're signed in. Check your connection and try again."
+  },
+  "roles": {
+    "grower": {
+      "title": "Grower",
+      "description": "I look after plants and want to record the insects I find."
+    },
+    "specialist": {
+      "title": "Plant specialist",
+      "description": "I identify pests and review growers' cases."
+    },
+    "joinAs": "Join as",
+    "signInAs": "Sign in as"
+  },
+  "landing": {
+    "title": "A field notebook for the insects on your plants",
+    "headline": "A field notebook for the insects on your plants.",
+    "intro": "Photograph an insect when you find it, keep the sighting with its plant, and build a history you can come back to. Plant specialists join Nabta to review growers' cases.",
+    "startGrower": "Create a grower account",
+    "signIn": "Sign in",
+    "createAccount": "Create an account",
+    "stepsTitle": "From sighting to record",
+    "steps": {
+      "plant": {
+        "title": "Add your plants",
+        "body": "Give each plant a profile with its name, type and where it grows."
+      },
+      "photo": {
+        "title": "Photograph what you find",
+        "body": "Get close, keep it sharp, and add the date and a note. The photo stays with its plant."
+      },
+      "history": {
+        "title": "Come back to its history",
+        "body": "Every sighting sits on the plant's page, newest first, so changes are easy to spot."
+      }
+    },
+    "rolesTitle": "Two ways into Nabta",
+    "growerTitle": "For growers",
+    "growerBody": "Home gardeners and nursery staff keep a record of every insect they find, plant by plant, with photos, dates and notes.",
+    "specialistTitle": "For plant specialists",
+    "specialistBody": "Pest specialists get a review queue for the cases growers send, with the photo, the plant and the grower's notes in one place.",
+    "joinSpecialist": "Join as a specialist",
+    "footer": "Nabta is an SE499 senior project supervised by Dr. Suad Alramouni.",
+    "sceneLabel": "Illustration: an insect on a leaf, looked at through a magnifying glass"
+  },
+  "scene": {
+    "grower": {
+      "line1": "Lemon tree, back garden",
+      "line2": "Seen 24 September 2026",
+      "note": "Small green insects under the young leaves."
+    },
+    "specialist": {
+      "line1": "Lemon tree, back garden",
+      "line2": "Waiting for your review",
+      "note": "Photo from 24 September 2026, with the grower's notes."
+    }
+  },
+  "counts": {
+    "plants_one": "{{count}} plant",
+    "plants_other": "{{count}} plants",
+    "observations_one": "{{count}} observation",
+    "observations_other": "{{count}} observations"
+  }
+}
