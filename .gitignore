@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Backend runtime data (database and uploaded photos)
+backend/storage/
+backend/.env
+
+# Node / Vite
+node_modules/
+frontend/dist/
+frontend/coverage/
+*.local
+
+# Editors and OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.log

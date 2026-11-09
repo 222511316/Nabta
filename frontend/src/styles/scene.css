@@ -1,0 +1,154 @@
+/*
+ * The leaf scene's one orchestrated entrance: the leaves unfurl, the veins draw
+ * in, an insect walks up the midrib, the magnifier glides over it and the
+ * record's label appears. Every element's resting style is its final state;
+ * keyframes only describe where it comes from, so reduced motion shows the
+ * finished scene. --pace shortens the whole sequence (the auth pages use 0.55).
+ */
+.leaf-scene {
+  --pace: 1;
+}
+
+.leaf-scene .scene-halo {
+  transform-box: view-box;
+  transform-origin: 320px 310px;
+  animation: scene-halo 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) calc(0s * var(--pace)) backwards;
+}
+
+.leaf-scene .scene-leaf-main,
+.leaf-scene .scene-leaf-back,
+.leaf-scene .scene-stem {
+  transform-box: view-box;
+  transform-origin: 205px 518px;
+}
+
+.leaf-scene .scene-leaf-main {
+  animation:
+    scene-unfurl-main 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) calc(0.15s * var(--pace)) backwards,
+    scene-sway 7s ease-in-out calc(5s * var(--pace)) infinite alternate;
+}
+
+.leaf-scene .scene-leaf-back {
+  animation:
+    scene-unfurl-back 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) calc(0.35s * var(--pace)) backwards,
+    scene-sway-back 8s ease-in-out calc(5s * var(--pace)) infinite alternate;
+}
+
+.leaf-scene .scene-stem {
+  animation: scene-draw 0.6s ease-out 0s backwards;
+}
+
+.leaf-scene .scene-vein {
+  stroke-dasharray: 1;
+  animation: scene-draw 0.9s ease-out calc(var(--d, 0.8s) * var(--pace)) backwards;
+}
+
+.leaf-scene .scene-insect {
+  animation: scene-walk 1.9s cubic-bezier(0.3, 0.6, 0.3, 1) calc(1.3s * var(--pace)) backwards;
+}
+
+.leaf-scene .scene-wobble {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scene-scuttle 0.24s ease-in-out calc(1.3s * var(--pace)) 8 alternate;
+}
+
+.leaf-scene .scene-loupe {
+  transform-box: view-box;
+  transform-origin: 307px 318px;
+  animation: scene-loupe 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) calc(3s * var(--pace)) backwards;
+}
+
+.leaf-scene .scene-magnified {
+  animation: scene-fade 0.45s ease-out calc(3.9s * var(--pace)) backwards;
+}
+
+.leaf-scene .scene-label {
+  animation: scene-label 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) calc(4.1s * var(--pace)) backwards;
+}
+
+/* When the role changes, only the label swaps, straight away. */
+.leaf-scene .scene-label[data-replay] {
+  animation-delay: 0s;
+}
+
+@keyframes scene-halo {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes scene-unfurl-main {
+  from {
+    opacity: 0;
+    transform: rotate(-16deg) scale(0.55);
+  }
+}
+
+@keyframes scene-unfurl-back {
+  from {
+    opacity: 0;
+    transform: rotate(20deg) scale(0.5);
+  }
+}
+
+@keyframes scene-sway {
+  to {
+    transform: rotate(-1.6deg);
+  }
+}
+
+@keyframes scene-sway-back {
+  to {
+    transform: rotate(1.8deg);
+  }
+}
+
+@keyframes scene-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes scene-walk {
+  from {
+    opacity: 0;
+    transform: translate(-62px, 114px);
+  }
+  15% {
+    opacity: 1;
+  }
+}
+
+@keyframes scene-scuttle {
+  from {
+    transform: rotate(-5deg);
+  }
+  to {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes scene-loupe {
+  from {
+    opacity: 0;
+    transform: translate(180px, -200px) scale(0.85);
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+@keyframes scene-label {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes scene-fade {
+  from {
+    opacity: 0;
+  }
+}
