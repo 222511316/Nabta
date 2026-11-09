@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
+import { toast } from 'sonner'
 import { afterAll, afterEach, beforeAll } from 'vitest'
 import '../i18n'
 import { server } from './server'
@@ -35,6 +36,9 @@ if (!URL.createObjectURL) {
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 afterEach(() => {
   cleanup()
+  // Sonner keeps toasts in a module-level store and replays active ones to every new
+  // Toaster, so one test's toast would otherwise show up in the next.
+  toast.dismiss()
   server.resetHandlers()
 })
 afterAll(() => server.close())

@@ -1,0 +1,38 @@
+# Nabta's pest categories and the IP102 classes each one groups together.
+# IP102 class ids are 1-based, as listed in IP102's classes.txt
+# (the dataset files store them 0-based: label = id - 1).
+#
+# This file is the recorded category mapping (charter NFR15). Change it here, then
+# re-run the pipeline; every report and the exported model card record which mapping was used.
+
+dataset: IP102 v1.1 (Wu et al., CVPR 2019)
+
+categories:
+  - key: aphids
+    name: Aphids
+    ip102: [25, 28, 29, 30, 53, 90, 91, 92]   # aphids, grain/green/oat aphids, citrus aphids
+  - key: whiteflies
+    name: Whiteflies
+    ip102: [72, 83]                             # greenhouse whitefly, citrus spiny whitefly
+  - key: mealybugs
+    name: Mealybugs
+    ip102: [65, 82]                             # Comstock mealybug, Nipaecoccus
+  - key: scale_insects
+    name: Scale insects
+    ip102: [77, 78, 79, 80, 81]                 # cottony cushion, arrowhead, wax and armoured scales
+  - key: fruit_flies
+    name: Fruit flies
+    ip102: [84, 85, 86]                         # Bactrocera / Dacus fruit flies
+  - key: armyworms_cutworms
+    name: Armyworms and cutworms
+    ip102: [19, 20, 21, 24, 39, 40, 87]         # cutworms, armyworms, Spodoptera litura
+  - key: thrips
+    name: Thrips
+    ip102: [13, 34, 54, 55, 93]
+  - key: locusts
+    name: Locusts and grasshoppers
+    ip102: [49]
+
+# Every IP102 class not listed above is an "unsupported insect". They are split by class
+# into two disjoint groups: one tunes the "unclear" threshold, the other only measures it.
+unsupported_split_seed: 2026

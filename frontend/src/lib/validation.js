@@ -9,6 +9,10 @@ export const limits = {
   location: 120,
   plantNotes: 1000,
   observationNotes: 2000,
+  reviewNote: 1000,
+  caseMessage: 2000,
+  otherPest: 80,
+  pestQuestion: 300,
 }
 
 // Deliberately loose: something@something.tld. The server does the strict check.

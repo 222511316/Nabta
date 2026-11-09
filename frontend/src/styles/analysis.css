@@ -1,0 +1,48 @@
+/*
+ * The analysis moment. While Nabta looks at a photo, the brand's magnifier (the
+ * landing scene's loupe) sweeps slowly across it. The loupe's resting place is
+ * the middle of the photo, which is what reduced motion shows.
+ */
+.photo-sweep {
+  container-type: size;
+}
+
+.photo-sweep .loupe {
+  /* The lens centre sits at 40% of the loupe's box; the handle fills the rest. */
+  --loupe: clamp(4.5rem, 20cqmin, 8rem);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--loupe);
+  height: var(--loupe);
+  transform: translate(calc(50cqw - var(--loupe) * 0.4), calc(50cqh - var(--loupe) * 0.4));
+  filter: drop-shadow(0 6px 14px rgb(11 25 16 / 0.35));
+  animation: loupe-sweep 6.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.photo-sweep .loupe-glass {
+  position: absolute;
+  top: 13%;
+  left: 13%;
+  width: 54%;
+  height: 54%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgb(255 255 255 / 0.3), transparent 58%);
+  backdrop-filter: saturate(1.5) contrast(1.12) brightness(1.08);
+}
+
+@keyframes loupe-sweep {
+  0%,
+  100% {
+    transform: translate(calc(28cqw - var(--loupe) * 0.4), calc(32cqh - var(--loupe) * 0.4));
+  }
+  25% {
+    transform: translate(calc(68cqw - var(--loupe) * 0.4), calc(28cqh - var(--loupe) * 0.4));
+  }
+  50% {
+    transform: translate(calc(60cqw - var(--loupe) * 0.4), calc(66cqh - var(--loupe) * 0.4));
+  }
+  75% {
+    transform: translate(calc(32cqw - var(--loupe) * 0.4), calc(70cqh - var(--loupe) * 0.4));
+  }
+}

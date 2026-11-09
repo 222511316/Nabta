@@ -16,6 +16,9 @@ frontend/dist/
 frontend/coverage/
 *.local
 
+# Browser-testing logs from the Playwright tools
+.playwright-mcp/
+
 # Editors and OS
 .vscode/*
 !.vscode/extensions.json
@@ -23,3 +26,9 @@ frontend/coverage/
 .DS_Store
 Thumbs.db
 *.log
+
+# ML: raw data, cached features and trained models are rebuilt from ml/README.md
+ml/data/
+ml/artifacts/
+ml/*.pkl
+backend/models/

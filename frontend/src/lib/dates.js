@@ -1,4 +1,4 @@
-import { dateLocales } from '../i18n'
+import { localeFor } from '../i18n'
 
 const pad = (value) => String(value).padStart(2, '0')
 
@@ -13,8 +13,6 @@ function parseCalendarDate(isoDate) {
   const [year, month, day] = isoDate.split('-').map(Number)
   return new Date(year, month - 1, day)
 }
-
-const localeFor = (language) => dateLocales[language] ?? language
 
 /** "2026-09-20" → "20 September 2026" (in English). */
 export function formatDate(isoDate, language) {
@@ -36,4 +34,23 @@ export function formatDateTime(isoTimestamp, language) {
     dateStyle: 'long',
     timeStyle: 'short',
   }).format(new Date(isoTimestamp))
+}
+
+const RELATIVE_UNITS = [
+  ['year', 365 * 24 * 3600],
+  ['month', 30 * 24 * 3600],
+  ['week', 7 * 24 * 3600],
+  ['day', 24 * 3600],
+  ['hour', 3600],
+  ['minute', 60],
+]
+
+/** How long ago a UTC timestamp from the API was: "3 hours ago", "yesterday", "now". */
+export function formatRelativeTime(isoTimestamp, language, now = new Date()) {
+  const seconds = (new Date(isoTimestamp).getTime() - now.getTime()) / 1000
+  const format = new Intl.RelativeTimeFormat(localeFor(language), { numeric: 'auto' })
+  for (const [unit, size] of RELATIVE_UNITS) {
+    if (Math.abs(seconds) >= size) return format.format(Math.round(seconds / size), unit)
+  }
+  return format.format(0, 'second')
 }

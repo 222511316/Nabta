@@ -1,0 +1,196 @@
+{
+  "pests": [
+    {
+      "key": "aphids",
+      "name": "Aphids",
+      "summary": "Small, soft-bodied insects that pierce tender plant parts and suck out the sap. Almost every plant has an aphid species that feeds on it now and then.",
+      "look_for": [
+        "Soft, pear-shaped bodies with long legs and antennae, coloured green, yellow, brown, red or black",
+        "Two tube-like cornicles pointing backwards from the rear end, which no other insect has",
+        "Usually wingless; winged adults appear when colonies get crowded, especially in spring and autumn"
+      ],
+      "size": "Small; often seen in dense groups.",
+      "where": "Dense groups on leaves, stems and soft new shoots.",
+      "damage": "Large colonies turn leaves yellow and stunt shoots, and some species make leaves curl. Their sticky honeydew often turns black with sooty mould.",
+      "look_alikes": "Leafhoppers and plant bugs. Unlike those, most aphids don't move quickly when disturbed.",
+      "sources": [
+        { "title": "Aphids", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/aphids/" }
+      ],
+      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "images": [
+        { "file": "aphids-1.jpg", "caption": "Close-up: pear-shaped body, long legs and the cornicles at the rear", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 28" },
+        { "file": "aphids-2.jpg", "caption": "Black aphids feeding on a stem", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 90" },
+        { "file": "aphids-3.jpg", "caption": "A colony on soft new growth", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 90" }
+      ]
+    },
+    {
+      "key": "whiteflies",
+      "name": "Whiteflies",
+      "summary": "Tiny sap-sucking insects, related to aphids rather than true flies. They take their name from the white wax on their wings and body.",
+      "look_for": [
+        "Adults with yellowish bodies and four whitish wings",
+        "A cloud of adults flying up when the plant is disturbed",
+        "Wingless nymphs with no visible legs, from almost clear yellow or white to black with a white fringe"
+      ],
+      "size": "Tiny.",
+      "where": "Colonies on the undersides of leaves, where they also lay their eggs.",
+      "damage": "Large numbers make leaves turn yellow, dry out or drop. Leaves get sticky with honeydew or covered in black sooty mould.",
+      "look_alikes": "Mealybugs, which also make wax and honeydew but don't fly.",
+      "sources": [
+        { "title": "Whiteflies", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/whiteflies/" }
+      ],
+      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "images": [
+        { "file": "whiteflies-1.jpg", "caption": "Adult: yellowish body and white, waxy wings", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 72" },
+        { "file": "whiteflies-2.jpg", "caption": "Adults gathered on the underside of a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 72" },
+        { "file": "whiteflies-3.jpg", "caption": "Black nymphs with a white fringe", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 83" }
+      ]
+    },
+    {
+      "key": "mealybugs",
+      "name": "Mealybugs",
+      "summary": "Soft, oval insects covered in white wax, usually found in colonies. They are close relatives of soft scales but have no scale cover.",
+      "look_for": [
+        "Distinctly segmented bodies dusted with white wax",
+        "Wax filaments around the edge of older mealybugs, longer at the rear in some species",
+        "White, cottony egg sacs on leaves, bark, fruit or twigs"
+      ],
+      "size": "Small, soft and oval.",
+      "where": "Sheltered spots: between touching fruits, in the crown of the plant, in branch forks, on stems near the soil, or between a stem and a touching leaf. A few species feed on roots.",
+      "damage": "They suck sap and weaken the plant. Sticky honeydew and wax spoil leaves and fruit, especially once black sooty mould grows on it. Heavy numbers slow growth and make leaves drop.",
+      "look_alikes": "Cottony cushion scale, woolly aphids, some soft scales and whiteflies, which also produce wax and honeydew.",
+      "sources": [
+        { "title": "Mealybugs", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/mealybugs/" }
+      ],
+      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "images": [
+        { "file": "mealybugs-1.jpg", "caption": "Segmented, wax-covered bodies with filaments around the edge", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 65" },
+        { "file": "mealybugs-2.jpg", "caption": "A single mealybug on a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 82" },
+        { "file": "mealybugs-3.jpg", "caption": "A colony with white wax on a twig", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 82" },
+        { "file": "mealybugs-4.jpg", "caption": "Mealybugs sheltering in a crevice of a fruit", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 65" }
+      ]
+    },
+    {
+      "key": "scale_insects",
+      "name": "Scale insects",
+      "summary": "Sap-sucking insects that stay fixed in one place under a protective cover. They don't look like most insects, so they are easy to overlook.",
+      "look_for": [
+        "Round to oval bumps with no visible head or legs on bark, leaves or fruit",
+        "Armored scales: tiny, flat covers that can usually be lifted off, and no honeydew",
+        "Soft scales: larger, rounded and raised, with smooth, cottony or waxy surfaces and sticky honeydew",
+        "Tiny yellow to orange crawlers (the young) moving over the plant before they settle"
+      ],
+      "size": "About 1–6 mm (1/25–1/4 inch).",
+      "where": "Bark, twigs, leaves and fruit, mostly of trees, shrubs and other perennial plants.",
+      "damage": "Some species seriously harm the plant, while others do little even when abundant. Soft scales drip honeydew, which turns black with sooty mould.",
+      "look_alikes": "Some helpful lady beetles are tiny and shaped and coloured like scales. Mealybugs are related but have no cover.",
+      "sources": [
+        { "title": "Scales", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/scales/" }
+      ],
+      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "images": [
+        { "file": "scale_insects-1.jpg", "caption": "Cottony cushion scale with its white, fluted egg sac", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 77" },
+        { "file": "scale_insects-2.jpg", "caption": "Wax scales on leaves", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 79" },
+        { "file": "scale_insects-3.jpg", "caption": "Scales crowded along a twig", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 78" },
+        { "file": "scale_insects-4.jpg", "caption": "Small scales on a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 78" }
+      ]
+    },
+    {
+      "key": "fruit_flies",
+      "name": "Fruit flies",
+      "summary": "Flies whose maggots feed inside fruit, such as the oriental fruit fly. They spread mainly through infested fruit and vegetables.",
+      "look_for": [
+        "Adults with bright yellow markings, a dark T-shaped mark on the abdomen and clear wings",
+        "Females with a slender, pointed tube at the tip of the body for laying eggs under the fruit's skin",
+        "Legless, white to yellowish-white maggots inside the fruit"
+      ],
+      "size": "Adults are somewhat larger than a house fly. Maggots grow to about 1 cm (0.4 inch).",
+      "where": "On fruit, with the maggots feeding inside. Infested fruit often drops early.",
+      "damage": "Fruit rots early and drops to the ground as the maggots feed on the pulp.",
+      "look_alikes": "Other flies on ripe or fallen fruit. Check for the yellow markings, the dark T-shaped mark and the clear wings.",
+      "sources": [
+        { "title": "Oriental Fruit Fly", "publisher": "USDA Animal and Plant Health Inspection Service (APHIS)", "url": "https://www.aphis.usda.gov/plant-pests-diseases/oriental-fruit-fly" }
+      ],
+      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "images": [
+        { "file": "fruit_flies-1.jpg", "caption": "Adult oriental fruit fly: clear wings and bright yellow markings", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 85" },
+        { "file": "fruit_flies-2.jpg", "caption": "Adults on a green citrus fruit", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 84" },
+        { "file": "fruit_flies-3.jpg", "caption": "Maggots in the fruit pulp", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 84" },
+        { "file": "fruit_flies-4.jpg", "caption": "An adult on a fingertip, for size", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 85" }
+      ]
+    },
+    {
+      "key": "armyworms_cutworms",
+      "name": "Armyworms and cutworms",
+      "summary": "Moth caterpillars that chew plants. Armyworms feed in groups on leaves and fruit; cutworms hide in the soil and cut seedlings down at night.",
+      "look_for": [
+        "Smooth-skinned caterpillars; older armyworms have clear stripes along the body",
+        "Cutworms: dull brown caterpillars that curl into a C-shape when disturbed",
+        "Fluffy egg masses on seedlings and leaves (armyworms)",
+        "Adults: grey and brown mottled moths"
+      ],
+      "size": "Cutworms are 2.5–5 cm (1–2 inches) long when fully grown.",
+      "where": "Armyworms feed on leaves and green fruit. Cutworms stay on or just below the soil surface or on the lower parts of plants, and are active at night.",
+      "damage": "Armyworms skeletonise leaves and gouge fruit such as tomatoes and strawberries. Cutworms clip seedling stems near or just below the soil.",
+      "look_alikes": "Other caterpillars such as corn earworms and loopers. Armyworms are the ones feeding in groups.",
+      "sources": [
+        { "title": "Armyworms", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/armyworms/" },
+        { "title": "Cutworms", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/cutworms/" }
+      ],
+      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "images": [
+        { "file": "armyworms_cutworms-1.jpg", "caption": "A cutworm curled into a C-shape", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 21" },
+        { "file": "armyworms_cutworms-2.jpg", "caption": "An armyworm caterpillar on a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 40" },
+        { "file": "armyworms_cutworms-3.jpg", "caption": "A cutworm beside a seedling cut at soil level", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 19" },
+        { "file": "armyworms_cutworms-4.jpg", "caption": "The adult: a grey and brown mottled moth", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 40" }
+      ]
+    },
+    {
+      "key": "thrips",
+      "name": "Thrips",
+      "summary": "Tiny, slender insects with fringed wings. They puncture the surface of leaves, flowers and fruit and suck out the contents.",
+      "look_for": [
+        "Slender adults with long, narrow wings edged with long fringes",
+        "Wingless young (larvae) that are oblong or slender",
+        "Colours from see-through white or yellow to dark brown or black",
+        "Tiny black, varnish-like specks of droppings where they have fed"
+      ],
+      "size": "Under 1.3 mm (1/20 inch) long.",
+      "where": "On leaves, flowers and fruit surfaces.",
+      "damage": "Stippled, flecked or silvery leaves, scarred flowers and fruit, and distorted growth.",
+      "look_alikes": "Helpful predatory thrips, such as the sixspotted thrips with three dark spots on each forewing. Only an expert can name a thrips species for certain.",
+      "sources": [
+        { "title": "Thrips", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/thrips/" }
+      ],
+      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "images": [
+        { "file": "thrips-1.jpg", "caption": "Adult: slender body and narrow, fringed wings", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 54" },
+        { "file": "thrips-2.jpg", "caption": "A dark adult on a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 34" },
+        { "file": "thrips-3.jpg", "caption": "A pale yellow adult", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 93" },
+        { "file": "thrips-4.jpg", "caption": "A wingless young thrips on a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 93" }
+      ]
+    },
+    {
+      "key": "locusts",
+      "name": "Locusts and grasshoppers",
+      "summary": "Chewing insects with large hind legs for jumping. Most can fly, and in some years large numbers move into gardens.",
+      "look_for": [
+        "Hind legs with greatly enlarged thighs, built for jumping",
+        "A robust body and relatively short antennae",
+        "Wings on most adults, and many are strong fliers"
+      ],
+      "where": "Feeding on leaves and flowers, especially young green plants such as lettuce, beans, corn, carrots and onions.",
+      "damage": "They chew away large sections of leaves and flowers and sometimes eat whole plants.",
+      "look_alikes": "Crickets and katydids, which have long antennae.",
+      "sources": [
+        { "title": "Grasshoppers", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/grasshoppers/" }
+      ],
+      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "images": [
+        { "file": "locusts-1.jpg", "caption": "Short antennae and large hind legs", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 49" },
+        { "file": "locusts-2.jpg", "caption": "A grasshopper at rest", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 49" },
+        { "file": "locusts-3.jpg", "caption": "A pair on the ground", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 49" }
+      ]
+    }
+  ]
+}

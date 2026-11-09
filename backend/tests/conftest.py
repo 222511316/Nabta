@@ -36,6 +36,7 @@ def settings(request, tmp_path):
         _env_file=None,
         database_url=f"sqlite:///{(tmp_path / 'nabta.db').as_posix()}",
         storage_dir=tmp_path / "storage",
+        model_dir=tmp_path / "no-model",
         **overrides,
     )
 

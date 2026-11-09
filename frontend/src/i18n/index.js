@@ -13,6 +13,9 @@ export const dateLocales = {
   en: 'en-GB',
 }
 
+/** The Intl locale for a UI language. */
+export const localeFor = (language) => dateLocales[language] ?? language
+
 i18n.use(initReactI18next).init({
   resources,
   lng: 'en',

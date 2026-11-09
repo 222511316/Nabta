@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Camera, ImagePlus, Pencil, Trash2 } from 'lucide-react'
+import { Camera, ImagePlus, Pencil, Sparkles, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
@@ -15,6 +15,7 @@ import { Breadcrumb, Card, EmptyState, PageHeader } from '../../components/ui/la
 import { errorMessage } from '../../lib/apiErrors'
 import { formatDay } from '../../lib/dates'
 import { useDocumentTitle } from '../../lib/useDocumentTitle'
+import { useAiStatus } from '../ai/useAiStatus'
 import { plantMeta } from './plantMeta'
 import { ObservationCard } from '../observations/ObservationCard'
 import { PlantNotFound } from './PlantNotFound'
@@ -41,6 +42,7 @@ function PlantProfile({ plant }) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [confirmingDelete, setConfirmingDelete] = useState(false)
+  const ai = useAiStatus()
 
   const remove = useMutation({
     mutationFn: () => deletePlant(plant.id),
@@ -83,6 +85,12 @@ function PlantProfile({ plant }) {
               <Pencil />
               {t('plant.edit')}
             </ButtonLink>
+            {ai.enabled && (
+              <ButtonLink to={`/plants/${plant.id}/report`} variant="secondary">
+                <Sparkles />
+                {t('report.open')}
+              </ButtonLink>
+            )}
             <ButtonLink to={`/observations/new?plantId=${plant.id}`}>
               <Camera />
               {t('plant.addObservation')}

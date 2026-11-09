@@ -9,6 +9,7 @@ from app.config import Settings
 from app.db import get_db
 from app.errors import ApiError
 from app.models import Role, User, UserSession
+from app.pests import Catalog
 from app.services import sessions
 
 
@@ -16,8 +17,19 @@ def get_settings(request: Request) -> Settings:
     return request.app.state.settings
 
 
+def get_catalog(request: Request) -> Catalog:
+    return request.app.state.pests
+
+
+def get_ai_writer(request: Request):
+    """The language model for the AI features, or None when no API key is set."""
+    return request.app.state.ai
+
+
 DbSession = Annotated[Session, Depends(get_db)]
 AppSettings = Annotated[Settings, Depends(get_settings)]
+PestCatalog = Annotated[Catalog, Depends(get_catalog)]
+AiWriter = Annotated[object | None, Depends(get_ai_writer)]
 
 
 def get_current_session(request: Request, db: DbSession) -> UserSession:

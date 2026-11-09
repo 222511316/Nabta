@@ -33,3 +33,12 @@ export async function createObservation(
   })
   return data
 }
+
+/**
+ * Runs Nabta's pest model on the observation's photo (US09). The server keeps one
+ * analysis per observation, so asking again returns the saved result.
+ */
+export async function analyseObservation(observationId) {
+  const { data } = await apiClient.post(`/observations/${observationId}/analysis`)
+  return data
+}
