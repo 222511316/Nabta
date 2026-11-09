@@ -1,202 +1,208 @@
-# Nabta
+<div align="center">
 
-Insect pest identification and specialist review — SE499 Senior Project.
+<img src="Nabta-logo.png" alt="Nabta logo" width="120" />
 
-This repository holds all three sprints of the charter (§16, stories US01–US24):
+# Nabta · نبتة
 
-- **Sprint 1, application foundation:** a public home page, separate grower and plant specialist accounts, plant profiles and photo observations.
-- **Sprint 2, identification and review:** Nabta suggests which pest a photo shows, with a confidence or an honest "unclear". Growers can compare their photo with reference photos and ask a plant specialist, who reviews the case, asks questions and sends an assessment.
-- **Sprint 3, guidance, follow-up and release:**
-  - non-chemical "What you can do" steps on each pest page
-  - tasks with in-app reminders, and dated notes on each plant
-  - a side-by-side photo comparison on a date timeline
-  - search, and a "Needs attention" summary on the dashboard
-  - deleting single records or the whole account, and a separate research-consent switch
-  - the whole app in Arabic (right to left) as well as English
-  - browser tests across Chromium, Firefox and WebKit, and a Dockerfile for deployment
+**A field notebook for the insects on your plants.**<br />
+Photograph an insect, get a calibrated suggestion of what it is, and ask a plant specialist when you need to be sure.
 
-The designs, including the API contracts, are in [docs/superpowers/specs/](docs/superpowers/specs/). Read [the Sprint 1 design](docs/superpowers/specs/2026-09-23-nabta-sprint1-design.md) first, then [Sprint 2](docs/superpowers/specs/2026-10-18-nabta-sprint2-design.md) and [Sprint 3](docs/superpowers/specs/2026-10-27-nabta-sprint3-design.md). Deployment is in [docs/DEPLOY.md](docs/DEPLOY.md). [docs/CHARTER_ALIGNMENT.md](docs/CHARTER_ALIGNMENT.md) checks every charter requirement against the prototype and lists what the team still has to do.
+[![Live demo](https://img.shields.io/badge/live_demo-nabta.duckdns.org-1f4d2c?style=for-the-badge)](https://nabta.duckdns.org)
 
-| Part | Stack |
+[![Release](https://img.shields.io/github/v/release/222511316/Nabta?color=3a714c&label=release)](https://github.com/222511316/Nabta/releases/latest)
+[![License: MIT](https://img.shields.io/badge/license-MIT-3a714c)](LICENSE)
+![User stories](https://img.shields.io/badge/user_stories-24%2F24-3a714c)
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![ONNX Runtime](https://img.shields.io/badge/ONNX_Runtime-005CED?logo=onnx&logoColor=white)
+![Arabic and English](https://img.shields.io/badge/languages-العربية_·_English-3a714c)
+
+[Live demo](https://nabta.duckdns.org) ·
+[Features](#features) ·
+[Screenshots](#screenshots) ·
+[How it works](#how-it-works) ·
+[Getting started](#getting-started) ·
+[Documentation](#documentation) ·
+[Team](#team)
+
+<sub>SE499 Senior Project</sub>
+
+</div>
+
+---
+
+<p align="center">
+  <img src="docs/screenshots/identification.jpg" alt="An observation of a fruit fly on a lemon tree, with Nabta's suggestion: Fruit flies, very likely, 99%" width="900" />
+</p>
+
+## About
+
+Home growers in Saudi Arabia often find an insect on a plant and have no quick way to tell what it is, or whether it matters. **Nabta** turns that moment into a record:
+
+1. **Photograph** the insect and save it with the plant and the date.
+2. **Get a suggestion.** A pest model picks one of eight common pest categories and shows a calibrated confidence. When it isn't sure, it says the result is *unclear* rather than guessing.
+3. **Compare** the photo with reviewed reference photos, and read practical, non-chemical guidance with its sources.
+4. **Ask a specialist.** Approved plant specialists take the case, ask questions, and send back a dated assessment, kept apart from the model's suggestion.
+5. **Follow up** with tasks, reminders, dated notes and a photo timeline.
+
+The whole app works in **Arabic (right to left) and English**, on phones and desktops.
+
+**Pest categories:** aphids · whiteflies · mealybugs · scale insects · fruit flies · armyworms and cutworms · thrips · locusts and grasshoppers
+
+## Features
+
+| | Sprint 1: application foundation | Sprint 2: identification and review | Sprint 3: guidance, follow-up and release |
+| --- | --- | --- | --- |
+| **Growers** | Accounts, sign-in, password reset · plant profiles · photo observations · dashboard | Pest suggestion with confidence or "unclear" · reference photo comparison · ask a specialist · track requests with notifications | "What you can do" guidance · tasks and reminders · dated notes · photo timeline · search and "Needs attention" · data deletion and research consent |
+| **Specialists** | Separate, protected workspace | Review queue · open a case · ask the grower questions · send an assessment | Approval by the team before seeing cases |
+| **Everyone** | Public home page | | Full Arabic (RTL) and English · phone and desktop · accessibility checks (WCAG 2.1 AA) |
+
+All 24 user stories in the project charter are built and tested. See [how the prototype meets the charter](docs/CHARTER_ALIGNMENT.md) for the requirement-by-requirement check.
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/home.jpg" alt="Nabta home page" /><br /><sub><b>Home page.</b> Public landing page in English or Arabic.</sub></td>
+    <td width="50%"><img src="docs/screenshots/dashboard.jpg" alt="Grower dashboard with plant cards and a Needs attention summary" /><br /><sub><b>Grower dashboard.</b> Plants, latest sightings and what needs attention.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/pest-guide.jpg" alt="Pest guide page for aphids with reference photos and sources" /><br /><sub><b>Pest guide.</b> Reference photos, what to look for, and cited sources.</sub></td>
+    <td width="50%"><img src="docs/screenshots/specialist-queue.jpg" alt="Specialist review queue with taken and waiting cases" /><br /><sub><b>Specialist review queue.</b> Cases waiting for a specialist and cases in progress.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/arabic-phones.jpg" alt="Two phone screens in Arabic: a suggestion and a specialist assessment" /><br /><sub><b>Arabic on a phone.</b> Nabta's suggestion and a specialist's assessment, right to left.</sub></td>
+    <td width="50%" align="center"><img src="docs/screenshots/dashboard-ar-phone.jpg" alt="Arabic dashboard on a phone" width="260" /><br /><sub><b>Arabic dashboard.</b> The same records in Arabic on a 390 px screen.</sub></td>
+  </tr>
+</table>
+
+## How it works
+
+```mermaid
+flowchart LR
+    subgraph Browser
+        UI["React 19 + Vite<br/>Tailwind · TanStack Query<br/>Arabic / English"]
+    end
+    subgraph Server["Docker container"]
+        API["FastAPI<br/>auth · plants · observations<br/>reviews · tasks · notes"]
+        Model["Pest model (ONNX Runtime)<br/>BioCLIP features + trained head<br/>calibrated · 'unclear' threshold"]
+        DB[("SQLite<br/>+ photo storage")]
+    end
+    UI -- "/api (JSON, cookie session)" --> API
+    API --> Model
+    API --> DB
+    Caddy["Caddy (HTTPS)"] --> API
+    Internet((Growers and<br/>specialists)) --> Caddy
+```
+
+The backend serves both the API and the built frontend from one container. In production it runs on a Google Compute Engine VM behind Caddy, which provides HTTPS ([deployment guide](deploy/gcp/DEPLOY_GCP.md)).
+
+### The pest model
+
+A frozen, pretrained biology model, [BioCLIP](https://imageomics.github.io/bioclip/), turns each photo into features, and a small head trained on the [IP102](https://github.com/xpwu95/IP102) dataset picks the category. Temperature scaling calibrates the confidence, and a threshold decides when a result is shown as *unclear*. The backend only needs `onnxruntime`, not PyTorch.
+
+| Model (IP102 test split, Nabta's eight categories) | Test macro F1 | Test accuracy |
+| --- | ---: | ---: |
+| **BioCLIP + trained head (Nabta)** | **0.828** | **88.4%** |
+| ResNet-50 + trained head (in-house baseline) | 0.796 | 84.6% |
+| Published IP102 ResNet-50 (Wu et al., 2019), within Nabta's categories | 0.625 | 74.7% |
+
+Near-duplicates of training images were removed from the test split. The full evaluation, with per-category results and the confusion matrix, is in [ml/reports/evaluation.md](ml/reports/evaluation.md).
+
+### Tech stack
+
+| Part | Technologies |
 | --- | --- |
-| `frontend/` | React 19 + Vite (JavaScript), Tailwind CSS, React Router, TanStack Query |
-| `backend/` | FastAPI (Python 3.13), SQLAlchemy + Alembic, SQLite; serves the pest model with onnxruntime |
-| `ml/` | PyTorch, BioCLIP and scikit-learn: trains, evaluates and exports the pest model ([ml/README.md](ml/README.md)) |
+| Frontend | React 19, Vite, Tailwind CSS, React Router, TanStack Query, i18next |
+| Backend | FastAPI (Python 3.13), SQLAlchemy, Alembic, SQLite, onnxruntime |
+| Machine learning | PyTorch, BioCLIP, scikit-learn, ONNX |
+| Testing | pytest, Vitest, Testing Library, MSW, Playwright, axe-core |
+| Deployment | Docker, Caddy, Google Compute Engine |
 
-## Prerequisites
+### Quality
 
-- Node.js 22.22 or newer (tested with 24)
-- Python 3.13
+- **300+ backend tests** (pytest): API, access control, photos, review cases, database migrations and the CLI.
+- **170+ frontend tests** (Vitest and Testing Library) on page flows against a mock API.
+- **End-to-end tests** (Playwright) of the grower and specialist journeys, specialist approval and accessibility, in **Chromium, Firefox and WebKit** at phone and desktop sizes.
+- **Accessibility:** axe-core checks for WCAG 2.1 A and AA in English and Arabic, plus keyboard focus.
+- **30+ ML tests** for categories, data selection, duplicates, calibration, metrics and preprocessing parity.
 
-## First-time setup
+## Getting started
 
-**Backend** (from `backend/`):
+You need **Python 3.13** and **Node.js 22 or newer**.
 
 ```bash
+# Backend (from backend/)
 python -m venv .venv
-.venv\Scripts\activate            # macOS/Linux: source .venv/bin/activate
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements-dev.txt
-alembic upgrade head              # creates or updates storage/nabta.db
-```
-
-**Pest model.** The model files are too large for git. Build them with the steps in [ml/README.md](ml/README.md); the last step installs them in `backend/models/nabta-pest/`. Without a model, everything else works, and identification answers "isn't available right now".
-
-**Demo data** (optional, from `backend/`, after the model is installed):
-
-```bash
-python -m app.cli seed-demo           # demo accounts, plants, photos, suggestions, reviews, tasks and notes
-python -m app.cli seed-demo --reset   # rebuild the demo grower's data (other accounts untouched)
-```
-
-**Frontend** (from `frontend/`):
-
-```bash
-npm install
-```
-
-## Running
-
-Start both servers, each in its own terminal:
-
-```bash
-# backend/ (virtualenv active)
+alembic upgrade head
 uvicorn app.main:app --reload --port 8000
 
-# frontend/
+# Frontend (from frontend/, in a second terminal)
+npm install
 npm run dev
 ```
 
-Then open http://localhost:5173. The Vite dev server forwards `/api` to FastAPI, so the browser only ever talks to one address.
+Then open http://localhost:5173. The model files are too large for git; build them with [ml/README.md](ml/README.md). Without a model, everything else works.
 
-Interactive API documentation is at http://localhost:8000/docs.
+For demo data, step-by-step instructions and the team's commands, see [HOW_TO_RUN.md](HOW_TO_RUN.md) and the [developer guide](docs/DEVELOPMENT.md).
 
-To try the app on a phone on the same Wi-Fi, run `npm run dev -- --host` and open the "Network" address it prints.
+## Project timeline
 
-### Demo accounts
+The project was delivered in three sprints. Each sprint has its own branch, release and milestone.
 
-After `seed-demo`, both accounts use the password `NabtaDemo2026`:
+| Sprint | Stories | Branch | Release |
+| --- | --- | --- | --- |
+| 1: Application foundation | US01–US08 | [`sprint-1`](https://github.com/222511316/Nabta/tree/sprint-1) | [v0.1.0](https://github.com/222511316/Nabta/releases/tag/v0.1.0) |
+| 2: Pest identification and specialist review | US09–US16 | [`sprint-2`](https://github.com/222511316/Nabta/tree/sprint-2) | [v0.2.0](https://github.com/222511316/Nabta/releases/tag/v0.2.0) |
+| 3: Guidance, follow-up and release | US17–US24 | [`sprint-3`](https://github.com/222511316/Nabta/tree/sprint-3) | [v1.0.0](https://github.com/222511316/Nabta/releases/tag/v1.0.0) |
 
-| Email | Role | What's there |
-| --- | --- | --- |
-| grower@example.com | Grower | Five plants with real insect photos and Nabta's suggestions; three reviews: one answered, one with a question waiting, one waiting for a specialist; tasks that are overdue, due today, coming up, undated and done; a few dated notes |
-| specialist@example.com | Plant specialist | Two cases already taken and one new case in the review queue |
+Each user story is tracked as an [issue](https://github.com/222511316/Nabta/issues?q=is%3Aissue) under its sprint's [milestone](https://github.com/222511316/Nabta/milestones?state=closed).
 
-The demo photos are from the IP102 test split, which the model never trained on (credits in `backend/content/demo/demo.json`).
-
-### Roles
-
-The sign-up and sign-in screens have a **Grower / Plant specialist** picker. Each role is its own account. If you sign in with the other role's picker selected, the screen says so and offers to switch.
-
-**Only specialists the Nabta team has approved see review cases** (charter FR03, FR12, NFR05, NFR06). A specialist who signs up on the website is *pending*: they can sign in and manage their account, see "Awaiting approval" instead of the review queue, and the server answers every case request with `403 specialist_pending`. The team approves accounts from `backend/` (there is no admin role or admin screen):
-
-```bash
-python -m app.cli list-pending-specialists                       # names and emails only
-python -m app.cli approve-specialist --email huda@example.com
-python -m app.cli revoke-specialist --email huda@example.com      # back to pending (--release-cases returns their open cases to the queue)
-```
-
-The team can also create an already-approved specialist:
-
-```bash
-python -m app.cli create-specialist --email noura@example.com --name "Dr Noura"
-```
-
-The command asks for the password twice. `--password` sets it directly instead. When an older database is upgraded, existing specialist accounts start pending; approve the team's own with `approve-specialist`.
-
-### AI features (switched off in the assessed release)
-
-**The assessed release runs without an OpenAI API key, so these features are off**: their buttons and links are hidden, opening the report page shows "Plant reports aren't available", and the AI endpoints answer `503 ai_unavailable` without contacting OpenAI. They are outside the charter; the code is kept for later. Do not set `NABTA_OPENAI_API_KEY` for the assessed release.
-
-Three features are written by an OpenAI model (`gpt-6-luna` by default):
-- a **plant report** on a plant's insect history, which can be printed
-- **Draft with AI** for a specialist's assessment message
-- **Ask about this pest** on each pest page
-
-They stay hidden until you add a key. Copy `backend/.env.example` to `backend/.env`, set `NABTA_OPENAI_API_KEY`, and restart the backend. They write in the language the user has chosen. Only text is sent to OpenAI, never photos, names or email addresses, and OpenAI is asked not to store it. Everything the AI writes is labelled as AI-written. Answers come only from Nabta's own records and the reviewed pest pages. The design is in [docs/superpowers/specs/2026-10-18-nabta-ai-features-design.md](docs/superpowers/specs/2026-10-18-nabta-ai-features-design.md).
-
-### Pest reference content
-
-The pest guide's descriptions and reference photos live in `backend/content/pests/catalog.json`. Each entry cites its source (UC IPM, or USDA APHIS for fruit flies) and starts as "Awaiting specialist review". When a plant specialist on the team has checked a page, record it from `backend/`, then restart the backend:
-
-```bash
-python -m app.cli review-content --by "Dr Noura Saad" --pest aphids   # --pest is repeatable
-python -m app.cli review-content --by "Dr Noura Saad" --all
-```
-
-The page then shows "Reviewed by" with the name and date. The app refuses to start if an entry is incomplete.
-
-### Arabic and English
-
-The language switch is in the header, on the home page and on the sign-in screens; the choice is remembered in the browser. Interface text is in `frontend/src/i18n/locales/` (`en.json`, `ar.json`), and a test fails if a string is missing from either. Pest content has its Arabic version beside the English in `catalog.json`.
-
-The Arabic interface text and pest content were translated by AI and are marked **awaiting review by a native-speaking team member**. The pest pages say so in Arabic until the review is recorded with `python -m app.cli review-content --by "Name" --translation ar`.
-
-### Growers' photos for research
-
-Growers who switch on research consent (Account settings) agree to their photos being used to test the model. Only the team's commands take photos out of the app, and only from those growers. They copy the photo, its date and the insect identified, and never the grower's name, email, plants or notes. From `backend/`:
-
-```bash
-python -m app.cli export-research-photos --out D:\nabta-collected      # outside the repository
-python -m app.cli evaluate-collected --set D:\nabta-collected --report ..\ml\reports\collected.md
-```
-
-The export takes photos a specialist has identified in a review. `--include-unchecked` adds the rest with an empty `category` for a reviewer to fill in. Fill in the `conditions` column (for example "outdoors, phone, daylight") before evaluating. Running the export again removes photos whose grower has since switched consent off, and keeps what you typed. The evaluation uses the installed model with the app's own "unclear" rule, and reports apart from the benchmark (charter §8).
-
-### Password-reset emails
-
-The email is in the language of the screen it was requested from. Without SMTP settings, emails are **printed in the backend terminal**. Copy the reset link from there. To send real email, copy `backend/.env.example` to `backend/.env` and fill in the `NABTA_SMTP_*` values.
-
-## Tests
-
-```bash
-# backend/
-pytest                 # API, access control, photos, review cases, migrations, CLI, and the real model when installed
-pytest -m real_ai      # only on purpose: calls the paid OpenAI API (left out of the default run)
-
-# frontend/
-npm test               # page flows against a fake API (Vitest + Testing Library + MSW)
-npm run lint
-npm run build
-npm run e2e            # the real app in Chromium, Firefox and WebKit, at 390 px and 1366 px
-```
-
-`npm run e2e` builds the frontend and starts the backend on port 8100 (`e2e/server.mjs`) with a fresh database in a temporary folder, the demo data and the installed pest model, with the AI features off. The browser tests (`e2e/*.spec.js`) cover the grower journey, the specialist review journey, specialist approval, AI switched off, and accessibility (axe-core, WCAG 2.1 A and AA, in English and Arabic, plus keyboard focus). Every test signs up its own throwaway accounts. The first time, install the browsers with `npx playwright install chromium firefox webkit`. `npm run e2e:report` opens the last report; `e2e-results/` holds JSON and JUnit results.
-
-```bash
-
-# ml/
-pytest                 # categories, data selection, duplicates, calibration, metrics, preprocessing parity
-```
-
-## Project layout
+## Repository layout
 
 ```
-backend/
-  app/            routers (HTTP) → services (logic) → models (database); analysis/ loads the pest model
-  alembic/        database migrations: add one for every model change
-  content/        pest reference content and demo photos (versioned like code)
-  models/         the installed pest model (not in git)
-  tests/          pytest suite
-  storage/        nabta.db + uploaded photos (not in git)
-frontend/
-  src/api/        one module per API resource
-  src/auth/       signed-in state and route guards
-  src/components/ shared UI (buttons, fields, layout, notifications bell)
-  src/features/   one folder per area: auth, dashboard, plants, observations, analysis, pests, reviews, specialist,
-                  account, tasks, notes, compare, search, ai
-  src/i18n/       all interface text, in English (en.json) and Arabic (ar.json)
-  e2e/            browser tests (Playwright)
-ml/               training, evaluation and export of the pest model; reports/ holds the results
-docs/             design specs and deployment notes
-Dockerfile        the whole app in one container (docs/DEPLOY.md)
+backend/    FastAPI app, database migrations, pest content, tests
+frontend/   React app, translations (en/ar), unit and end-to-end tests
+ml/         training, evaluation and export of the pest model, with reports
+docs/       design specs, charter alignment, deployment, developer guide
+deploy/gcp/ production setup on Google Compute Engine (Docker Compose + Caddy)
+Dockerfile  the whole app in one container
 ```
 
-## Changing the database
+## Documentation
 
-1. Edit the models in `backend/app/models/`.
-2. From `backend/`, run `alembic revision --autogenerate -m "describe the change"`.
-3. Review the generated file in `alembic/versions/`, then run `python -m app.cli backup-db` and `alembic upgrade head`.
+| Document | What it covers |
+| --- | --- |
+| [HOW_TO_RUN.md](HOW_TO_RUN.md) | Step-by-step setup and running, for anyone |
+| [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Developer guide: demo data, roles, specialist approval, content review, tests, layout, migrations |
+| [docs/superpowers/specs/](docs/superpowers/specs/) | Design specs and API contracts for Sprints 1, 2 and 3 |
+| [docs/CHARTER_ALIGNMENT.md](docs/CHARTER_ALIGNMENT.md) | How the prototype meets each charter requirement |
+| [docs/DEPLOY.md](docs/DEPLOY.md) · [deploy/gcp/](deploy/gcp/DEPLOY_GCP.md) | Docker image and the Google Cloud deployment |
+| [ml/README.md](ml/README.md) | Rebuilding and evaluating the pest model |
 
-`tests/test_migrations.py` fails if the models and the migrations drift apart, and if upgrading, downgrading or upgrading again a database that already holds records loses any row or link.
+## Team
 
-Migrations on SQLite run with foreign keys off for that one connection, in one transaction, and are undone if `PRAGMA foreign_key_check` finds a broken link (`alembic/env.py`). Before that, a batch table rebuild of `users` deleted every plant, observation and review on upgrade (supervisor review DEF-02). `python -m app.cli restore-db --from <backup>` puts a backup back.
+| Name | |
+| --- | --- |
+| Rema Altamimi | SE499 team member |
+| Danah Alfaris | SE499 team member |
+| Alanoud Almubarak | SE499 team member |
+| Dana Alhamdan | SE499 team member |
+| Rema Alsabhan ([@222511316](https://github.com/222511316)) | SE499 team member |
+
+**Supervisor:** Dr. Suad Alramouni
+
+## Acknowledgements
+
+- **IP102** insect pest dataset: Wu et al., *IP102: A Large-Scale Benchmark Dataset for Insect Pest Recognition*, CVPR 2019. Used for training, evaluation and reference photos, for academic purposes.
+- **BioCLIP** by the Imageomics Institute, the pretrained model behind Nabta's image features.
+- **UC Statewide IPM Program (UC IPM)** and **USDA APHIS**, the sources of the pest guide's descriptions and guidance.
+
+Nabta gives suggestions, not diagnoses. The pest content and the Arabic translation are marked in the app as awaiting review by a plant specialist and a native speaker on the team.
+
+## License
+
+Released under the [MIT License](LICENSE).
