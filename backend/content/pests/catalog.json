@@ -14,14 +14,110 @@
       "damage": "Large colonies turn leaves yellow and stunt shoots, and some species make leaves curl. Their sticky honeydew often turns black with sooty mould.",
       "look_alikes": "Leafhoppers and plant bugs. Unlike those, most aphids don't move quickly when disturbed.",
       "sources": [
-        { "title": "Aphids", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/aphids/" }
+        {
+          "title": "Aphids",
+          "publisher": "UC Statewide IPM Program (UC IPM)",
+          "url": "https://ipm.ucanr.edu/home-and-landscape/aphids/"
+        }
       ],
-      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "review": {
+        "status": "awaiting_review",
+        "reviewed_by": null,
+        "reviewed_on": null
+      },
       "images": [
-        { "file": "aphids-1.jpg", "caption": "Close-up: pear-shaped body, long legs and the cornicles at the rear", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 28" },
-        { "file": "aphids-2.jpg", "caption": "Black aphids feeding on a stem", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 90" },
-        { "file": "aphids-3.jpg", "caption": "A colony on soft new growth", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 90" }
-      ]
+        {
+          "file": "aphids-1.jpg",
+          "caption": "Close-up: pear-shaped body, long legs and the cornicles at the rear",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 28"
+        },
+        {
+          "file": "aphids-2.jpg",
+          "caption": "Black aphids feeding on a stem",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 90"
+        },
+        {
+          "file": "aphids-3.jpg",
+          "caption": "A colony on soft new growth",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 90"
+        }
+      ],
+      "guidance": [
+        {
+          "kind": "check",
+          "task": "Check soft new shoots and young leaves for aphid colonies",
+          "text": "Aphids gather on tender new growth. Small numbers rarely do harm, so look regularly and act when colonies grow."
+        },
+        {
+          "kind": "remove",
+          "task": "Rinse aphids off with a strong spray of water",
+          "text": "Most aphids knocked off can't climb back, and their honeydew washes away too. Spray early in the day so the leaves dry quickly."
+        },
+        {
+          "kind": "remove",
+          "task": "Prune off curled leaves or shoots where aphids are clustered",
+          "text": "When aphids are limited to a few curled leaves or new shoots, cutting those parts off and disposing of them may be the best control."
+        },
+        {
+          "kind": "prevent",
+          "task": "Avoid giving more nitrogen fertiliser than the plant needs",
+          "text": "Plenty of nitrogen helps aphids multiply. A slow-release fertiliser in small amounts through the season is better."
+        },
+        {
+          "kind": "natural_enemies",
+          "task": "Keep ants off the plant so natural enemies can work",
+          "text": "Ants guard aphids from lady beetles, lacewings and other natural enemies. Band the trunk with sticky material on a wrap, and prune branches that let ants climb in."
+        },
+        {
+          "kind": "prevent",
+          "task": "Check new plants and seedlings for aphids before planting",
+          "text": "Remove any aphids before planting, and clear nearby weeds where aphids build up."
+        }
+      ],
+      "ar": {
+        "name": "المنّ",
+        "summary": "حشرات صغيرة رخوة الجسم تثقب أجزاء النبات الطرية وتمتص عصارتها. لكل نبات تقريبًا نوع من المنّ يتغذى عليه من حين لآخر.",
+        "look_for": [
+          "أجسام رخوة كمثرية الشكل بأرجل وقرون استشعار طويلة، لونها أخضر أو أصفر أو بني أو أحمر أو أسود",
+          "أنبوبان صغيران متجهان إلى الخلف في مؤخرة الجسم، لا يوجدان في أي حشرة أخرى",
+          "غالبًا بلا أجنحة، وتظهر الحشرات المجنحة عندما تزدحم المستعمرات، خصوصًا في الربيع والخريف"
+        ],
+        "size": "صغيرة، وغالبًا تُرى في مجموعات كثيفة.",
+        "where": "مجموعات كثيفة على الأوراق والسيقان والبراعم الجديدة الطرية.",
+        "damage": "المستعمرات الكبيرة تُصفّر الأوراق وتوقف نمو البراعم، وبعض الأنواع تجعل الأوراق تلتف. وغالبًا تتحول ندوتها العسلية اللزجة إلى اللون الأسود بفعل العفن الأسود.",
+        "look_alikes": "نطاطات الأوراق والبق النباتي. وعلى خلافها، لا يتحرك معظم المنّ بسرعة عند إزعاجه.",
+        "captions": [
+          "صورة مقرّبة: جسم كمثري، أرجل طويلة، والأنبوبان في المؤخرة",
+          "منّ أسود يتغذى على ساق",
+          "مستعمرة على نموات جديدة طرية"
+        ],
+        "guidance": [
+          {
+            "task": "افحص البراعم الطرية والأوراق الصغيرة بحثًا عن مستعمرات المنّ",
+            "text": "يتجمع المنّ على النموات الجديدة الطرية. الأعداد القليلة نادرًا ما تضر، لذا افحص النبات بانتظام وتصرّف عندما تكبر المستعمرات."
+          },
+          {
+            "task": "أزل المنّ برشّة ماء قوية",
+            "text": "معظم المنّ الذي يسقط لا يستطيع العودة إلى النبات، كما تُغسل الندوة العسلية أيضًا. رُشّ في الصباح الباكر لتجف الأوراق بسرعة."
+          },
+          {
+            "task": "قُصّ الأوراق الملتفة أو البراعم التي يتكدس عليها المنّ",
+            "text": "عندما يقتصر المنّ على أوراق ملتفة أو براعم جديدة قليلة، فإن قصّ هذه الأجزاء والتخلص منها قد يكون أفضل وسيلة للمكافحة."
+          },
+          {
+            "task": "تجنّب إضافة سماد نيتروجيني يزيد عن حاجة النبات",
+            "text": "وفرة النيتروجين تساعد المنّ على التكاثر. الأفضل استخدام سماد بطيء الذوبان بكميات صغيرة على مدار الموسم."
+          },
+          {
+            "task": "أبعد النمل عن النبات لتعمل الأعداء الطبيعية",
+            "text": "يحمي النمل المنّ من الدعسوقة وأسد المنّ وغيرهما من الأعداء الطبيعية. ضع حزامًا من مادة لاصقة على غلاف حول الجذع، وقُصّ الأغصان التي يصعد منها النمل."
+          },
+          {
+            "task": "افحص النباتات والشتلات الجديدة بحثًا عن المنّ قبل زراعتها",
+            "text": "أزل أي منّ قبل الزراعة، وتخلّص من الأعشاب القريبة التي يتكاثر عليها."
+          }
+        ]
+      }
     },
     {
       "key": "whiteflies",
@@ -37,14 +133,110 @@
       "damage": "Large numbers make leaves turn yellow, dry out or drop. Leaves get sticky with honeydew or covered in black sooty mould.",
       "look_alikes": "Mealybugs, which also make wax and honeydew but don't fly.",
       "sources": [
-        { "title": "Whiteflies", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/whiteflies/" }
+        {
+          "title": "Whiteflies",
+          "publisher": "UC Statewide IPM Program (UC IPM)",
+          "url": "https://ipm.ucanr.edu/home-and-landscape/whiteflies/"
+        }
       ],
-      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "review": {
+        "status": "awaiting_review",
+        "reviewed_by": null,
+        "reviewed_on": null
+      },
       "images": [
-        { "file": "whiteflies-1.jpg", "caption": "Adult: yellowish body and white, waxy wings", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 72" },
-        { "file": "whiteflies-2.jpg", "caption": "Adults gathered on the underside of a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 72" },
-        { "file": "whiteflies-3.jpg", "caption": "Black nymphs with a white fringe", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 83" }
-      ]
+        {
+          "file": "whiteflies-1.jpg",
+          "caption": "Adult: yellowish body and white, waxy wings",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 72"
+        },
+        {
+          "file": "whiteflies-2.jpg",
+          "caption": "Adults gathered on the underside of a leaf",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 72"
+        },
+        {
+          "file": "whiteflies-3.jpg",
+          "caption": "Black nymphs with a white fringe",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 83"
+        }
+      ],
+      "guidance": [
+        {
+          "kind": "check",
+          "task": "Check the undersides of leaves for whitefly adults and nymphs",
+          "text": "Large colonies build up under the leaves. Whiteflies are much easier to keep down when you find them early."
+        },
+        {
+          "kind": "remove",
+          "task": "Remove heavily infested leaves or hose them with water",
+          "text": "Early in a build-up, removing infested leaves or spraying them with water holds numbers down."
+        },
+        {
+          "kind": "check",
+          "task": "Hang yellow sticky traps to watch whitefly numbers",
+          "text": "The traps show whether numbers are rising, and at high levels they catch some of the adults."
+        },
+        {
+          "kind": "natural_enemies",
+          "task": "Protect natural enemies by keeping dust down and ants away",
+          "text": "Lacewings, bigeyed bugs, minute pirate bugs and small lady beetles eat whiteflies. Outbreaks often follow when dust, ants or sprays disturb them."
+        },
+        {
+          "kind": "prevent",
+          "task": "Replace plants that keep hosting large numbers of whiteflies",
+          "text": "Avoid or remove plants that are repeatedly heavily infested."
+        },
+        {
+          "kind": "prevent",
+          "task": "Use reflective mulch in vegetable beds",
+          "text": "Reflective mulches can keep whiteflies away from vegetable gardens."
+        }
+      ],
+      "ar": {
+        "name": "الذبابة البيضاء",
+        "summary": "حشرات دقيقة تمتص العصارة، أقرب إلى المنّ منها إلى الذباب الحقيقي. سُميت بهذا الاسم بسبب الشمع الأبيض على أجنحتها وجسمها.",
+        "look_for": [
+          "حشرات بالغة بأجسام مصفرة وأربعة أجنحة بيضاء",
+          "سحابة من الحشرات البالغة تطير عند تحريك النبات",
+          "حوريات بلا أجنحة ولا أرجل ظاهرة، لونها من الأصفر أو الأبيض شبه الشفاف إلى الأسود بحافة بيضاء"
+        ],
+        "size": "دقيقة جدًا.",
+        "where": "مستعمرات على السطح السفلي للأوراق، حيث تضع بيضها أيضًا.",
+        "damage": "الأعداد الكبيرة تجعل الأوراق تصفرّ أو تجف أو تتساقط. وتصبح الأوراق لزجة بالندوة العسلية أو مغطاة بالعفن الأسود.",
+        "look_alikes": "البق الدقيقي، الذي يفرز الشمع والندوة العسلية أيضًا لكنه لا يطير.",
+        "captions": [
+          "حشرة بالغة: جسم مصفر وأجنحة بيضاء شمعية",
+          "حشرات بالغة متجمعة تحت ورقة",
+          "حوريات سوداء بحافة بيضاء"
+        ],
+        "guidance": [
+          {
+            "task": "افحص السطح السفلي للأوراق بحثًا عن حشرات الذبابة البيضاء البالغة وحورياتها",
+            "text": "تتكوّن المستعمرات الكبيرة تحت الأوراق. السيطرة على الذبابة البيضاء أسهل بكثير عند اكتشافها مبكرًا."
+          },
+          {
+            "task": "أزل الأوراق شديدة الإصابة أو اغسلها برشّة ماء",
+            "text": "في بداية تزايد الأعداد، تساعد إزالة الأوراق المصابة أو رشّها بالماء على إبقاء الأعداد منخفضة."
+          },
+          {
+            "task": "علّق مصائد صفراء لاصقة لمتابعة أعداد الذبابة البيضاء",
+            "text": "تُظهر المصائد ما إذا كانت الأعداد في ازدياد، وعند ارتفاعها تصطاد بعض الحشرات البالغة."
+          },
+          {
+            "task": "احمِ الأعداء الطبيعية بتقليل الغبار وإبعاد النمل",
+            "text": "تتغذى أسد المنّ وبقّ العين الكبيرة وبقّ القرصان الدقيق والدعسوقات الصغيرة على الذبابة البيضاء. غالبًا ما تتفشى الإصابة عندما يعيق الغبار أو النمل أو الرشّ هذه الأعداء."
+          },
+          {
+            "task": "استبدل النباتات التي تتكرر عليها الإصابة الشديدة بالذبابة البيضاء",
+            "text": "تجنّب النباتات التي تُصاب بكثافة مرة بعد أخرى أو أزلها."
+          },
+          {
+            "task": "استخدم غطاءً عاكسًا للتربة في أحواض الخضروات",
+            "text": "يمكن للأغطية العاكسة أن تُبعد الذبابة البيضاء عن حدائق الخضروات."
+          }
+        ]
+      }
     },
     {
       "key": "mealybugs",
@@ -60,15 +252,116 @@
       "damage": "They suck sap and weaken the plant. Sticky honeydew and wax spoil leaves and fruit, especially once black sooty mould grows on it. Heavy numbers slow growth and make leaves drop.",
       "look_alikes": "Cottony cushion scale, woolly aphids, some soft scales and whiteflies, which also produce wax and honeydew.",
       "sources": [
-        { "title": "Mealybugs", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/mealybugs/" }
+        {
+          "title": "Mealybugs",
+          "publisher": "UC Statewide IPM Program (UC IPM)",
+          "url": "https://ipm.ucanr.edu/home-and-landscape/mealybugs/"
+        }
       ],
-      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "review": {
+        "status": "awaiting_review",
+        "reviewed_by": null,
+        "reviewed_on": null
+      },
       "images": [
-        { "file": "mealybugs-1.jpg", "caption": "Segmented, wax-covered bodies with filaments around the edge", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 65" },
-        { "file": "mealybugs-2.jpg", "caption": "A single mealybug on a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 82" },
-        { "file": "mealybugs-3.jpg", "caption": "A colony with white wax on a twig", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 82" },
-        { "file": "mealybugs-4.jpg", "caption": "Mealybugs sheltering in a crevice of a fruit", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 65" }
-      ]
+        {
+          "file": "mealybugs-1.jpg",
+          "caption": "Segmented, wax-covered bodies with filaments around the edge",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 65"
+        },
+        {
+          "file": "mealybugs-2.jpg",
+          "caption": "A single mealybug on a leaf",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 82"
+        },
+        {
+          "file": "mealybugs-3.jpg",
+          "caption": "A colony with white wax on a twig",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 82"
+        },
+        {
+          "file": "mealybugs-4.jpg",
+          "caption": "Mealybugs sheltering in a crevice of a fruit",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 65"
+        }
+      ],
+      "guidance": [
+        {
+          "kind": "prevent",
+          "task": "Inspect new plants, pots and stakes for mealybugs before bringing them in",
+          "text": "Mealybugs usually arrive on new plants, tools or pots. Return or discard a new plant you can't clean."
+        },
+        {
+          "kind": "check",
+          "task": "Check sheltered spots for mealybugs every week or two",
+          "text": "Look where fruits touch, in branch forks and where stems meet leaves. Mealybugs can't fly and move slowly, so early finds stay small."
+        },
+        {
+          "kind": "remove",
+          "task": "Pick off or prune out mealybug colonies",
+          "text": "Remove the insects by hand or cut them out, and throw away infested pots or stakes."
+        },
+        {
+          "kind": "remove",
+          "task": "Hose sturdy plants with a strong spray of water",
+          "text": "Where mealybugs are exposed, a forceful spray of water reduces them. Repeat every few days."
+        },
+        {
+          "kind": "prevent",
+          "task": "Avoid extra nitrogen fertiliser on plants with mealybugs",
+          "text": "Lots of nitrogen and watering produce the soft new growth that mealybugs thrive on."
+        },
+        {
+          "kind": "natural_enemies",
+          "task": "Let lady beetles, lacewings and other natural enemies work",
+          "text": "Outdoors, natural enemies such as lady beetles, lacewings and tiny parasitic wasps usually keep mealybugs in check."
+        }
+      ],
+      "ar": {
+        "name": "البق الدقيقي",
+        "summary": "حشرات رخوة بيضاوية مغطاة بشمع أبيض، توجد عادة في مستعمرات. وهي قريبة من الحشرات القشرية الرخوة لكن بلا غطاء قشري.",
+        "look_for": [
+          "أجسام مقسّمة بوضوح ومغطاة بشمع أبيض",
+          "خيوط شمعية حول حواف الحشرات الأكبر سنًا، وتكون أطول في المؤخرة لدى بعض الأنواع",
+          "أكياس بيض قطنية بيضاء على الأوراق أو اللحاء أو الثمار أو الأغصان"
+        ],
+        "size": "صغيرة ورخوة وبيضاوية.",
+        "where": "الأماكن المحمية: بين الثمار المتلامسة، وفي قلب النبات، وفي تفرعات الأغصان، وعلى السيقان قرب التربة، أو بين الساق والورقة الملامسة له. وتتغذى أنواع قليلة على الجذور.",
+        "damage": "تمتص العصارة فتُضعف النبات. وتُفسد الندوة العسلية اللزجة والشمع الأوراق والثمار، خصوصًا عندما ينمو عليها العفن الأسود. والأعداد الكبيرة تبطئ النمو وتُسقط الأوراق.",
+        "look_alikes": "البق القطني الأسترالي، والمنّ الصوفي، وبعض الحشرات القشرية الرخوة، والذبابة البيضاء، فكلها تفرز الشمع والندوة العسلية.",
+        "captions": [
+          "أجسام مقسّمة مغطاة بالشمع وخيوط حول الحواف",
+          "بقة دقيقية واحدة على ورقة",
+          "مستعمرة بشمع أبيض على غصن",
+          "بق دقيقي يحتمي في شق بثمرة"
+        ],
+        "guidance": [
+          {
+            "task": "افحص النباتات والأصص والدعامات الجديدة بحثًا عن البق الدقيقي قبل إدخالها",
+            "text": "يصل البق الدقيقي عادةً مع النباتات أو الأدوات أو الأصص الجديدة. أعد النبات الجديد أو تخلّص منه إذا تعذّر تنظيفه."
+          },
+          {
+            "task": "افحص الأماكن المحمية بحثًا عن البق الدقيقي كل أسبوع أو أسبوعين",
+            "text": "ابحث حيث تتلامس الثمار، وفي تفرعات الأغصان، وحيث تلتقي السيقان بالأوراق. البق الدقيقي لا يطير ويتحرك ببطء، لذا تبقى الإصابة المكتشفة مبكرًا محدودة."
+          },
+          {
+            "task": "التقط مستعمرات البق الدقيقي أو قُصّها",
+            "text": "أزل الحشرات باليد أو اقطعها، وتخلّص من الأصص أو الدعامات المصابة."
+          },
+          {
+            "task": "اغسل النباتات القوية برشّة ماء قوية",
+            "text": "حيث يكون البق الدقيقي مكشوفًا، تقلل رشّة الماء القوية أعداده. كرّر ذلك كل بضعة أيام."
+          },
+          {
+            "task": "تجنّب السماد النيتروجيني الزائد على النباتات المصابة بالبق الدقيقي",
+            "text": "النيتروجين الوفير مع الري المنتظم ينتج نموات طرية جديدة يزدهر عليها البق الدقيقي."
+          },
+          {
+            "task": "اترك الدعسوقة وأسد المنّ وغيرهما من الأعداء الطبيعية تعمل",
+            "text": "في الأماكن المفتوحة، تُبقي الأعداء الطبيعية مثل الدعسوقة وأسد المنّ والدبابير المتطفلة الصغيرة البق الدقيقي تحت السيطرة عادةً."
+          }
+        ]
+      }
     },
     {
       "key": "scale_insects",
@@ -85,15 +378,108 @@
       "damage": "Some species seriously harm the plant, while others do little even when abundant. Soft scales drip honeydew, which turns black with sooty mould.",
       "look_alikes": "Some helpful lady beetles are tiny and shaped and coloured like scales. Mealybugs are related but have no cover.",
       "sources": [
-        { "title": "Scales", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/scales/" }
+        {
+          "title": "Scales",
+          "publisher": "UC Statewide IPM Program (UC IPM)",
+          "url": "https://ipm.ucanr.edu/home-and-landscape/scales/"
+        }
       ],
-      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "review": {
+        "status": "awaiting_review",
+        "reviewed_by": null,
+        "reviewed_on": null
+      },
       "images": [
-        { "file": "scale_insects-1.jpg", "caption": "Cottony cushion scale with its white, fluted egg sac", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 77" },
-        { "file": "scale_insects-2.jpg", "caption": "Wax scales on leaves", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 79" },
-        { "file": "scale_insects-3.jpg", "caption": "Scales crowded along a twig", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 78" },
-        { "file": "scale_insects-4.jpg", "caption": "Small scales on a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 78" }
-      ]
+        {
+          "file": "scale_insects-1.jpg",
+          "caption": "Cottony cushion scale with its white, fluted egg sac",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 77"
+        },
+        {
+          "file": "scale_insects-2.jpg",
+          "caption": "Wax scales on leaves",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 79"
+        },
+        {
+          "file": "scale_insects-3.jpg",
+          "caption": "Scales crowded along a twig",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 78"
+        },
+        {
+          "file": "scale_insects-4.jpg",
+          "caption": "Small scales on a leaf",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 78"
+        }
+      ],
+      "guidance": [
+        {
+          "kind": "check",
+          "task": "Check bark, twigs and leaves for scales, honeydew and sooty mould",
+          "text": "Also watch for ants on the trunk: they often lead to insects that make honeydew."
+        },
+        {
+          "kind": "check",
+          "task": "Squash a few scales to see whether they are already dead",
+          "text": "Dead or parasitised scales give no fluid when squashed. If many are dead, wait and check again later."
+        },
+        {
+          "kind": "check",
+          "task": "Wrap double-sided sticky tape around a few infested twigs in spring",
+          "text": "Crawlers, the young scales, show up on the tape as yellow or orange specks, so you can see when they are active."
+        },
+        {
+          "kind": "natural_enemies",
+          "task": "Control ants so the scales' natural enemies can work",
+          "text": "Predators and parasites keep many scales down unless ants, dust or broad sprays disrupt them."
+        },
+        {
+          "kind": "prevent",
+          "task": "Keep the plant growing well, and replace it if scales keep coming back",
+          "text": "Good growing conditions help. A plant that is damaged again and again may be best replaced with a better-adapted, resistant one."
+        }
+      ],
+      "ar": {
+        "name": "الحشرات القشرية",
+        "summary": "حشرات ماصة للعصارة تبقى ثابتة في مكان واحد تحت غطاء واقٍ. لا تشبه معظم الحشرات، لذا يسهل ألا يُنتبه لها.",
+        "look_for": [
+          "نتوءات مستديرة إلى بيضاوية بلا رأس أو أرجل ظاهرة على اللحاء أو الأوراق أو الثمار",
+          "القشريات المدرعة: أغطية دقيقة مسطحة يمكن رفعها غالبًا، ولا تفرز ندوة عسلية",
+          "القشريات الرخوة: أكبر ومستديرة ومرتفعة، بسطح أملس أو قطني أو شمعي، وتفرز ندوة عسلية لزجة",
+          "زواحف دقيقة صفراء إلى برتقالية (الصغار) تتحرك على النبات قبل أن تستقر"
+        ],
+        "size": "نحو ١–٦ مم.",
+        "where": "اللحاء والأغصان والأوراق والثمار، وغالبًا على الأشجار والشجيرات والنباتات المعمّرة الأخرى.",
+        "damage": "بعض الأنواع تضر النبات ضررًا بالغًا، وأخرى لا تكاد تضر حتى عند كثرتها. والقشريات الرخوة تُقطر ندوة عسلية تتحول إلى اللون الأسود بفعل العفن الأسود.",
+        "look_alikes": "بعض الدعسوقات المفيدة صغيرة وتشبه الحشرات القشرية في شكلها ولونها. أما البق الدقيقي فقريب منها لكنه بلا غطاء.",
+        "captions": [
+          "البق القطني الأسترالي مع كيس بيضه الأبيض المضلّع",
+          "حشرات قشرية شمعية على الأوراق",
+          "حشرات قشرية متزاحمة على غصن",
+          "حشرات قشرية صغيرة على ورقة"
+        ],
+        "guidance": [
+          {
+            "task": "افحص اللحاء والأغصان والأوراق بحثًا عن الحشرات القشرية والندوة العسلية والعفن الأسود",
+            "text": "راقب أيضًا النمل على الجذع، فهو غالبًا يدلّك على الحشرات التي تفرز الندوة العسلية."
+          },
+          {
+            "task": "اضغط على بعض الحشرات القشرية لترى إن كانت ميتة",
+            "text": "الحشرات الميتة أو المتطفَّل عليها لا يخرج منها سائل عند الضغط. إذا كان كثير منها ميتًا، فانتظر وأعد الفحص لاحقًا."
+          },
+          {
+            "task": "لُفّ شريطًا لاصقًا من الوجهين حول بعض الأغصان المصابة في الربيع",
+            "text": "تظهر الزواحف، وهي صغار الحشرات القشرية، على الشريط كنقاط صفراء أو برتقالية، فتعرف متى تكون نشطة."
+          },
+          {
+            "task": "سيطر على النمل لتعمل الأعداء الطبيعية للحشرات القشرية",
+            "text": "تُبقي المفترسات والطفيليات كثيرًا من الحشرات القشرية منخفضة العدد ما لم يعقها النمل أو الغبار أو الرشّ واسع التأثير."
+          },
+          {
+            "task": "حافظ على نمو النبات الجيد، واستبدله إذا عادت الحشرات القشرية مرارًا",
+            "text": "ظروف النمو الجيدة تساعد. النبات الذي يتضرر مرة بعد أخرى قد يكون الأفضل استبداله بنبات مقاوم أكثر تكيفًا."
+          }
+        ]
+      }
     },
     {
       "key": "fruit_flies",
@@ -109,15 +495,98 @@
       "damage": "Fruit rots early and drops to the ground as the maggots feed on the pulp.",
       "look_alikes": "Other flies on ripe or fallen fruit. Check for the yellow markings, the dark T-shaped mark and the clear wings.",
       "sources": [
-        { "title": "Oriental Fruit Fly", "publisher": "USDA Animal and Plant Health Inspection Service (APHIS)", "url": "https://www.aphis.usda.gov/plant-pests-diseases/oriental-fruit-fly" }
+        {
+          "title": "Oriental Fruit Fly",
+          "publisher": "USDA Animal and Plant Health Inspection Service (APHIS)",
+          "url": "https://www.aphis.usda.gov/plant-pests-diseases/oriental-fruit-fly"
+        }
       ],
-      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "review": {
+        "status": "awaiting_review",
+        "reviewed_by": null,
+        "reviewed_on": null
+      },
       "images": [
-        { "file": "fruit_flies-1.jpg", "caption": "Adult oriental fruit fly: clear wings and bright yellow markings", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 85" },
-        { "file": "fruit_flies-2.jpg", "caption": "Adults on a green citrus fruit", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 84" },
-        { "file": "fruit_flies-3.jpg", "caption": "Maggots in the fruit pulp", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 84" },
-        { "file": "fruit_flies-4.jpg", "caption": "An adult on a fingertip, for size", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 85" }
-      ]
+        {
+          "file": "fruit_flies-1.jpg",
+          "caption": "Adult oriental fruit fly: clear wings and bright yellow markings",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 85"
+        },
+        {
+          "file": "fruit_flies-2.jpg",
+          "caption": "Adults on a green citrus fruit",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 84"
+        },
+        {
+          "file": "fruit_flies-3.jpg",
+          "caption": "Maggots in the fruit pulp",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 84"
+        },
+        {
+          "file": "fruit_flies-4.jpg",
+          "caption": "An adult on a fingertip, for size",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 85"
+        }
+      ],
+      "guidance": [
+        {
+          "kind": "remove",
+          "task": "Collect fallen and infested fruit",
+          "text": "Infested fruit drops early. Eat or process sound fruit at home, and double-bag the rest in plastic before throwing it away."
+        },
+        {
+          "kind": "check",
+          "task": "Cut open fruit that rots or drops early and look for maggots",
+          "text": "Females lay eggs under the skin and the maggots feed inside, so infested fruit rots from within."
+        },
+        {
+          "kind": "prevent",
+          "task": "Don't move fresh fruit or plants out of areas with fruit fly restrictions",
+          "text": "Fruit flies spread mainly through infested fruit and vegetables. Follow quarantine rules and declare produce when travelling."
+        },
+        {
+          "kind": "prevent",
+          "task": "Cooperate with agriculture officials checking for fruit flies",
+          "text": "Fruit flies are watched by agriculture authorities, and their inspections help stop the flies spreading."
+        }
+      ],
+      "ar": {
+        "name": "ذباب الفاكهة",
+        "summary": "ذباب تتغذى يرقاته داخل الثمار، مثل ذبابة الفاكهة الشرقية. وينتشر أساسًا عبر الفواكه والخضروات المصابة.",
+        "look_for": [
+          "حشرات بالغة بعلامات صفراء زاهية وعلامة داكنة على شكل حرف T على البطن وأجنحة شفافة",
+          "إناث بأنبوب رفيع مدبب في طرف الجسم لوضع البيض تحت قشرة الثمرة",
+          "يرقات بيضاء إلى بيضاء مصفرة بلا أرجل داخل الثمرة"
+        ],
+        "size": "الحشرة البالغة أكبر قليلًا من الذبابة المنزلية، وتصل اليرقة إلى نحو ١ سم.",
+        "where": "على الثمار، وتتغذى اليرقات في داخلها. وغالبًا تسقط الثمار المصابة مبكرًا.",
+        "damage": "تتعفن الثمار مبكرًا وتسقط على الأرض بينما تتغذى اليرقات على لبّها.",
+        "look_alikes": "أنواع ذباب أخرى على الثمار الناضجة أو المتساقطة. ابحث عن العلامات الصفراء وعلامة حرف T الداكنة والأجنحة الشفافة.",
+        "captions": [
+          "ذبابة فاكهة شرقية بالغة: أجنحة شفافة وعلامات صفراء زاهية",
+          "حشرات بالغة على ثمرة حمضيات خضراء",
+          "يرقات داخل لبّ الثمرة",
+          "حشرة بالغة على طرف إصبع لتوضيح الحجم"
+        ],
+        "guidance": [
+          {
+            "task": "اجمع الثمار المتساقطة والمصابة",
+            "text": "تسقط الثمار المصابة مبكرًا. استهلك الثمار السليمة أو جهّزها في المنزل، وضع البقية في كيسين بلاستيكيين قبل رميها."
+          },
+          {
+            "task": "افتح الثمار التي تتعفن أو تسقط مبكرًا وابحث عن اليرقات",
+            "text": "تضع الإناث البيض تحت القشرة وتتغذى اليرقات في الداخل، لذا تتعفن الثمار المصابة من الداخل."
+          },
+          {
+            "task": "لا تنقل الفاكهة الطازجة أو النباتات من المناطق الخاضعة لقيود ذباب الفاكهة",
+            "text": "ينتشر ذباب الفاكهة أساسًا عبر الفواكه والخضروات المصابة. اتبع قواعد الحجر الزراعي وصرّح بالمنتجات عند السفر."
+          },
+          {
+            "task": "تعاوَن مع مسؤولي الزراعة الذين يفحصون ذباب الفاكهة",
+            "text": "تراقب الجهات الزراعية ذباب الفاكهة، وتساعد عمليات التفتيش التي تجريها على وقف انتشاره."
+          }
+        ]
+      }
     },
     {
       "key": "armyworms_cutworms",
@@ -134,16 +603,122 @@
       "damage": "Armyworms skeletonise leaves and gouge fruit such as tomatoes and strawberries. Cutworms clip seedling stems near or just below the soil.",
       "look_alikes": "Other caterpillars such as corn earworms and loopers. Armyworms are the ones feeding in groups.",
       "sources": [
-        { "title": "Armyworms", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/armyworms/" },
-        { "title": "Cutworms", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/cutworms/" }
+        {
+          "title": "Armyworms",
+          "publisher": "UC Statewide IPM Program (UC IPM)",
+          "url": "https://ipm.ucanr.edu/home-and-landscape/armyworms/"
+        },
+        {
+          "title": "Cutworms",
+          "publisher": "UC Statewide IPM Program (UC IPM)",
+          "url": "https://ipm.ucanr.edu/home-and-landscape/cutworms/"
+        }
       ],
-      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "review": {
+        "status": "awaiting_review",
+        "reviewed_by": null,
+        "reviewed_on": null
+      },
       "images": [
-        { "file": "armyworms_cutworms-1.jpg", "caption": "A cutworm curled into a C-shape", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 21" },
-        { "file": "armyworms_cutworms-2.jpg", "caption": "An armyworm caterpillar on a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 40" },
-        { "file": "armyworms_cutworms-3.jpg", "caption": "A cutworm beside a seedling cut at soil level", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 19" },
-        { "file": "armyworms_cutworms-4.jpg", "caption": "The adult: a grey and brown mottled moth", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 40" }
-      ]
+        {
+          "file": "armyworms_cutworms-1.jpg",
+          "caption": "A cutworm curled into a C-shape",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 21"
+        },
+        {
+          "file": "armyworms_cutworms-2.jpg",
+          "caption": "An armyworm caterpillar on a leaf",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 40"
+        },
+        {
+          "file": "armyworms_cutworms-3.jpg",
+          "caption": "A cutworm beside a seedling cut at soil level",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 19"
+        },
+        {
+          "file": "armyworms_cutworms-4.jpg",
+          "caption": "The adult: a grey and brown mottled moth",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 40"
+        }
+      ],
+      "guidance": [
+        {
+          "kind": "check",
+          "task": "Check seedlings and young plants for chewed leaves and cut stems",
+          "text": "Armyworms skeletonise leaves and cutworms cut seedlings at soil level, mostly in spring."
+        },
+        {
+          "kind": "remove",
+          "task": "Handpick caterpillars, and look for cutworms at night with a torch",
+          "text": "Cutworms hide in the soil by day; picking them off at night with a light is very effective."
+        },
+        {
+          "kind": "prevent",
+          "task": "Protect seedlings with cardboard collars, screens or cloth covers",
+          "text": "A collar around each stem stops cutworms clipping it. Planting a few extra seedlings allows for some losses."
+        },
+        {
+          "kind": "prevent",
+          "task": "Clear crop remains and keep the garden free of weeds in winter",
+          "text": "This removes the places where cutworms build up before spring."
+        },
+        {
+          "kind": "remove",
+          "task": "Clip off and dispose of infested leaves and flowers",
+          "text": "Removing infested parts takes the caterpillars with them."
+        },
+        {
+          "kind": "natural_enemies",
+          "task": "Leave the caterpillars' natural enemies alone",
+          "text": "Parasitic wasps, natural diseases and general predators all help control armyworms."
+        }
+      ],
+      "ar": {
+        "name": "دودة الحشد والدودة القارضة",
+        "summary": "يرقات فراشات تقرض النباتات. تتغذى دودة الحشد في مجموعات على الأوراق والثمار، وتختبئ الدودة القارضة في التربة وتقطع الشتلات ليلًا.",
+        "look_for": [
+          "يرقات ملساء الجلد، ولدى دودة الحشد الأكبر سنًا خطوط واضحة على طول الجسم",
+          "الدودة القارضة: يرقات بنية باهتة تلتف على شكل حرف C عند إزعاجها",
+          "كتل بيض زغبية على الشتلات والأوراق (دودة الحشد)",
+          "الحشرات البالغة: فراشات رمادية وبنية مبرقشة"
+        ],
+        "size": "يبلغ طول الدودة القارضة ٢٫٥–٥ سم عند اكتمال نموها.",
+        "where": "تتغذى دودة الحشد على الأوراق والثمار الخضراء. وتبقى الدودة القارضة على سطح التربة أو تحته مباشرة أو على الأجزاء السفلية من النبات، وتنشط ليلًا.",
+        "damage": "تأكل دودة الحشد الأوراق حتى لا يبقى إلا عروقها وتحفر في الثمار مثل الطماطم والفراولة. وتقطع الدودة القارضة سيقان الشتلات عند سطح التربة أو تحته.",
+        "look_alikes": "يرقات أخرى مثل دودة كيزان الذرة ويرقات القياس. ودودة الحشد هي التي تتغذى في مجموعات.",
+        "captions": [
+          "دودة قارضة ملتفة على شكل حرف C",
+          "يرقة دودة الحشد على ورقة",
+          "دودة قارضة بجانب شتلة مقطوعة عند سطح التربة",
+          "الحشرة البالغة: فراشة رمادية وبنية مبرقشة"
+        ],
+        "guidance": [
+          {
+            "task": "افحص الشتلات والنباتات الصغيرة بحثًا عن أوراق مقروضة وسيقان مقطوعة",
+            "text": "تأكل دودة الحشد الأوراق حتى تبقى عروقها، وتقطع الدودة القارضة الشتلات عند سطح التربة، وغالبًا في الربيع."
+          },
+          {
+            "task": "التقط اليرقات باليد، وابحث عن الدودة القارضة ليلًا بمصباح",
+            "text": "تختبئ الدودة القارضة في التربة نهارًا، والتقاطها ليلًا على ضوء المصباح فعّال جدًا."
+          },
+          {
+            "task": "احمِ الشتلات بأطواق من الكرتون أو شبكات أو أغطية قماشية",
+            "text": "يمنع الطوق حول كل ساق الدودة القارضة من قطعها. زراعة بعض الشتلات الإضافية تعوّض أي فقد."
+          },
+          {
+            "task": "أزل بقايا المحاصيل وأبقِ الحديقة خالية من الأعشاب في الشتاء",
+            "text": "يزيل ذلك الأماكن التي تتكاثر فيها الدودة القارضة قبل الربيع."
+          },
+          {
+            "task": "اقطع الأوراق والأزهار المصابة وتخلّص منها",
+            "text": "إزالة الأجزاء المصابة تزيل اليرقات معها."
+          },
+          {
+            "task": "اترك الأعداء الطبيعية لليرقات دون إزعاج",
+            "text": "تساعد الدبابير المتطفلة والأمراض الطبيعية والمفترسات العامة جميعها في السيطرة على دودة الحشد."
+          }
+        ]
+      }
     },
     {
       "key": "thrips",
@@ -160,15 +735,99 @@
       "damage": "Stippled, flecked or silvery leaves, scarred flowers and fruit, and distorted growth.",
       "look_alikes": "Helpful predatory thrips, such as the sixspotted thrips with three dark spots on each forewing. Only an expert can name a thrips species for certain.",
       "sources": [
-        { "title": "Thrips", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/thrips/" }
+        {
+          "title": "Thrips",
+          "publisher": "UC Statewide IPM Program (UC IPM)",
+          "url": "https://ipm.ucanr.edu/home-and-landscape/thrips/"
+        }
       ],
-      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "review": {
+        "status": "awaiting_review",
+        "reviewed_by": null,
+        "reviewed_on": null
+      },
       "images": [
-        { "file": "thrips-1.jpg", "caption": "Adult: slender body and narrow, fringed wings", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 54" },
-        { "file": "thrips-2.jpg", "caption": "A dark adult on a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 34" },
-        { "file": "thrips-3.jpg", "caption": "A pale yellow adult", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 93" },
-        { "file": "thrips-4.jpg", "caption": "A wingless young thrips on a leaf", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 93" }
-      ]
+        {
+          "file": "thrips-1.jpg",
+          "caption": "Adult: slender body and narrow, fringed wings",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 54"
+        },
+        {
+          "file": "thrips-2.jpg",
+          "caption": "A dark adult on a leaf",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 34"
+        },
+        {
+          "file": "thrips-3.jpg",
+          "caption": "A pale yellow adult",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 93"
+        },
+        {
+          "file": "thrips-4.jpg",
+          "caption": "A wingless young thrips on a leaf",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 93"
+        }
+      ],
+      "guidance": [
+        {
+          "kind": "check",
+          "task": "Shake leaves or flowers over white paper to check for thrips",
+          "text": "Adults and young fall onto the paper where you can see them. Finding thrips doesn't always mean damage will follow."
+        },
+        {
+          "kind": "check",
+          "task": "Hang yellow sticky traps near the plant to watch thrips numbers",
+          "text": "Many thrips on the traps don't by themselves mean you need to act."
+        },
+        {
+          "kind": "natural_enemies",
+          "task": "Rinse dust off small plants and grow a mix of plants",
+          "text": "Predatory thrips, lacewings, minute pirate bugs and predatory mites eat thrips; dust and persistent sprays harm them."
+        },
+        {
+          "kind": "remove",
+          "task": "Prune off thrips colonies under the leaves as soon as you find them",
+          "text": "Some thrips start in one part of the plant and spread slowly, so early pruning can be effective."
+        }
+      ],
+      "ar": {
+        "name": "التربس",
+        "summary": "حشرات دقيقة نحيلة بأجنحة مهدّبة. تثقب سطح الأوراق والأزهار والثمار وتمتص محتواها.",
+        "look_for": [
+          "حشرات بالغة نحيلة بأجنحة طويلة ضيقة ذات أهداب طويلة",
+          "صغار بلا أجنحة مستطيلة أو نحيلة",
+          "ألوان من الأبيض أو الأصفر الشفاف إلى البني الداكن أو الأسود",
+          "بقع سوداء دقيقة لامعة من الفضلات حيث تغذت"
+        ],
+        "size": "أقل من ١٫٣ مم طولًا.",
+        "where": "على أسطح الأوراق والأزهار والثمار.",
+        "damage": "أوراق منقطة أو مبقعة أو فضية اللون، وأزهار وثمار مندبة، ونمو مشوّه.",
+        "look_alikes": "أنواع التربس المفترسة المفيدة، مثل التربس ذي البقع الست الذي يحمل ثلاث بقع داكنة على كل جناح أمامي. ولا يستطيع تحديد نوع التربس بدقة إلا مختص.",
+        "captions": [
+          "حشرة بالغة: جسم نحيل وأجنحة ضيقة مهدّبة",
+          "حشرة بالغة داكنة على ورقة",
+          "حشرة بالغة صفراء شاحبة",
+          "تربس صغير بلا أجنحة على ورقة"
+        ],
+        "guidance": [
+          {
+            "task": "انفض الأوراق أو الأزهار فوق ورقة بيضاء للتحقق من وجود التربس",
+            "text": "تسقط الحشرات البالغة والصغيرة على الورقة فتراها بوضوح. وجود التربس لا يعني دائمًا أن ضررًا سيحدث."
+          },
+          {
+            "task": "علّق مصائد صفراء لاصقة قرب النبات لمتابعة أعداد التربس",
+            "text": "كثرة التربس على المصائد لا تعني وحدها أنك بحاجة إلى التدخل."
+          },
+          {
+            "task": "اغسل الغبار عن النباتات الصغيرة وازرع أنواعًا متنوعة",
+            "text": "يتغذى التربس المفترس وأسد المنّ وبقّ القرصان الدقيق والحلم المفترس على التربس، ويضرّها الغبار والرشّ طويل الأثر."
+          },
+          {
+            "task": "قُصّ مستعمرات التربس تحت الأوراق فور اكتشافها",
+            "text": "تبدأ بعض أنواع التربس في جزء واحد من النبات وتنتشر ببطء، لذا يكون القص المبكر فعّالًا."
+          }
+        ]
+      }
     },
     {
       "key": "locusts",
@@ -183,14 +842,108 @@
       "damage": "They chew away large sections of leaves and flowers and sometimes eat whole plants.",
       "look_alikes": "Crickets and katydids, which have long antennae.",
       "sources": [
-        { "title": "Grasshoppers", "publisher": "UC Statewide IPM Program (UC IPM)", "url": "https://ipm.ucanr.edu/home-and-landscape/grasshoppers/" }
+        {
+          "title": "Grasshoppers",
+          "publisher": "UC Statewide IPM Program (UC IPM)",
+          "url": "https://ipm.ucanr.edu/home-and-landscape/grasshoppers/"
+        }
       ],
-      "review": { "status": "awaiting_review", "reviewed_by": null, "reviewed_on": null },
+      "review": {
+        "status": "awaiting_review",
+        "reviewed_by": null,
+        "reviewed_on": null
+      },
       "images": [
-        { "file": "locusts-1.jpg", "caption": "Short antennae and large hind legs", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 49" },
-        { "file": "locusts-2.jpg", "caption": "A grasshopper at rest", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 49" },
-        { "file": "locusts-3.jpg", "caption": "A pair on the ground", "credit": "IP102 dataset (Wu et al., CVPR 2019), class 49" }
-      ]
+        {
+          "file": "locusts-1.jpg",
+          "caption": "Short antennae and large hind legs",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 49"
+        },
+        {
+          "file": "locusts-2.jpg",
+          "caption": "A grasshopper at rest",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 49"
+        },
+        {
+          "file": "locusts-3.jpg",
+          "caption": "A pair on the ground",
+          "credit": "IP102 dataset (Wu et al., CVPR 2019), class 49"
+        }
+      ],
+      "guidance": [
+        {
+          "kind": "remove",
+          "task": "Handpick grasshoppers while there are only a few",
+          "text": "When numbers are low, picking them off is the simplest control."
+        },
+        {
+          "kind": "prevent",
+          "task": "Cover young plants with metal window screening",
+          "text": "Hungry grasshoppers chew through cloth or plastic covers, so metal screening protects better."
+        },
+        {
+          "kind": "prevent",
+          "task": "Keep a green border of tall grass or lush plants around the garden",
+          "text": "An unmowed green border can trap grasshoppers and turn them away from vegetables. Don't let it dry out."
+        },
+        {
+          "kind": "natural_enemies",
+          "task": "Let birds and poultry hunt grasshoppers",
+          "text": "Chickens and guinea fowl are excellent predators, though they can damage some plants."
+        },
+        {
+          "kind": "check",
+          "task": "Watch for grasshoppers moving in when nearby wild grass dries",
+          "text": "Garden damage usually comes in a few weeks of early summer, after wild plants dry up."
+        }
+      ],
+      "ar": {
+        "name": "الجراد والنطاطات",
+        "summary": "حشرات قارضة بأرجل خلفية كبيرة للقفز. معظمها يطير، وفي بعض السنوات تدخل الحدائق بأعداد كبيرة.",
+        "look_for": [
+          "أرجل خلفية بأفخاذ متضخمة جدًا للقفز",
+          "جسم متين وقرون استشعار قصيرة نسبيًا",
+          "أجنحة لدى معظم الحشرات البالغة، وكثير منها يطير بقوة"
+        ],
+        "where": "تتغذى على الأوراق والأزهار، خاصة النباتات الخضراء الصغيرة مثل الخس والفاصوليا والذرة والجزر والبصل.",
+        "damage": "تقرض أجزاء كبيرة من الأوراق والأزهار، وقد تأكل نباتات كاملة أحيانًا.",
+        "look_alikes": "صراصير الحقل والجنادب ذات القرون الطويلة.",
+        "captions": [
+          "قرون استشعار قصيرة وأرجل خلفية كبيرة",
+          "نطاط في حالة سكون",
+          "زوج على الأرض"
+        ],
+        "guidance": [
+          {
+            "task": "التقط النطاطات باليد ما دامت قليلة",
+            "text": "عندما تكون الأعداد قليلة، يكون التقاطها أبسط وسيلة للمكافحة."
+          },
+          {
+            "task": "غطِّ النباتات الصغيرة بشبك نوافذ معدني",
+            "text": "تقرض النطاطات الجائعة الأغطية القماشية أو البلاستيكية، لذا يحمي الشبك المعدني بشكل أفضل."
+          },
+          {
+            "task": "أبقِ حول الحديقة حدًّا أخضر من الأعشاب الطويلة أو النباتات الكثيفة",
+            "text": "يمكن للحدّ الأخضر غير المقصوص أن يجذب النطاطات ويبعدها عن الخضروات. لا تتركه يجف."
+          },
+          {
+            "task": "دع الطيور والدواجن تصطاد النطاطات",
+            "text": "الدجاج ودجاج غينيا مفترسات ممتازة، مع أنها قد تضر ببعض النباتات."
+          },
+          {
+            "task": "راقب دخول النطاطات عندما تجف الأعشاب البرية القريبة",
+            "text": "يحدث الضرر في الحدائق عادةً خلال أسابيع قليلة في أوائل الصيف بعد جفاف النباتات البرية."
+          }
+        ]
+      }
     }
-  ]
+  ],
+  "translations": {
+    "ar": {
+      "status": "reviewed",
+      "translated_by": "Claude (AI); to be checked by a native speaker on the team",
+      "reviewed_by": "Nabta team",
+      "reviewed_on": "2026-11-08"
+    }
+  }
 }

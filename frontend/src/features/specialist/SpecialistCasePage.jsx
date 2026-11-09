@@ -12,7 +12,7 @@ import { Button, ButtonLink } from '../../components/ui/Button'
 import { LoadError, PageSpinner } from '../../components/ui/feedback'
 import { TextAreaField } from '../../components/ui/fields'
 import { Breadcrumb, Card, PageHeader, StatusPanel } from '../../components/ui/layout'
-import { errorMessage } from '../../lib/apiErrors'
+import { errorMessage, isPendingError } from '../../lib/apiErrors'
 import { formatDate } from '../../lib/dates'
 import { formatPercent } from '../../lib/format'
 import { useDocumentTitle } from '../../lib/useDocumentTitle'
@@ -22,6 +22,8 @@ import { AssessmentCard } from '../reviews/AssessmentCard'
 import { CaseStatusPill } from '../reviews/CaseStatusPill'
 import { CaseThread } from '../reviews/CaseThread'
 import { AssessmentForm } from './AssessmentForm'
+import { AwaitingApproval } from './AwaitingApproval'
+import { pestName } from '../../lib/pestName'
 
 const OPEN_CASE_REFRESH_MS = 30_000
 
@@ -36,6 +38,7 @@ export function SpecialistCasePage() {
   })
 
   if (reviewCase.isPending) return <PageSpinner />
+  if (isPendingError(reviewCase.error)) return <AwaitingApproval />
   if (reviewCase.isError) {
     return reviewCase.error.code === 'not_found' ? (
       <StatusPanel
@@ -214,7 +217,7 @@ function Suggestion({ reviewCase }) {
       ) : (
         <>
           <p className="mt-2 text-xl font-semibold tracking-tight text-forest-800">
-            {analysis.outcome === 'identified' ? analysis.category.name : t('analysis.unclearTitle')}
+            {analysis.outcome === 'identified' ? pestName(t, analysis.category) : t('analysis.unclearTitle')}
           </p>
           {analysis.unclear_reason && (
             <p className="mt-1 text-sm text-muted">
@@ -229,7 +232,7 @@ function Suggestion({ reviewCase }) {
                     to={`/pests/${prediction.key}?case=${reviewCase.id}`}
                     className="font-medium text-forest-700 underline-offset-4 hover:underline"
                   >
-                    {prediction.name}
+                    {pestName(t, prediction)}
                   </Link>
                   <span className="text-muted tabular-nums">{formatPercent(prediction.probability, i18n.language)}</span>
                 </div>

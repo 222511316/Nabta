@@ -2,6 +2,7 @@ import { Navigate, Outlet, useLocation } from 'react-router'
 import { FullPageError, FullPageSpinner } from '../components/layout/FullPageStatus'
 import { ForbiddenPage } from '../features/errors/ForbiddenPage'
 import { LandingPage } from '../features/landing/LandingPage'
+import { AwaitingApproval } from '../features/specialist/AwaitingApproval'
 import { useAuth } from './useAuth'
 import { homePathFor } from './homePath'
 
@@ -26,6 +27,7 @@ function RequireAuthInner() {
   const { user, endReason } = useAuth()
   const location = useLocation()
   if (user) return <Outlet />
+  if (endReason === 'account_deleted') return <Navigate to="/" replace />
   // After a deliberate sign-out, start fresh rather than returning to the old page.
   const state =
     endReason === 'signed_out'
@@ -38,6 +40,16 @@ function RequireAuthInner() {
 export function RoleGate({ role }) {
   const { user } = useAuth()
   if (user.role !== role) return <ForbiddenPage requiredRole={role} />
+  return <Outlet />
+}
+
+/**
+ * Review cases are for specialists the Nabta team has approved (FR03, FR12). A pending specialist sees
+ * "Awaiting approval" instead of the queue; the server refuses them the cases too (403 specialist_pending).
+ */
+export function ApprovedSpecialistGate() {
+  const { user } = useAuth()
+  if (user.specialist_status !== 'approved') return <AwaitingApproval />
   return <Outlet />
 }
 

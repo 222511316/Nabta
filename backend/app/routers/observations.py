@@ -1,4 +1,4 @@
-"""US06: saving and viewing photo observations. Growers only, on their own plants."""
+"""US06, US22: saving, viewing and deleting photo observations. Growers only, on their own plants."""
 
 from datetime import date
 from typing import Annotated, Literal
@@ -61,6 +61,17 @@ def create_observation(
 @router.get("/api/observations/{observation_id}", response_model=ObservationOut)
 def get_observation(observation_id: int, grower: Grower, db: DbSession) -> ObservationOut:
     return observations.to_out(observations.get_owned_observation(db, grower, observation_id))
+
+
+@router.delete("/api/observations/{observation_id}", status_code=204)
+def delete_observation(observation_id: int, grower: Grower, db: DbSession, settings: AppSettings) -> None:
+    """US22: the photo, its result and any review go; tasks that followed it up stay on the plant."""
+    observation = observations.get_owned_observation(db, grower, observation_id)
+    files = [observation.photo_filename, observation.thumb_filename]
+    db.delete(observation)
+    db.commit()
+    # Only once the row is gone: a failed commit must not lose a photo still referenced.
+    photos.delete_files(settings.photos_dir, files)
 
 
 @router.get("/api/observations/{observation_id}/photo", response_class=FileResponse)

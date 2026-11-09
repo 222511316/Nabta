@@ -22,6 +22,12 @@ class Plant(Base):
     observations: Mapped[list["Observation"]] = relationship(
         back_populates="plant", cascade="all, delete-orphan", passive_deletes=True
     )
+    tasks: Mapped[list["Task"]] = relationship(  # noqa: F821
+        back_populates="plant", cascade="all, delete-orphan", passive_deletes=True
+    )
+    notes_log: Mapped[list["Note"]] = relationship(  # noqa: F821
+        back_populates="plant", cascade="all, delete-orphan", passive_deletes=True
+    )
 
 
 class Observation(Base):

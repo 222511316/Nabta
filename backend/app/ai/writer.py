@@ -39,8 +39,9 @@ class OpenAiWriter:
 
 
 def load_writer(settings: Settings) -> OpenAiWriter | None:
-    """The configured writer, or None when no API key is set (AI features are then hidden)."""
-    if settings.openai_api_key is None:
+    """The configured writer, or None when no API key is set (AI features are then hidden).
+    A blank key (`NABTA_OPENAI_API_KEY=` left empty in .env) counts as none."""
+    if settings.openai_api_key is None or not settings.openai_api_key.get_secret_value().strip():
         logger.info("No OpenAI API key; AI features are off.")
         return None
     logger.info("AI features use OpenAI model %s", settings.openai_model)

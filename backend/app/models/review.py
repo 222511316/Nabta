@@ -78,18 +78,22 @@ class CaseFeedback(Base):
 
 
 class Notification(Base):
-    """An in-app notice about a review case (US13, FR15)."""
+    """An in-app notice about a review case (US13, FR15) or a task that has come due (US18)."""
 
     __tablename__ = "notifications"
     __table_args__ = (
-        CheckConstraint("kind IN ('question_asked', 'grower_replied', 'feedback_sent')", name="kind_valid"),
+        CheckConstraint(
+            "kind IN ('question_asked', 'grower_replied', 'feedback_sent', 'task_due')", name="kind_valid"
+        ),
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
     kind: Mapped[str] = mapped_column(String(20))
-    case_id: Mapped[int] = mapped_column(ForeignKey("review_cases.id", ondelete="CASCADE"))
+    case_id: Mapped[int | None] = mapped_column(ForeignKey("review_cases.id", ondelete="CASCADE"))
+    task_id: Mapped[int | None] = mapped_column(ForeignKey("tasks.id", ondelete="CASCADE"))
     created_at: Mapped[datetime] = mapped_column(UTCDateTime, default=utcnow)
     read_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
 
-    case: Mapped[ReviewCase] = relationship()
+    case: Mapped[ReviewCase | None] = relationship()
+    task: Mapped["Task | None"] = relationship()  # noqa: F821

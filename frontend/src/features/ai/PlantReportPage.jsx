@@ -25,6 +25,7 @@ export function PlantReportPage() {
   const report = useQuery({
     queryKey: queryKeys.plantReport(plantId),
     queryFn: () => getPlantReport(plantId),
+    enabled: ai.enabled, // with AI off, no AI endpoint is called, even when this page is opened directly
   })
 
   if (plant.isPending) return <PageSpinner />
@@ -58,16 +59,18 @@ function Report({ plant, report, ai }) {
         <p className="mt-1 text-sm text-muted">{t('report.writingBody')}</p>
       </Card>
     )
-  } else if (report.isPending) {
+  } else if (!ai.known) {
     content = <SectionSpinner />
-  } else if (hasReport) {
-    content = <ReportBody report={report.data} />
   } else if (!ai.enabled) {
     content = (
       <StatusPanel icon={FileText} title={t('report.unavailableTitle')}>
         {t('report.unavailableBody')}
       </StatusPanel>
     )
+  } else if (report.isPending) {
+    content = <SectionSpinner />
+  } else if (hasReport) {
+    content = <ReportBody report={report.data} />
   } else if (missing) {
     content = (
       <EmptyState

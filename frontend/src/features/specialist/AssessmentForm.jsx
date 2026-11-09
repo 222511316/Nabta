@@ -16,6 +16,7 @@ import { cx } from '../../lib/cx'
 import { limits, rules } from '../../lib/validation'
 import { AiNote } from '../ai/AiNote'
 import { useAiStatus } from '../ai/useAiStatus'
+import { pestName } from '../../lib/pestName'
 
 const OTHER_PEST = 'other'
 const API_FIELDS = { category_key: 'pestKey', other_pest: 'otherPest', message: 'message' }
@@ -56,7 +57,7 @@ export function AssessmentForm({ reviewCase }) {
   })
 
   const options = [
-    ...(suggested ? [{ value: 'agree', label: t('case.agree', { name: suggested.name }) }] : []),
+    ...(suggested ? [{ value: 'agree', label: t('case.agree', { name: pestName(t, suggested) }) }] : []),
     { value: 'different', label: suggested ? t('case.different') : t('case.namePest') },
     { value: 'inconclusive', label: t('case.inconclusive') },
   ]

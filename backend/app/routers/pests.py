@@ -1,11 +1,19 @@
-"""US11: reference content for each pest category. Any signed-in user."""
+"""US11, US17: reference content and guidance for each pest category, in the browser's language. Any signed-in user."""
 
 from fastapi import APIRouter
 from fastapi.responses import FileResponse
 
-from app.deps import CurrentUser, PestCatalog
+from app.deps import CurrentUser, Language, PestCatalog
 from app.pests import Catalog, Pest
-from app.schemas.pests import ContentReviewOut, PestOut, PestSummaryOut, ReferenceImageOut, SourceOut
+from app.schemas.pests import (
+    ContentReviewOut,
+    GuidanceStepOut,
+    PestOut,
+    PestSummaryOut,
+    ReferenceImageOut,
+    SourceOut,
+    TranslationOut,
+)
 from app.services.plants import not_found
 
 router = APIRouter(prefix="/api/pests", tags=["pests"])
@@ -15,15 +23,15 @@ def _image_url(pest: Pest, filename: str) -> str:
     return f"/api/pests/{pest.key}/images/{filename}"
 
 
-def _find(catalog: Catalog, key: str) -> Pest:
-    pest = catalog.get(key)
+def _find(catalog: Catalog, key: str, language: str = "en") -> Pest:
+    pest = catalog.get(key, language)
     if pest is None:
         raise not_found()
     return pest
 
 
 @router.get("", response_model=list[PestSummaryOut])
-def list_pests(user: CurrentUser, catalog: PestCatalog) -> list[PestSummaryOut]:
+def list_pests(user: CurrentUser, catalog: PestCatalog, language: Language) -> list[PestSummaryOut]:
     return [
         PestSummaryOut(
             key=pest.key,
@@ -32,13 +40,13 @@ def list_pests(user: CurrentUser, catalog: PestCatalog) -> list[PestSummaryOut]:
             image_url=_image_url(pest, pest.images[0].file),
             review_status=pest.review.status,
         )
-        for pest in catalog.pests
+        for pest in catalog.in_language(language)
     ]
 
 
 @router.get("/{key}", response_model=PestOut)
-def get_pest(key: str, user: CurrentUser, catalog: PestCatalog) -> PestOut:
-    pest = _find(catalog, key)
+def get_pest(key: str, user: CurrentUser, catalog: PestCatalog, language: Language) -> PestOut:
+    pest = _find(catalog, key, language)
     return PestOut(
         key=pest.key,
         name=pest.name,
@@ -56,6 +64,12 @@ def get_pest(key: str, user: CurrentUser, catalog: PestCatalog) -> PestOut:
             ReferenceImageOut(url=_image_url(pest, image.file), caption=image.caption, credit=image.credit)
             for image in pest.images
         ],
+        guidance=[GuidanceStepOut(kind=step.kind, task=step.task, text=step.text) for step in pest.guidance],
+        translation=(
+            TranslationOut(language=pest.translation.language, status=pest.translation.status)
+            if pest.translation
+            else None
+        ),
     )
 
 

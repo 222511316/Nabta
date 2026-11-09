@@ -1,12 +1,13 @@
 """Running the pest model on an observation's photo and keeping the result (US09, US10)."""
 
 import logging
+from dataclasses import dataclass
 
 from PIL import Image
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.analysis.classifier import Prediction
+from app.analysis.classifier import CategoryInfo, Prediction
 from app.config import Settings
 from app.errors import ApiError
 from app.models import Analysis, Observation
@@ -33,6 +34,30 @@ def to_out(analysis: Analysis | None) -> AnalysisOut | None:
     )
 
 
+@dataclass(frozen=True)
+class Decision:
+    identified: bool
+    unclear_reason: str | None  # "unfamiliar" or "uncertain" when not identified
+    ranked: list[tuple[CategoryInfo, float]]  # every category with its probability, most likely first
+
+
+def decide(classifier, prediction: Prediction) -> Decision:
+    """Nabta's rule, shared by live analysis and the evaluation of growers' photos.
+
+    Identified only when the photo looks like the training photos and the top category is
+    likely enough; an insect Nabta was never trained on mustn't get a confident answer (R03).
+    """
+    ranked = sorted(zip(classifier.categories, prediction.probabilities), key=lambda pair: -pair[1])
+    familiar = (
+        classifier.familiarity_threshold is None
+        or (prediction.familiarity is not None and prediction.familiarity >= classifier.familiarity_threshold)
+    )
+    confident = ranked[0][1] >= classifier.threshold
+    if familiar and confident:
+        return Decision(True, None, ranked)
+    return Decision(False, "unfamiliar" if not familiar else "uncertain", ranked)
+
+
 def _run_model(classifier, settings: Settings, observation: Observation) -> Prediction:
     try:
         with Image.open(settings.photos_dir / observation.photo_filename) as image:
@@ -54,26 +79,18 @@ def analyse(db: Session, observation: Observation, classifier, settings: Setting
         raise ApiError(503, "analysis_unavailable", "Identification isn't available right now.")
 
     prediction = _run_model(classifier, settings, observation)
-    ranked = sorted(zip(classifier.categories, prediction.probabilities), key=lambda pair: -pair[1])
-    top_category, top_probability = ranked[0]
-    # Identified only when the photo looks like the training photos and the top category is
-    # likely enough; an insect Nabta was never trained on mustn't get a confident answer (R03).
-    familiar = (
-        classifier.familiarity_threshold is None
-        or (prediction.familiarity is not None and prediction.familiarity >= classifier.familiarity_threshold)
-    )
-    confident = top_probability >= classifier.threshold
-    identified = familiar and confident
+    decision = decide(classifier, prediction)
+    top_category, top_probability = decision.ranked[0]
     analysis = Analysis(
         observation_id=observation.id,
-        outcome="identified" if identified else "unclear",
-        unclear_reason=None if identified else ("unfamiliar" if not familiar else "uncertain"),
-        category_key=top_category.key if identified else None,
+        outcome="identified" if decision.identified else "unclear",
+        unclear_reason=decision.unclear_reason,
+        category_key=top_category.key if decision.identified else None,
         confidence=float(top_probability),
         familiarity=prediction.familiarity,
         predictions=[
             {"key": category.key, "name": category.name, "probability": float(probability)}
-            for category, probability in ranked[:TOP_PREDICTIONS]
+            for category, probability in decision.ranked[:TOP_PREDICTIONS]
         ],
         model_version=classifier.version,
     )

@@ -6,6 +6,12 @@ import { grower, makeObservation, makePlant } from '../../test/fixtures'
 import { renderApp } from '../../test/renderApp'
 import { server } from '../../test/server'
 
+/** Edit, Plant report and Delete live in the plant page's More menu. */
+async function chooseFromMoreMenu(events, name) {
+  await events.click(await screen.findByRole('button', { name: 'More' }))
+  await events.click(await screen.findByRole('menuitem', { name }))
+}
+
 /** A tiny in-memory plant store so reads after a write see the change. */
 function plantStore(initial, { onPatch = () => {} } = {}) {
   let plant = initial
@@ -142,7 +148,7 @@ describe('Plant profiles (US05)', () => {
     )
     const { events } = renderApp('/plants/3', { user: grower })
 
-    await events.click(await screen.findByRole('button', { name: 'Delete' }))
+    await chooseFromMoreMenu(events, 'Delete')
     let dialog = await screen.findByRole('dialog', { name: 'Delete Lemon tree?' })
     expect(dialog).toHaveTextContent(
       "This permanently deletes the plant and its 2 observations, including their photos. This can't be undone.",
@@ -151,7 +157,7 @@ describe('Plant profiles (US05)', () => {
     await expect.poll(() => screen.queryByRole('dialog')).toBeNull()
     expect(deleteCalls).toBe(0)
 
-    await events.click(screen.getByRole('button', { name: 'Delete' }))
+    await chooseFromMoreMenu(events, 'Delete')
     dialog = await screen.findByRole('dialog', { name: 'Delete Lemon tree?' })
     await events.click(within(dialog).getByRole('button', { name: 'Delete plant' }))
 
@@ -185,7 +191,7 @@ describe('Plant profiles (US05)', () => {
     const { events } = renderApp('/plants/3', { user: grower })
     await screen.findByRole('link', { name: /September 2026/ })
 
-    await events.click(screen.getByRole('button', { name: 'Delete' }))
+    await chooseFromMoreMenu(events, 'Delete')
     const dialog = await screen.findByRole('dialog', { name: 'Delete Lemon tree?' })
     await events.click(within(dialog).getByRole('button', { name: 'Delete plant' }))
     await screen.findByRole('heading', { name: 'Add your first plant' })

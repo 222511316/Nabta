@@ -2,7 +2,7 @@ import { screen, within } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { describe, expect, it } from 'vitest'
 import { apiPath, errorResponse } from '../../test/api'
-import { grower, makePlant, specialist } from '../../test/fixtures'
+import { grower, makePlant, pendingSpecialist } from '../../test/fixtures'
 import { renderApp } from '../../test/renderApp'
 import { server } from '../../test/server'
 
@@ -216,14 +216,14 @@ describe('Password reset (US03)', () => {
 })
 
 describe('Choosing a role', () => {
-  it('signs up a plant specialist and opens the review queue', async () => {
+  // Supervisor review OBS-14: website sign-up makes a pending specialist, who waits for the team's approval.
+  it('signs up a plant specialist, who waits for the Nabta team to approve the account', async () => {
     let sentBody
     server.use(
       http.post(apiPath('/auth/register'), async ({ request }) => {
         sentBody = await request.json()
-        return HttpResponse.json(specialist, { status: 201 })
+        return HttpResponse.json(pendingSpecialist, { status: 201 })
       }),
-      http.get(apiPath('/specialist/cases'), () => HttpResponse.json([])),
     )
     const { events } = renderApp('/register')
 
@@ -234,7 +234,8 @@ describe('Choosing a role', () => {
     await events.type(screen.getByLabelText('Confirm password'), 'correct-horse')
     await events.click(screen.getByRole('button', { name: 'Create account' }))
 
-    expect(await screen.findByRole('heading', { name: 'Review queue' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Awaiting approval' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Review queue' })).not.toBeInTheDocument()
     expect(sentBody.role).toBe('specialist')
   })
 

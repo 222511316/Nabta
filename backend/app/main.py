@@ -7,8 +7,21 @@ from app.analysis.classifier import load_classifier
 from app.config import Settings
 from app.db import create_db_engine, create_session_factory
 from app.errors import register_error_handlers
+from app.frontend import mount_frontend
 from app.pests import load_catalog
-from app.routers import account, ai, auth, health, notifications, observations, pests, plants, reviews, specialist
+from app.routers import (
+    account,
+    ai,
+    auth,
+    followup,
+    health,
+    notifications,
+    observations,
+    pests,
+    plants,
+    reviews,
+    specialist,
+)
 from app.security_middleware import RejectCrossSiteWrites
 from app.services.email import email_sender_for
 
@@ -37,7 +50,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     application.include_router(reviews.router)
     application.include_router(specialist.router)
     application.include_router(notifications.router)
+    application.include_router(followup.router)
     application.include_router(ai.router)
+    mount_frontend(application, settings.frontend_dist)  # last: it answers every other path
     application.add_middleware(RejectCrossSiteWrites)
     return application
 

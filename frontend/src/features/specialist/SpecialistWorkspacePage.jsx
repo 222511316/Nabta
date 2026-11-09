@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import { Inbox } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -11,6 +12,10 @@ import { formatDate } from '../../lib/dates'
 import { formatPercent } from '../../lib/format'
 import { useDocumentTitle } from '../../lib/useDocumentTitle'
 import { CaseStatusPill } from '../reviews/CaseStatusPill'
+import { pestName } from '../../lib/pestName'
+import { useAuth } from '../../auth/useAuth'
+import { isPendingError } from '../../lib/apiErrors'
+import { AwaitingApproval } from './AwaitingApproval'
 
 const QUEUE_REFRESH_MS = 30_000
 
@@ -26,7 +31,13 @@ export function SpecialistWorkspacePage() {
     queryFn: listReviewCases,
     refetchInterval: QUEUE_REFRESH_MS,
   })
+  const { reload } = useAuth()
+  const revoked = isPendingError(cases.error)
+  useEffect(() => {
+    if (revoked) reload() // approval was withdrawn meanwhile: the account now shows as pending
+  }, [revoked, reload])
 
+  if (revoked) return <AwaitingApproval />
   let content
   if (cases.isPending) content = <PageSpinner />
   else if (cases.isError) {
@@ -87,7 +98,7 @@ function QueueRow({ item }) {
   else if (item.suggestion.outcome === 'unclear') suggestion = t('specialist.suggestionUnclear')
   else {
     suggestion = t('specialist.suggestion', {
-      name: item.suggestion.name,
+      name: pestName(t, item.suggestion),
       percent: formatPercent(item.suggestion.confidence, i18n.language),
     })
   }

@@ -5,11 +5,11 @@ from tests.images import jpeg
 PASSWORD = "correct-horse-42"
 
 
-def register(client, *, email="sara@example.com", full_name="Sara Ahmed", password=PASSWORD):
-    response = client.post(
-        "/api/auth/register",
-        json={"full_name": full_name, "email": email, "password": password},
-    )
+def register(client, *, email="sara@example.com", full_name="Sara Ahmed", password=PASSWORD, role=None):
+    payload = {"full_name": full_name, "email": email, "password": password}
+    if role is not None:
+        payload["role"] = role
+    response = client.post("/api/auth/register", json=payload)
     assert response.status_code == 201, response.text
     return response.json()
 

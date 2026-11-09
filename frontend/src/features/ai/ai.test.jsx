@@ -111,9 +111,10 @@ describe('Plant report', () => {
       http.get(apiPath('/plants/3'), () => HttpResponse.json(lemon)),
       http.get(apiPath('/plants/3/observations'), () => HttpResponse.json([])),
     )
-    renderApp('/plants/3', { user: grower })
+    const { events } = renderApp('/plants/3', { user: grower })
 
-    expect(await screen.findByRole('link', { name: 'Plant report' })).toHaveAttribute('href', '/plants/3/report')
+    await events.click(await screen.findByRole('button', { name: 'More' }))
+    expect(await screen.findByRole('menuitem', { name: 'Plant report' })).toHaveAttribute('href', '/plants/3/report')
   })
 })
 

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import i18n from '../i18n'
 
 /** Every failed API call surfaces as an ApiError (spec §4.3). */
 export class ApiError extends Error {
@@ -15,6 +16,12 @@ export const apiClient = axios.create({
   baseURL: '/api',
   withCredentials: true,
   headers: { Accept: 'application/json' },
+})
+
+// The server answers in the interface language: pest pages, guidance, AI text (US23).
+apiClient.interceptors.request.use((config) => {
+  config.headers['Accept-Language'] = i18n.language
+  return config
 })
 
 const unauthorizedListeners = new Set()

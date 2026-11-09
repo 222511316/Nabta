@@ -12,6 +12,7 @@ import { TextAreaField } from '../../components/ui/fields'
 import { errorMessage } from '../../lib/apiErrors'
 import { formatPercent } from '../../lib/format'
 import { limits, rules } from '../../lib/validation'
+import { pestName } from '../../lib/pestName'
 
 /**
  * Asks a specialist to review an observation (US12). The dialog lists exactly what the
@@ -53,7 +54,7 @@ export function RequestReviewDialog({ observation, open, onClose }) {
   if (analysis?.outcome === 'identified') {
     shares.push(
       t('review.sharesSuggestion', {
-        name: analysis.category.name,
+        name: pestName(t, analysis.category),
         percent: formatPercent(analysis.confidence, i18n.language),
       }),
     )

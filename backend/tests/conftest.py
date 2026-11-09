@@ -37,6 +37,7 @@ def settings(request, tmp_path):
         database_url=f"sqlite:///{(tmp_path / 'nabta.db').as_posix()}",
         storage_dir=tmp_path / "storage",
         model_dir=tmp_path / "no-model",
+        frontend_dist=tmp_path / "no-frontend",
         **overrides,
     )
 
@@ -103,10 +104,19 @@ def specialist(db, make_client):
         full_name="Khalid Alharbi",
         password=PASSWORD,
         role=Role.SPECIALIST,
+        approved=True,  # the CLI's accounts are approved from the start
     )
     db.commit()
     client = make_client()
     login(client, email="khalid@example.com")
+    return client
+
+
+@pytest.fixture
+def pending_specialist(make_client):
+    """A signed-in specialist who signed up on the website: Huda, waiting for the team's approval."""
+    client = make_client()
+    register(client, email="huda@example.com", full_name="Huda Alqahtani", role="specialist")
     return client
 
 

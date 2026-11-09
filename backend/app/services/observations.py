@@ -51,12 +51,17 @@ def list_for_plant(db: Session, plant: Plant) -> list[Observation]:
     )
 
 
-def check_observed_on(observed_on: date) -> None:
+def check_date(value: date, field: str) -> None:
+    """A date that has happened: not in the future, and not before 2000."""
     # "Tomorrow" in UTC is allowed: in Saudi Arabia (UTC+3) the day starts before UTC's.
-    if observed_on > datetime.now(UTC).date() + timedelta(days=1):
-        raise validation_error({"observed_on": "future_date"})
-    if observed_on < EARLIEST_DATE:
-        raise validation_error({"observed_on": "too_early"})
+    if value > datetime.now(UTC).date() + timedelta(days=1):
+        raise validation_error({field: "future_date"})
+    if value < EARLIEST_DATE:
+        raise validation_error({field: "too_early"})
+
+
+def check_observed_on(observed_on: date) -> None:
+    check_date(observed_on, "observed_on")
 
 
 def find_repeat(db: Session, owner: User, client_request_id: str | None) -> Observation | None:

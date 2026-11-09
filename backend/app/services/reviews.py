@@ -254,8 +254,10 @@ def _suggestion(case: ReviewCase) -> SuggestionOut | None:
     analysis = case.observation.analysis
     if analysis is None:
         return None
-    name = analysis.predictions[0]["name"] if analysis.outcome == "identified" else None
-    return SuggestionOut(outcome=analysis.outcome, name=name, confidence=analysis.confidence)
+    top = analysis.predictions[0] if analysis.outcome == "identified" else {}
+    return SuggestionOut(
+        outcome=analysis.outcome, key=top.get("key"), name=top.get("name"), confidence=analysis.confidence
+    )
 
 
 def queue_item_out(case: ReviewCase, specialist: User) -> QueueItemOut:

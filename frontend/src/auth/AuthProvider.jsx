@@ -52,6 +52,8 @@ export function AuthProvider({ children }) {
       reload: () => me.refetch(),
       endReason,
       setUser,
+      /** The account is gone (US22): forget everything, and leave the signed-in pages. */
+      accountDeleted: () => endSession('account_deleted'),
       signIn: async (credentials) => startSession(await authApi.signIn(credentials)),
       register: async (details) => startSession(await authApi.register(details)),
       signOut: async () => {

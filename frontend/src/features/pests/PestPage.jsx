@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { ArrowLeft, ExternalLink, SearchX } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useParams, useSearchParams } from 'react-router'
+import { Link, useLocation, useParams, useSearchParams } from 'react-router'
 import { getObservation } from '../../api/observations'
 import { getPest } from '../../api/pests'
 import { queryKeys } from '../../api/queryKeys'
@@ -18,6 +18,8 @@ import { cx } from '../../lib/cx'
 import { formatDate } from '../../lib/dates'
 import { useDocumentTitle } from '../../lib/useDocumentTitle'
 import { AskAboutPest } from '../ai/AskAboutPest'
+import { Guidance } from './Guidance'
+import { pestName } from '../../lib/pestName'
 
 /**
  * A pest's reference page (US11). Opened from a result (?observation=) or a case
@@ -75,6 +77,7 @@ function useComparisonSubject() {
       analysis: o.analysis,
       param: `observation=${o.id}`,
       observationId: o.id,
+      observation: o,
       back: { to: `/observations/${o.id}`, label: t('pests.backToObservation') },
       crumbs: [
         { label: t('nav.dashboard'), to: '/dashboard' },
@@ -106,7 +109,13 @@ function useComparisonSubject() {
 function PestReference({ pest }) {
   const { t } = useTranslation()
   const subject = useComparisonSubject()
+  const { hash } = useLocation()
   useDocumentTitle(pest.name)
+
+  // Opened from "What you can do" on a result: go straight to the guidance.
+  useEffect(() => {
+    if (hash === '#guidance') document.getElementById('guidance')?.scrollIntoView?.({ block: 'start' })
+  }, [hash])
 
   const crumbs = subject?.crumbs ?? [{ label: t('pests.guideTitle'), to: '/pests' }]
   const facts = [
@@ -157,6 +166,9 @@ function PestReference({ pest }) {
               </div>
             ))}
           </dl>
+          <div className="border-t border-line pt-8">
+            <Guidance pest={pest} observation={subject?.observation} />
+          </div>
         </div>
         <div className="space-y-6">
           <SourceCard pest={pest} />
@@ -198,7 +210,7 @@ function ComparisonStage({ subject, pest }) {
                 to={`/pests/${prediction.key}?${subject.param}`}
                 className="rounded-full border border-line-strong bg-white px-3 py-1 font-medium text-forest-800 hover:border-forest-400 hover:bg-forest-50"
               >
-                {prediction.name}
+                {pestName(t, prediction)}
               </Link>
             ))}
           </p>
@@ -303,6 +315,9 @@ function SourceCard({ pest }) {
           <StatusPill tone="attention">{t('pests.awaitingReview')}</StatusPill>
         )}
       </div>
+      {pest.translation?.status === 'awaiting_review' && (
+        <p className="mt-3 text-xs leading-relaxed text-warning-800">{t('pests.translationAwaiting')}</p>
+      )}
       <p className="mt-4 text-xs leading-relaxed text-muted">{t('pests.photosNote')}</p>
     </Card>
   )

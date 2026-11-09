@@ -2,6 +2,7 @@ import { ExternalLink } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cx } from '../../lib/cx'
 import { confidenceLevel, formatPercent } from '../../lib/format'
+import { pestName } from '../../lib/pestName'
 
 /**
  * A photo under study. While Nabta analyses it, the brand's magnifier sweeps across
@@ -73,7 +74,7 @@ function SpecimenLabel({ result, pinning }) {
     >
       <span className="absolute -top-1.5 start-4 size-3 rounded-full bg-pollen ring-2 ring-white" />
       <span className="block font-semibold text-forest-800">
-        {identified ? result.category.name : t('analysis.labelUnclear')}
+        {identified ? pestName(t, result.category) : t('analysis.labelUnclear')}
       </span>
       <span className="mt-0.5 block text-muted">
         {identified

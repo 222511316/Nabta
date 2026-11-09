@@ -9,6 +9,7 @@ The backend never needs PyTorch. It loads the exported ONNX file with onnxruntim
 - [reports/evaluation.md](reports/evaluation.md): macro F1 against the baselines, per-category precision and recall, the confusion matrix, and how often unsupported insects are rejected.
 - [reports/serving.md](reports/serving.md): the exported file, its checks and its CPU latency.
 - [reports/audit.md](reports/audit.md) and [reports/label-check.md](reports/label-check.md): data counts, removed duplicates and label checks.
+- `reports/collected.md`, once growers' photos are collected: the same model on photos from growers, reported separately (charter §8 "practical evaluation"). It is written by the backend's `evaluate-collected` command; see "Growers' photos for research" in the [main README](../README.md).
 
 ## Rebuilding the model
 

@@ -1,0 +1,10 @@
+# Public addresses. nabta.duckdns.org is the main one (free DuckDNS name pointing at the static IP
+# 34.18.217.81). The sslip.io name keeps working so links already shared don't break. With a real domain,
+# add it here (and point its DNS A record at the IP). Caddy gets a Let's Encrypt certificate for each name.
+nabta.duckdns.org, 34-18-217-81.sslip.io {
+	encode gzip
+	request_body {
+		max_size 12MB
+	}
+	reverse_proxy nabta:8000
+}

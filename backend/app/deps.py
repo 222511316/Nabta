@@ -1,4 +1,4 @@
-"""Request dependencies: settings, database session, the signed-in user and role checks."""
+"""Request dependencies: settings, database session, the signed-in user, role checks and specialist approval."""
 
 from typing import Annotated
 
@@ -21,6 +21,12 @@ def get_catalog(request: Request) -> Catalog:
     return request.app.state.pests
 
 
+def get_language(request: Request) -> str:
+    """The interface language the browser asks for (US23): Arabic or English."""
+    first = request.headers.get("accept-language", "").split(",")[0].strip().lower()
+    return "ar" if first.startswith("ar") else "en"
+
+
 def get_ai_writer(request: Request):
     """The language model for the AI features, or None when no API key is set."""
     return request.app.state.ai
@@ -30,6 +36,7 @@ DbSession = Annotated[Session, Depends(get_db)]
 AppSettings = Annotated[Settings, Depends(get_settings)]
 PestCatalog = Annotated[Catalog, Depends(get_catalog)]
 AiWriter = Annotated[object | None, Depends(get_ai_writer)]
+Language = Annotated[str, Depends(get_language)]
 
 
 def get_current_session(request: Request, db: DbSession) -> UserSession:
@@ -59,4 +66,26 @@ def require_role(role: Role):
 
 
 Grower = Annotated[User, Depends(require_role(Role.GROWER))]
-Specialist = Annotated[User, Depends(require_role(Role.SPECIALIST))]
+# Any specialist account, approved or not. Only for the account itself; never for cases or grower data.
+AnySpecialist = Annotated[User, Depends(require_role(Role.SPECIALIST))]
+
+
+def specialist_pending() -> ApiError:
+    return ApiError(
+        403,
+        "specialist_pending",
+        "Your specialist account is waiting for approval by the Nabta team. "
+        "You can see review cases once it is approved.",
+    )
+
+
+def require_approved_specialist(specialist: AnySpecialist) -> User:
+    """FR03, FR12, NFR05, NFR06: only specialists the Nabta team has approved open review cases.
+    A pending specialist can sign in and manage their account, nothing more."""
+    if specialist.approved_at is None:
+        raise specialist_pending()
+    return specialist
+
+
+# Every route that shows cases or grower data to a specialist uses this one.
+ApprovedSpecialist = Annotated[User, Depends(require_approved_specialist)]

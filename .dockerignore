@@ -1,0 +1,19 @@
+# Only what the image needs: the backend code, its model, and the frontend sources.
+.git
+**/__pycache__
+**/.pytest_cache
+.playwright-mcp
+docs
+ml
+
+backend/.venv
+backend/.env
+backend/storage
+backend/tests
+
+frontend/node_modules
+frontend/dist
+frontend/coverage
+frontend/e2e
+frontend/test-results
+frontend/playwright-report

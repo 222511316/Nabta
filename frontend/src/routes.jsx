@@ -1,8 +1,9 @@
 import { Route, Routes } from 'react-router'
-import { PublicOnlyRoute, RequireAuth, RoleGate, RootRedirect } from './auth/guards'
+import { ApprovedSpecialistGate, PublicOnlyRoute, RequireAuth, RoleGate, RootRedirect } from './auth/guards'
 import { AppLayout } from './components/layout/AppLayout'
 import { AuthLayout } from './components/layout/AuthLayout'
 import { AccountPage } from './features/account/AccountPage'
+import { ComparePage } from './features/compare/ComparePage'
 import { ForgotPasswordPage } from './features/auth/ForgotPasswordPage'
 import { RegisterPage } from './features/auth/RegisterPage'
 import { ResetPasswordPage } from './features/auth/ResetPasswordPage'
@@ -17,10 +18,12 @@ import { PestPage } from './features/pests/PestPage'
 import { PlantFormPage } from './features/plants/PlantFormPage'
 import { PlantPage } from './features/plants/PlantPage'
 import { GrowerReviewsPage } from './features/reviews/GrowerReviewsPage'
+import { SearchPage } from './features/search/SearchPage'
 import { SpecialistCasePage } from './features/specialist/SpecialistCasePage'
 import { SpecialistWorkspacePage } from './features/specialist/SpecialistWorkspacePage'
+import { TasksPage } from './features/tasks/TasksPage'
 
-// Route map: Sprint 1 spec §4.2, plus the Sprint 2 pages.
+// Route map: Sprint 1 spec §4.2, plus the Sprint 2 and Sprint 3 pages.
 export function AppRoutes() {
   return (
     <Routes>
@@ -47,14 +50,19 @@ export function AppRoutes() {
             <Route path="plants/:plantId" element={<PlantPage />} />
             <Route path="plants/:plantId/edit" element={<PlantFormPage />} />
             <Route path="plants/:plantId/report" element={<PlantReportPage />} />
+            <Route path="plants/:plantId/compare" element={<ComparePage />} />
             <Route path="observations/new" element={<NewObservationPage />} />
             <Route path="observations/:observationId" element={<ObservationPage />} />
             <Route path="reviews" element={<GrowerReviewsPage />} />
+            <Route path="tasks" element={<TasksPage />} />
+            <Route path="search" element={<SearchPage />} />
           </Route>
 
           <Route element={<RoleGate role="specialist" />}>
-            <Route path="specialist" element={<SpecialistWorkspacePage />} />
-            <Route path="specialist/cases/:caseId" element={<SpecialistCasePage />} />
+            <Route element={<ApprovedSpecialistGate />}>
+              <Route path="specialist" element={<SpecialistWorkspacePage />} />
+              <Route path="specialist/cases/:caseId" element={<SpecialistCasePage />} />
+            </Route>
           </Route>
         </Route>
       </Route>

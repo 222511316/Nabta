@@ -1,11 +1,14 @@
-import { useQuery } from '@tanstack/react-query'
-import { SearchX } from 'lucide-react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { SearchX, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useParams } from 'react-router'
-import { getObservation } from '../../api/observations'
+import { Link, useNavigate, useParams } from 'react-router'
+import { toast } from 'sonner'
+import { deleteObservation, getObservation } from '../../api/observations'
 import { queryKeys } from '../../api/queryKeys'
-import { ButtonLink } from '../../components/ui/Button'
+import { Alert } from '../../components/ui/Alert'
+import { Button, ButtonLink } from '../../components/ui/Button'
+import { ConfirmDialog } from '../../components/ui/ConfirmDialog'
 import { LoadError, PageSpinner } from '../../components/ui/feedback'
 import { Breadcrumb, Card, PageHeader, StatusPanel } from '../../components/ui/layout'
 import { errorMessage } from '../../lib/apiErrors'
@@ -96,6 +99,7 @@ function ObservationDetails({ observation }) {
 
 function ObservationFacts({ observation, date }) {
   const { t, i18n } = useTranslation()
+  const [deleting, setDeleting] = useState(false)
   return (
     <Card aria-labelledby="observation-facts-heading" className="p-6">
       <h2 id="observation-facts-heading" className="font-semibold text-forest-800">
@@ -128,6 +132,58 @@ function ObservationFacts({ observation, date }) {
           </dd>
         </div>
       </dl>
+      <div className="mt-6 border-t border-line pt-4">
+        <Button variant="dangerGhost" size="sm" className="-ms-3.5" onClick={() => setDeleting(true)}>
+          <Trash2 />
+          {t('observation.delete')}
+        </Button>
+      </div>
+      <DeleteObservationDialog observation={observation} date={date} open={deleting} onClose={() => setDeleting(false)} />
     </Card>
+  )
+}
+
+/** US22: one observation goes with its photo, Nabta's result and any review. */
+function DeleteObservationDialog({ observation, date, open, onClose }) {
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+
+  const remove = useMutation({
+    mutationFn: () => deleteObservation(observation.id),
+    onSuccess: () => {
+      // Marked, not removed: this page is still mounted until the navigation below.
+      queryClient.invalidateQueries({ queryKey: queryKeys.observation(observation.id), refetchType: 'none' })
+      for (const queryKey of [
+        queryKeys.plant(observation.plant_id),
+        queryKeys.plants,
+        queryKeys.reviews,
+        queryKeys.tasks,
+        queryKeys.summary,
+        ['search'],
+      ]) {
+        queryClient.invalidateQueries({ queryKey })
+      }
+      toast.success(t('observation.deleted'))
+      navigate(`/plants/${observation.plant_id}`, { replace: true })
+    },
+  })
+
+  return (
+    <ConfirmDialog
+      open={open}
+      onClose={onClose}
+      onConfirm={() => remove.mutate()}
+      confirming={remove.isPending}
+      title={t('observation.deleteTitle', { date })}
+      confirmLabel={remove.isPending ? t('plant.deleting') : t('observation.deleteConfirm')}
+    >
+      {observation.review_status ? t('observation.deleteBodyReview') : t('observation.deleteBody')}
+      {remove.isError && (
+        <Alert tone="danger" className="mt-4">
+          {errorMessage(t, remove.error)}
+        </Alert>
+      )}
+    </ConfirmDialog>
   )
 }
